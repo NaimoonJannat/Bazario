@@ -4,6 +4,11 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+.font-title{
+      font-family: "Newsreader", serif;
+}
+
+
 /* @theme {
     --primary1: #001f3f;
     --secondary2: #d4ff00;
@@ -33,6 +38,3 @@
 
 
 
-.font-title{
-      font-family: "Newsreader", serif;
-}
