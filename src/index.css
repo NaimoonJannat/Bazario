@@ -1,9 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap');
 
+
 @import "tailwindcss";
 @plugin "daisyui";
 
-.primaryColor{
+/* @theme {
+    --primary1: #001f3f;
+    --secondary2: #d4ff00;
+} */
+
+
+
+    /* :root {
+        --primaryColor: #001f3f;
+        --secondaryColor: #d4ff00;
+    } */
+
+
+/* .primaryColor{
     background-color: #001f3f;    
 }
 .secondaryColor{
@@ -14,7 +28,7 @@
 }
 .secondaryTextColor{
     color: #d4ff00;
-}
+} */
 
 
 

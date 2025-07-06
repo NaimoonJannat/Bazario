@@ -9,10 +9,10 @@ const Navbar = () => {
 
     console.log(user);
     return (
-        <div className='navbar absolute z-10  bg-transparent secondaryTextColor shadow-sm flex flex-row justify-between px-4 mx-auto'>
+        <div className='navbar absolute z-10 bg-transparent text-[#d4ff00] shadow-sm flex flex-row justify-between px-4 mx-auto'>
             <div className='flex w-full md:w-1/2'>
                 <Link to='/' className='flex gap-2 items-center'>
-                    <img className='w-auto h-20' src='./logo.png' alt='solo-sphere logo' />
+                    <img className='w-auto h-20' src='./logo.png' alt='logo' />
                 </Link>
             </div>
             <div className='flex flex-row justify-end items-center w-full md:w-1/2 '>
@@ -53,7 +53,7 @@ const Navbar = () => {
                         </div>
                         <ul
                             tabIndex={0}
-                            className='menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow secondaryColor primaryTextColor rounded-box w-52'
+                            className='menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-[#001f3f] text-[#d4ff00] rounded-box w-52'
                         >
                             <li>
                                 <Link to={"/history"}>
@@ -67,7 +67,7 @@ const Navbar = () => {
                             <li className='mt-2'>
                                 <button
                                     onClick={logOut}
-                                    className='primaryColor secondaryTextColor block text-center'>Logout</button>
+                                    className='bg-[#001f3f] text-[#d4ff00] block text-center'>Logout</button>
                             </li>
                         </ul>
                     </div>
