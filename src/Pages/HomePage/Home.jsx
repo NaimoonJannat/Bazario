@@ -1,8 +1,11 @@
+import HeroBanner from "./HeroBanner";
+
 
 const Home = () => {
+    console.log("Rendering Home");
     return (
         <div>
-           <h2 className="text-5xl">This is Home</h2>
+            <HeroBanner></HeroBanner>
         </div>
     );
 };
