@@ -39,7 +39,7 @@ const Navbar2 = ({ user, logOut }) => {
                     {/* GUEST (not logged in) */}
                     {!user && (
                         <>
-                            <Link to="/register">
+                            <Link to="/registration">
                                 <div>Register</div>
                             </Link>
                             <Link to="/login">
