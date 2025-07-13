@@ -22,6 +22,8 @@ const Registration = () => {
       console.log(result)
       await updateUserProfile(name, photo)
       setUser({ ...user, photoURL: photo, displayName: name })
+      // Save to DB only if new
+      await saveUserToDB(name, email, photo);
       navigate('/')
       toast.success('Signup Successful')
     } catch (err) {
@@ -32,17 +34,60 @@ const Registration = () => {
 
   // Google 
   const handleGoogleSignIn = async () => {
-    try {
-      await signInWithGoogle()
-      toast.success('Signin Successful')
-      navigate('/')
-    } catch (err) {
-      console.log(err)
-      toast.error(err?.message)
-    }
+  try {
+    const result = await signInWithGoogle();
+    const signedInUser = result.user;
+
+     // Save to DB only if new
+await saveUserToDB(
+  signedInUser.displayName,
+  signedInUser.email,
+  signedInUser.photoURL
+);
+    toast.success('Signin Successful');
+    navigate('/');
+  } catch (err) {
+    console.log(err);
+    toast.error(err?.message);
   }
+};
+
+  // Save user to backend 
+ const saveUserToDB = async (name, email, photoURL) => {
+  console.log('Attempting to save user to DB:', { name, email, photoURL });
+
+  try {
+    const res = await fetch(`http://localhost:5000/users/${email}`);
+    const data = await res.json();
+
+    if (!data?.email) {
+      const newUser = {
+        name,
+        email,
+        photoURL,
+        role: 'user',
+      };
+
+      const response = await fetch('http://localhost:5000/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newUser),
+      });
+
+      const result = await response.json();
+      console.log('User saved to DB:', result);
+    } else {
+      console.log('User already exists in DB.');
+    }
+  } catch (error) {
+    console.error('Error saving user to backend:', error);
+  }
+};
+
   return (
-    <div className='flex justify-center items-center my-12 min-h-[calc(100vh-306px)]'>
+    <div className='flex justify-center items-center min-h-[calc(100vh-306px)]'>
       <div className='flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg  lg:max-w-4xl '>
         <div className='w-full px-6 py-8 md:px-8 lg:w-1/2'>
           <div className='flex justify-center mx-auto'>

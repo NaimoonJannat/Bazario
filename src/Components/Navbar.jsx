@@ -7,7 +7,6 @@ import { Link } from "react-router";
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext)
 
-    console.log(user);
     return (
         <div className='navbar absolute z-10 bg-transparent text-[#d4ff00] shadow-sm flex flex-row justify-between px-4 mx-auto'>
             <div className='flex w-full md:w-1/2'>
