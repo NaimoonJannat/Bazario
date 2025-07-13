@@ -1,13 +1,17 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineProduct } from 'react-icons/ai';
 import { FaHeart, FaUserCircle, FaClipboardList } from 'react-icons/fa';
 import { FaCartShopping } from "react-icons/fa6";
-// import { AiOutlineProduct } from "react-icons/ai";
-import { useEffect, useState } from 'react';
+import { RxBackpack } from "react-icons/rx";
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { AuthContext } from '../Provider/AuthProvider';
+import toast from 'react-hot-toast';
 
-const Navbar2 = ({ user, logOut }) => {
-    const [userRole, setUserRole] = useState(null); // 'user' | 'seller' | null
+const Navbar2 = () => {
+     const { user, logOut } = useContext(AuthContext);
+      const navigate = useNavigate();
+    const [userRole, setUserRole] = useState(null); // 'user' | 'admin' | null
 
     useEffect(() => {
         if (user?.email) {
@@ -16,6 +20,19 @@ const Navbar2 = ({ user, logOut }) => {
                 .catch(err => console.error(err));
         } 
     }, [user]);
+
+      const handleSignOut = () => {
+        logOut()
+            .then((result) => {
+                console.log(result);
+                toast.success("Logged Out Successfully!");
+                navigate("/");
+            })
+            .catch((error) => {
+                console.error("Logout Error:", error);
+                toast.error("Error logging out. Please try again later.");
+            });
+    };
 
     return (
         <div className='navbar absolute z-10 bg-transparent text-[#d4ff00] shadow-sm flex flex-row justify-between px-4 mx-auto'>
@@ -60,10 +77,10 @@ const Navbar2 = ({ user, logOut }) => {
                         </>
                     )}
 
-                    {/* SELLER */}
-                    {user && userRole === 'seller' && (
+                    {/* admin */}
+                    {user && userRole === 'admin' && (
                         <Link to="/dashboard">
-                            <div className="text-base"><FaClipboardList /></div>
+                            <div className="text-base"><RxBackpack /></div>
                         </Link>
                     )}
                 </ul>
@@ -96,14 +113,14 @@ const Navbar2 = ({ user, logOut }) => {
                                 </>
                             )}
 
-                            {/* Only for sellers */}
-                            {userRole === 'seller' && (
+                            {/* Only for admin */}
+                            {userRole === 'admin' && (
                                 <li><Link to="/profile">My Profile</Link></li>
                             )}
 
                             <li className='mt-2'>
                                 <button
-                                    onClick={logOut}
+                                    onClick={handleSignOut}
                                     className='bg-[#001f3f] text-[#d4ff00] block text-center w-full'
                                 >
                                     Logout

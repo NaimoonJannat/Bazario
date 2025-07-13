@@ -51,17 +51,6 @@ await saveUserToDB(
     toast.error(err?.message);
   }
 };
-  //  old google login 
-  // const handleGoogleSignIn = async () => {
-  //   try {
-  //     await signInWithGoogle()
-  //     toast.success('Signin Successful')
-  //     navigate('/')
-  //   } catch (err) {
-  //     console.log(err)
-  //     toast.error(err?.message)
-  //   }
-  // }
 
   // Save user to backend 
  const saveUserToDB = async (name, email, photoURL) => {
