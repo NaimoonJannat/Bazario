@@ -3,7 +3,7 @@ import React from 'react';
 const Products = () => {
     return (
         <div>
-            <h5 className='text-5xl'>Iss baat ka dar hai mujhkooooo</h5>
+            <h5 className='text-5xl'>Products page</h5>
         </div>
     );
 };

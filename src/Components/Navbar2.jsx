@@ -7,16 +7,15 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Navbar2 = ({ user, logOut }) => {
-    // const [userRole, setUserRole] = useState(null); // 'user' | 'seller' | null
-    const userRole = 'user';
+    const [userRole, setUserRole] = useState(null); // 'user' | 'seller' | null
 
-    // useEffect(() => {
-    //     if (user?.email) {
-    //         axios.get(`https://your-backend-api.vercel.app/users/${user.email}`)
-    //             .then(res => setUserRole(res.data.role))
-    //             .catch(err => console.error(err));
-    //     } 
-    // }, [user]);
+    useEffect(() => {
+        if (user?.email) {
+            axios.get(`http://localhost:5000/users/${user.email}`)
+                .then(res => setUserRole(res.data.role))
+                .catch(err => console.error(err));
+        } 
+    }, [user]);
 
     return (
         <div className='navbar absolute z-10 bg-transparent text-[#d4ff00] shadow-sm flex flex-row justify-between px-4 mx-auto'>
