@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router"
 
 const Registration = () => {
   const navigate = useNavigate()
-  const { createUser, updateUserProfile, user, setUser } = useContext(AuthContext)
+  const { signInWithGoogle, createUser, updateUserProfile, user, setUser } = useContext(AuthContext)
 
   const handleSignUp = async e => {
     e.preventDefault()
@@ -32,6 +32,36 @@ const Registration = () => {
     }
   }
 
+  // Google 
+  const handleGoogleSignIn = async () => {
+  try {
+    const result = await signInWithGoogle();
+    const signedInUser = result.user;
+
+     // Save to DB only if new
+await saveUserToDB(
+  signedInUser.displayName,
+  signedInUser.email,
+  signedInUser.photoURL
+);
+    toast.success('Signin Successful');
+    navigate('/');
+  } catch (err) {
+    console.log(err);
+    toast.error(err?.message);
+  }
+};
+  //  old google login 
+  // const handleGoogleSignIn = async () => {
+  //   try {
+  //     await signInWithGoogle()
+  //     toast.success('Signin Successful')
+  //     navigate('/')
+  //   } catch (err) {
+  //     console.log(err)
+  //     toast.error(err?.message)
+  //   }
+  // }
 
   // Save user to backend 
  const saveUserToDB = async (name, email, photoURL) => {
@@ -83,7 +113,7 @@ const Registration = () => {
             Get Your Free Account Now.
           </p>
 
-          {/* <div onClick={handleGoogleSignIn} className='flex cursor-pointer items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg   hover:bg-gray-50 '>
+          <div onClick={handleGoogleSignIn} className='flex cursor-pointer items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg   hover:bg-gray-50 '>
             <div className='px-4 py-2'>
               <svg className='w-6 h-6' viewBox='0 0 40 40'>
                 <path
@@ -108,13 +138,13 @@ const Registration = () => {
             <span className='w-5/6 px-4 py-3 font-bold text-center'>
               Sign in with Google
             </span>
-          </div> */}
+          </div>
 
           <div className='flex items-center justify-between mt-4'>
             <span className='w-1/5 border-b  lg:w-1/4'></span>
 
             <div className='text-xs text-center text-gray-500 uppercase  hover:underline'>
-              Registration with email
+              or Registration with email
             </div>
 
             <span className='w-1/5 border-b dark:border-gray-400 lg:w-1/4'></span>
