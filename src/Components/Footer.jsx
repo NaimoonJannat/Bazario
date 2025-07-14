@@ -11,7 +11,7 @@ const Footer = () => {
 
                     <div className='flex flex-wrap justify-center mt-6 -mx-4'>
                         <a target="_blank"
-                            href='https://github.com/Idba1/'
+                            href=''
                             className='mx-4 text-sm transition-colors duration-300 hover:text-white '
                             aria-label='Reddit'
                         >
@@ -20,7 +20,7 @@ const Footer = () => {
                         </a>
 
                         <a target="_blank"
-                            href='https://github.com/Idba1/'
+                            href=''
                             className='mx-4 text-sm transition-colors duration-300 hover:text-white '
                             aria-label='Reddit'
                         >
@@ -29,7 +29,7 @@ const Footer = () => {
                         </a>
 
                         <a target="_blank"
-                            href='https://github.com/Idba1/'
+                            href=''
                             className='mx-4 text-sm transition-colors duration-300 hover:text-white '
                             aria-label='Reddit'
                         >
@@ -38,7 +38,7 @@ const Footer = () => {
                         </a>
 
                         <a target="_blank"
-                            href='https://github.com/Idba1/'
+                            href=''
                             className='mx-4 text-sm transition-colors duration-300 hover:text-white '
                             aria-label='Reddit'
                         >
@@ -47,7 +47,7 @@ const Footer = () => {
                         </a>
 
                         <a target="_blank"
-                            href='https://github.com/Idba1/'
+                            href=''
                             className='mx-4 text-sm transition-colors duration-300 hover:text-white '
                             aria-label='Reddit'
                         >
@@ -61,12 +61,12 @@ const Footer = () => {
 
                 <div className='flex flex-col items-center sm:flex-row sm:justify-between'>
                     <p className='text-sm'>
-                        © Copyright 2021. All Rights Reserved.
+                        © Copyright 2025. All Rights Reserved.
                     </p>
 
                     <div className='flex -mx-2'>
                         <a target="_blank"
-                            href='https://github.com/Idba1/'
+                            href=''
                             className='mx-2 transition-colors duration-300 hover:text-white '
                             aria-label='Reddit'
                         >
@@ -81,7 +81,7 @@ const Footer = () => {
                         </a>
 
                         <a target="_blank"
-                            href='https://github.com/Idba1/'
+                            href=''
                             className='mx-2 transition-colors duration-300 hover:text-white '
                             aria-label='Facebook'
                         >
@@ -96,7 +96,7 @@ const Footer = () => {
                         </a>
 
                         <a target="_blank"
-                            href='https://github.com/Idba1/'
+                            href=''
                             className='mx-2 transition-colors duration-300 hover:text-white '
                             aria-label='Github'
                         >
