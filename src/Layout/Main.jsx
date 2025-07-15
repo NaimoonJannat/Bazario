@@ -1,24 +1,29 @@
-// import Navbar from "../Components/Navbar";
+import { Outlet, useLocation } from "react-router-dom";
 import Footer from "../Components/Footer";
-import { Outlet } from "react-router";
 import Navbar2 from "../Components/Navbar2";
 import Sidebar from "../Components/Sidebar";
 
 const Main = () => {
-    return (
-        <div>
-            {/* Navbar */}
-            {/* <Navbar></Navbar> */}
-            <Navbar2></Navbar2>
-            <Sidebar></Sidebar>
-            {/* outlet */}
-            <div className="min-h-[calc(100vh-306px)] bg-[#001f3f]">
-                <Outlet></Outlet>
-            </div>
-            {/* footer */}
-            <Footer></Footer>
-        </div>
-    );
+  const location = useLocation();
+  const noLayoutRoutes = ["/login", "/registration"];
+
+  const isNoLayoutRoute = noLayoutRoutes.includes(location.pathname);
+
+  return (
+    <div>
+      {/* Show navbar and sidebar only if not login/register route */}
+      {!isNoLayoutRoute && <Navbar2 />}
+      {!isNoLayoutRoute && <Sidebar />}
+
+      {/* Main content */}
+      <div className="min-h-[calc(100vh-306px)] bg-[#001f3f]">
+        <Outlet />
+      </div>
+
+      {/* Show footer only if not login/register route */}
+      {!isNoLayoutRoute && <Footer />}
+    </div>
+  );
 };
 
 export default Main;
