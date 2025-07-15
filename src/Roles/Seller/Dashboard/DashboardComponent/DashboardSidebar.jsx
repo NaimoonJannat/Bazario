@@ -14,14 +14,19 @@ const Sidebar = () => {
     },
     {
       icon: <FaUserGraduate />,
-      label: 'Admission',
-      path: '/online-admissions',
-      submenu: [
-        { label: 'Online Admission', path: '/online-admissions' },
-        { label: 'Admission Fees', path: '/online-admissions/setting/fees' },
-        { label: 'Settings', path: '/online-admissions/setting/index' },
-      ],
+      label: 'Add Product',
+      path: '/add-product',
     },
+    // {
+    //   icon: <FaUserGraduate />,
+    //   label: 'Admission',
+    //   path: '/online-admissions',
+    //   submenu: [
+    //     { label: 'Online Admission', path: '/online-admissions' },
+    //     { label: 'Admission Fees', path: '/online-admissions/setting/fees' },
+    //     { label: 'Settings', path: '/online-admissions/setting/index' },
+    //   ],
+    // },
   ];
 
   // Helper to check active path (exact or prefix match for submenu)
