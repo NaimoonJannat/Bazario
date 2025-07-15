@@ -1,113 +1,86 @@
-// Sidebar.jsx
 import { useState } from 'react';
 import { FaTachometerAlt, FaUserGraduate } from 'react-icons/fa';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 
-const DashboardSidebar = () => {
-  const [activeIndex, setActiveIndex] = useState(
-    Number(localStorage.getItem('activeSidebarNav')) || 0
-  );
-  const [openSubMenuIndex, setOpenSubMenuIndex] = useState(null);
+const Sidebar = () => {
+  const [hovered, setHovered] = useState(false);
   const location = useLocation();
 
-  const handleNavClick = (index, hasSubmenu = false) => {
-    setActiveIndex(index);
-    localStorage.setItem('activeSidebarNav', index);
+  const menuItems = [
+    {
+      icon: <FaTachometerAlt />,
+      label: 'Dashboard',
+      path: '/dashboard',
+    },
+    {
+      icon: <FaUserGraduate />,
+      label: 'Admission',
+      path: '/online-admissions',
+      submenu: [
+        { label: 'Online Admission', path: '/online-admissions' },
+        { label: 'Admission Fees', path: '/online-admissions/setting/fees' },
+        { label: 'Settings', path: '/online-admissions/setting/index' },
+      ],
+    },
+  ];
 
-    if (hasSubmenu) {
-      setOpenSubMenuIndex(openSubMenuIndex === index ? null : index);
-    } else {
-      setOpenSubMenuIndex(null);
-    }
-  };
-
+  // Helper to check active path (exact or prefix match for submenu)
   const isActive = (path) => location.pathname === path;
+  const isActivePrefix = (prefix) => location.pathname.startsWith(prefix);
 
   return (
-    <div className="flex">
-      {/* Sidebar */}
-      <nav className="fixed bg-[#215447] h-screen w-[60px] flex flex-col items-center z-50">
-        <ul className="flex flex-col items-center mt-4 gap-4">
-          {/* Dashboard */}
-          <li>
-            <button
-              onClick={() => handleNavClick(0)}
-              className="text-white text-xl hover:text-yellow-400 transition-all"
-              title="Dashboard"
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className={`fixed top-0 left-0 h-screen bg-[#215447] z-50 transition-all duration-300 ease-in-out ${
+        hovered ? 'w-[220px]' : 'w-[60px]'
+      }`}
+    >
+      <ul className="mt-4 space-y-2">
+        {menuItems.map((item, index) => (
+          <li key={index} className="relative group">
+            <Link
+              to={item.path}
+              className={`flex items-center gap-3 px-4 py-3 text-white transition-all duration-200 ${
+                isActive(item.path) || isActivePrefix(item.path)
+                  ? 'bg-[#1b463b] text-yellow-400'
+                  : 'hover:bg-[#1b463b]'
+              }`}
             >
-              <FaTachometerAlt
-                className={`${
-                  activeIndex === 0 ? 'text-yellow-400' : ''
-                } transition-all duration-300`}
-              />
-            </button>
-          </li>
-
-          {/* Admission with Submenu */}
-          <li className="relative">
-            <button
-              onClick={() => handleNavClick(1, true)}
-              className="text-white text-xl hover:text-yellow-400 transition-all"
-              title="Online Admission"
-            >
-              <FaUserGraduate
-                className={`${
-                  activeIndex === 1 ? 'text-yellow-400' : ''
-                } transition-all duration-300`}
-              />
-            </button>
+              <span className="text-xl">{item.icon}</span>
+              <span
+                className={`text-sm font-semibold whitespace-nowrap overflow-hidden transition-all duration-300 ${
+                  hovered ? 'opacity-100 w-auto' : 'opacity-0 w-0'
+                }`}
+              >
+                {item.label}
+              </span>
+            </Link>
 
             {/* Submenu */}
-            {openSubMenuIndex === 1 && (
-              <ul className="absolute left-[60px] top-0 bg-white h-screen w-[200px] shadow-lg z-40 p-4">
-                <li className="mb-2">
-                  <a
-                    href="/online-admissions"
-                    className={`block font-semibold p-2 rounded-l-md border-l-4 ${
-                      isActive('/online-admissions')
-                        ? 'bg-gray-100 border-yellow-400'
-                        : 'border-transparent hover:bg-gray-100'
-                    }`}
-                  >
-                    Online Admission
-                  </a>
-                </li>
-                <li className="mb-2">
-                  <a
-                    href="/online-admissions/setting/fees"
-                    className={`block font-semibold p-2 rounded-l-md border-l-4 ${
-                      isActive('/online-admissions/setting/fees')
-                        ? 'bg-gray-100 border-yellow-400'
-                        : 'border-transparent hover:bg-gray-100'
-                    }`}
-                  >
-                    Admission Fees
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/online-admissions/setting/index"
-                    className={`block font-semibold p-2 rounded-l-md border-l-4 ${
-                      isActive('/online-admissions/setting/index')
-                        ? 'bg-gray-100 border-yellow-400'
-                        : 'border-transparent hover:bg-gray-100'
-                    }`}
-                  >
-                    Settings
-                  </a>
-                </li>
+            {item.submenu && hovered && (
+              <ul className="ml-8 mt-1 space-y-1">
+                {item.submenu.map((sub, i) => (
+                  <li key={i}>
+                    <Link
+                      to={sub.path}
+                      className={`block text-sm px-2 py-1 rounded transition ${
+                        isActive(sub.path)
+                          ? 'text-yellow-400 font-semibold'
+                          : 'text-white/80 hover:text-white'
+                      }`}
+                    >
+                      {sub.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             )}
           </li>
-        </ul>
-      </nav>
-
-      {/* Main Content */}
-      <div className="ml-[60px] flex-1 p-4 min-h-screen bg-gray-50">
-        {/* Your main content goes here */}
-      </div>
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default DashboardSidebar;
+export default Sidebar;
