@@ -2,6 +2,7 @@
 import Footer from "../Components/Footer";
 import { Outlet } from "react-router";
 import Navbar2 from "../Components/Navbar2";
+import Sidebar from "../Components/Sidebar";
 
 const Main = () => {
     return (
@@ -9,6 +10,7 @@ const Main = () => {
             {/* Navbar */}
             {/* <Navbar></Navbar> */}
             <Navbar2></Navbar2>
+            <Sidebar></Sidebar>
             {/* outlet */}
             <div className="min-h-[calc(100vh-306px)] bg-[#001f3f]">
                 <Outlet></Outlet>

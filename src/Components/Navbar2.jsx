@@ -46,7 +46,7 @@ const Navbar2 = () => {
 
       {/* RIGHT SIDE */}
       <div className='flex flex-row justify-end items-center w-full md:w-1/2'>
-        <ul className='menu menu-horizontal gap-8 items-center'>
+        <ul className='menu menu-horizontal gap-8 items-center hidden md:flex'>
           {/* Always visible */}
           <Link to='/products'>
             <div className='text-base'>
