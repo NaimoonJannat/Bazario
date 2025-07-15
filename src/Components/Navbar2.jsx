@@ -91,6 +91,16 @@ const Navbar2 = () => {
             </Link>
           )}
         </ul>
+        {/* The login button on small screen  */}
+        <ul className='menu menu-horizontal gap-8 items-center flex md:hidden'>
+            {!user && (
+            <>
+              <Link to='/login'>
+                <div>Login</div>
+              </Link>
+            </>
+          )}
+        </ul>
 
         {/* Authenticated User - Dropdown */}
         {user && (

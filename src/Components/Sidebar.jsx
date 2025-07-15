@@ -1,4 +1,3 @@
-// Sidebar.jsx
 import { Link } from 'react-router-dom';
 import { AiOutlineProduct } from 'react-icons/ai';
 import { FaHeart } from 'react-icons/fa';
