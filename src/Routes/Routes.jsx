@@ -31,7 +31,12 @@ const Routes = createBrowserRouter([
                 {
                     path: '/products',
                     element:<Products></Products>
-                }
+                },
+                {
+                    path: '/dashboard',
+                    element:
+                },
+
             ]
     }
 ]);
