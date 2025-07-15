@@ -93,7 +93,7 @@ await saveUserToDB(
           <div className='flex justify-center mx-auto'>
             <img
               className='w-auto h-7 sm:h-8'
-              src='../../../public/logo.png'
+              src='../../../logo.png'
               alt=''
             />
           </div>
@@ -229,7 +229,7 @@ await saveUserToDB(
         <div
           className='hidden bg-cover bg-center lg:block lg:w-1/2'
           style={{
-            backgroundImage: `url(${"../../../public/register.jpg"})`,
+            backgroundImage: `url(${"../../../register.jpg"})`,
           }}
         ></div>
       </div>
