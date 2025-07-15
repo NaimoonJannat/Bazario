@@ -5,7 +5,7 @@ import Registration from "../Pages/Authentication/Register";
 import Login from "../Pages/Authentication/LogIn";
 import Home from "../Pages/HomePage/Home";
 import Products from "../Pages/ProductsPage/Products";
-import Dashboard from "../Roles/Seller/Dashboard";
+import Dashboard from "../Roles/Seller/Dashboard/Dashboard";
 
 
 import { createBrowserRouter } from "react-router-dom";
@@ -45,7 +45,7 @@ const Routes = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: "/add-product", // /dashboard/profile
+        path: "add-product", // /dashboard/add-product
         element: <AddProduct />,
       },
       // Add more dashboard routes like:

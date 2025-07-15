@@ -5,18 +5,18 @@ import { useLocation, Link } from 'react-router-dom';
 const Sidebar = () => {
   const [hovered, setHovered] = useState(false);
   const location = useLocation();
-
+  const DASHBOARD_BASE = '/dashboard';
   const menuItems = [
-    {
-      icon: <FaTachometerAlt />,
-      label: 'Dashboard',
-      path: '/dashboard',
-    },
-    {
-      icon: <FaUserGraduate />,
-      label: 'Add Product',
-      path: '/add-product',
-    },
+   {
+    icon: <FaTachometerAlt />,
+    label: 'Dashboard',
+    path: DASHBOARD_BASE,
+  },
+  {
+    icon: <FaUserGraduate />,
+    label: 'Add Product',
+    path: `${DASHBOARD_BASE}/add-product`,
+  },
     // {
     //   icon: <FaUserGraduate />,
     //   label: 'Admission',
@@ -37,7 +37,7 @@ const Sidebar = () => {
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className={`fixed top-0 left-0 h-screen bg-[#215447] z-50 transition-all duration-300 ease-in-out ${
+      className={`fixed top-0 left-0 h-screen bg-[#001f3f] z-50 transition-all duration-300 ease-in-out ${
         hovered ? 'w-[220px]' : 'w-[60px]'
       }`}
     >
@@ -48,8 +48,8 @@ const Sidebar = () => {
               to={item.path}
               className={`flex items-center gap-3 px-4 py-3 text-white transition-all duration-200 ${
                 isActive(item.path) || isActivePrefix(item.path)
-                  ? 'bg-[#1b463b] text-yellow-400'
-                  : 'hover:bg-[#1b463b]'
+                  ? 'bg-[#234465] text-yellow-400'
+                  : 'hover:bg-[#234465]'
               }`}
             >
               <span className="text-xl">{item.icon}</span>
@@ -63,7 +63,7 @@ const Sidebar = () => {
             </Link>
 
             {/* Submenu */}
-            {item.submenu && hovered && (
+            {/* {item.submenu && hovered && (
               <ul className="ml-8 mt-1 space-y-1">
                 {item.submenu.map((sub, i) => (
                   <li key={i}>
@@ -80,7 +80,7 @@ const Sidebar = () => {
                   </li>
                 ))}
               </ul>
-            )}
+            )} */}
           </li>
         ))}
       </ul>
