@@ -17,6 +17,16 @@ const Sidebar = () => {
     label: 'Add Product',
     path: `${DASHBOARD_BASE}/add-product`,
   },
+  {
+    icon: <FaUserGraduate />,
+    label: 'Create Coupon',
+    path: `${DASHBOARD_BASE}/add-product`,
+  },
+  {
+    icon: <FaUserGraduate />,
+    label: 'Add Product',
+    path: `${DASHBOARD_BASE}/add-product`,
+  },
     // {
     //   icon: <FaUserGraduate />,
     //   label: 'Admission',

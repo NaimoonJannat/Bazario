@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CreateCoupon = () => {
+const Coupons = () => {
     return (
         <div>
              <h2 className="text-5xl">CreateCoupon</h2>
@@ -8,4 +8,4 @@ const CreateCoupon = () => {
     );
 };
 
-export default CreateCoupon;
+export default Coupons;

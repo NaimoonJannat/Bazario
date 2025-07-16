@@ -11,6 +11,15 @@ import Dashboard from "../Roles/Seller/Dashboard/Dashboard";
 import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../Roles/Seller/Dashboard/DashboardLayout/DashboardLayout";
 import AddProduct from "../Roles/Seller/Dashboard/DashboardPages/AddProduct";
+import Coupons from "../Roles/Seller/Dashboard/DashboardPages/Coupons";
+import UserList from "../Roles/Seller/Dashboard/DashboardPages/UserList";
+import DueOrders from "../Roles/Seller/Dashboard/DashboardPages/DueOrders";
+import OutofStock from "../Roles/Seller/Dashboard/DashboardPages/OutofStock";
+import ExpiredProducts from "../Roles/Seller/Dashboard/DashboardPages/ExpiredProducts";
+import DiscountPage from "../Roles/Seller/Dashboard/DashboardPages/DiscountPage";
+import Feedbacks from "../Roles/Seller/Dashboard/DashboardPages/Feedbacks";
+import PreOrder from "../Roles/Seller/Dashboard/DashboardPages/PreOrder";
+import OnSHopSale from "../Roles/Seller/Dashboard/DashboardPages/OnSHopSale";
 
 const Routes = createBrowserRouter([
   {
@@ -48,8 +57,42 @@ const Routes = createBrowserRouter([
         path: "add-product", // /dashboard/add-product
         element: <AddProduct />,
       },
-      // Add more dashboard routes like:
-      // { path: "products", element: <SellerProducts /> },
+       {
+        path: "coupons", // /dashboard/coupons
+        element: <Coupons></Coupons>,
+      },
+       {
+        path: "user-list", // /dashboard/User list
+        element: <UserList></UserList>,
+      },
+       {
+        path: "due-orders", // /dashboard/due-orders
+        element: <DueOrders></DueOrders>,
+      },
+       {
+        path: "out-of-stock", // /dashboard/OutOfStock
+        element: <OutofStock></OutofStock>,
+      },
+       {
+        path: "expired-products", // /dashboard/Expired products
+        element: <ExpiredProducts></ExpiredProducts>,
+      },
+       {
+        path: "discounts", // /dashboard/Discount
+        element: <DiscountPage></DiscountPage>,
+      },
+       {
+        path: "feedback", // /dashboard/Feedback
+        element: <Feedbacks></Feedbacks>,
+      },
+       {
+        path: "pre-orders", // /dashboard/pre-orders
+        element: <PreOrder></PreOrder>,
+      },
+       {
+        path: "on-shop-sale", // /dashboard/on-shop-sale
+        element: <OnSHopSale></OnSHopSale>,
+      },
     ],
   },
 ]);
