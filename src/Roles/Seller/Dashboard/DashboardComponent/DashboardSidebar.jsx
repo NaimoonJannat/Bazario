@@ -1,6 +1,13 @@
 import { useState } from 'react';
-import { FaTachometerAlt, FaUserGraduate } from 'react-icons/fa';
 import { useLocation, Link } from 'react-router-dom';
+import { FaTachometerAlt, FaHourglassEnd, FaUserGraduate, FaUsers } from 'react-icons/fa';
+import { IoAddCircleOutline, IoCalculatorOutline } from "react-icons/io5";
+import { GoListUnordered } from "react-icons/go";
+import { FcExpired } from "react-icons/fc";
+import { BiSolidCoupon } from "react-icons/bi";
+import { RiDiscountPercentFill } from "react-icons/ri";
+import { MdOutlineFeedback } from "react-icons/md";
+import { FaClockRotateLeft } from "react-icons/fa6";
 
 const Sidebar = () => {
   const [hovered, setHovered] = useState(false);
@@ -13,20 +20,56 @@ const Sidebar = () => {
     path: DASHBOARD_BASE,
   },
   {
-    icon: <FaUserGraduate />,
+    icon: <IoAddCircleOutline />,
     label: 'Add Product',
     path: `${DASHBOARD_BASE}/add-product`,
   },
   {
-    icon: <FaUserGraduate />,
-    label: 'Create Coupon',
-    path: `${DASHBOARD_BASE}/add-product`,
+    icon: <BiSolidCoupon />,
+    label: 'Coupons',
+    path: `${DASHBOARD_BASE}/coupons`,
   },
   {
-    icon: <FaUserGraduate />,
-    label: 'Add Product',
-    path: `${DASHBOARD_BASE}/add-product`,
+    icon: <FaUsers />,
+    label: 'User List',
+    path: `${DASHBOARD_BASE}/user-list`,
   },
+  {
+    icon: <GoListUnordered />,
+    label: 'Orders',
+    path: `${DASHBOARD_BASE}/due-orders`,
+  },
+  {
+    icon: <FaHourglassEnd />,
+    label: 'Out of Stock',
+    path: `${DASHBOARD_BASE}/out-of-stock`,
+  },
+  {
+    icon: <FcExpired />,
+    label: 'Expired Products',
+    path: `${DASHBOARD_BASE}/expired-products`,
+  },
+  {
+    icon: <RiDiscountPercentFill />,
+    label: 'Discounts',
+    path: `${DASHBOARD_BASE}/discounts`,
+  },
+  {
+    icon: <MdOutlineFeedback />,
+    label: 'Feedbacks',
+    path: `${DASHBOARD_BASE}/feedback`,
+  },
+  {
+    icon: <FaClockRotateLeft />,
+    label: 'Pre-Orders',
+    path: `${DASHBOARD_BASE}/pre-orders`,
+  },
+  {
+    icon: <IoCalculatorOutline />,
+    label: 'On Shop Sale',
+    path: `${DASHBOARD_BASE}/on-shop-sale`,
+  },
+  
     // {
     //   icon: <FaUserGraduate />,
     //   label: 'Admission',
