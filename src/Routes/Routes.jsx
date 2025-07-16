@@ -50,7 +50,7 @@ const Routes = createBrowserRouter([
     element: <DashboardLayout />,
     children: [
       {
-        index: true, // /dashboard
+        path: "/dashboard",
         element: <Dashboard />,
       },
       {

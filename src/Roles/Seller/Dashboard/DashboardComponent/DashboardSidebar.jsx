@@ -82,9 +82,9 @@ const Sidebar = () => {
     // },
   ];
 
-  // Helper to check active path (exact or prefix match for submenu)
+  // Helper to check active path 
   const isActive = (path) => location.pathname === path;
-  const isActivePrefix = (prefix) => location.pathname.startsWith(prefix);
+  
 
   return (
     <div
@@ -100,7 +100,7 @@ const Sidebar = () => {
             <Link
               to={item.path}
               className={`flex items-center gap-3 px-4 py-3 text-white transition-all duration-200 ${
-                isActive(item.path) || isActivePrefix(item.path)
+                isActive(item.path)
                   ? 'bg-[#234465] text-yellow-400'
                   : 'hover:bg-[#234465]'
               }`}
