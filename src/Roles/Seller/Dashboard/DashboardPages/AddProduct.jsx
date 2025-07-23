@@ -1,6 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const AddProduct = () => {
+  const [quantity, setQuantity] = useState(1);
+  const [manualCategory, setManualCategory] = useState('');
+  const [selectedImages, setSelectedImages] = useState([]);
+
+  const handleDecrease = () => {
+    setQuantity(prev => (prev > 0 ? prev - 1 : 0));
+  };
+
+  const handleIncrease = () => {
+    setQuantity(prev => prev + 1);
+  };
+
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    const newImages = files.map(file => URL.createObjectURL(file));
+    setSelectedImages(prev => [...prev, ...newImages]);
+  };
+
   return (
     <div className="p-4 md:p-8 max-w-screen-xl mx-auto">
       <h2 className="text-3xl md:text-5xl font-semibold mb-8 text-[#001f3f]">Add Product</h2>
@@ -13,25 +31,36 @@ const AddProduct = () => {
 
           <div className="mb-4">
             <img
-              src="https://static-01.daraz.com.bd/p/baebfcbe79f2dab34f0d4c68921c01c7.png"
+              src={selectedImages[0] || 'https://static-01.daraz.com.bd/p/baebfcbe79f2dab34f0d4c68921c01c7.png'}
               alt="Thumbnail"
               className="w-full h-auto rounded-xl border"
             />
           </div>
 
           <div className="grid grid-cols-4 gap-4">
-            {Array.from({ length: 6 }).map((_, i) => (
+            {(selectedImages.length ? selectedImages : Array.from({ length: 6 })).map((img, i) => (
               <div key={i} className="aspect-square rounded-xl border overflow-hidden">
                 <img
-                  src="https://static-01.daraz.com.bd/p/6e19588a7da9821c358c9c65d401942a.png"
+                  src={
+                    typeof img === 'string'
+                      ? img
+                      : 'https://static-01.daraz.com.bd/p/6e19588a7da9821c358c9c65d401942a.png'
+                  }
                   alt={`Variant ${i}`}
                   className="object-cover w-full h-full"
                 />
               </div>
             ))}
-            <div className="aspect-square border-dashed border-2 border-[#001f3f] flex items-center justify-center rounded-xl cursor-pointer">
+            <label className="aspect-square border-dashed border-2 border-[#001f3f] flex items-center justify-center rounded-xl cursor-pointer">
               <span className="text-[#001f3f] text-3xl">+</span>
-            </div>
+              <input
+                type="file"
+                multiple
+                accept="image/*"
+                onChange={handleImageChange}
+                className="hidden"
+              />
+            </label>
           </div>
         </div>
 
@@ -51,46 +80,70 @@ const AddProduct = () => {
               <textarea className="w-full border text-[#001f3f] rounded-lg px-4 py-2" rows="5" placeholder="Product description"></textarea>
             </div>
 
-            <div>
-              <label className="block mb-1 font-medium text-[#001f3f]">Categories</label>
-              <select className="w-full border text-[#001f3f] rounded-lg px-4 py-2">
-                <option>Accessories</option>
-                <option>Electronics</option>
-                <option>Home</option>
-              </select>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block mb-1 font-medium text-[#001f3f]">Select Category</label>
+                <select className="w-full border text-[#001f3f] rounded-lg px-4 py-2">
+                  <option>Accessories</option>
+                  <option>Electronics</option>
+                  <option>Food</option>
+                </select>
+              </div>
+              <div>
+                <label className="block mb-1 font-medium text-[#001f3f]">Or Enter New Category</label>
+                <input
+                  type="text"
+                  value={manualCategory}
+                  onChange={(e) => setManualCategory(e.target.value)}
+                  className="w-full border text-[#001f3f] rounded-lg px-4 py-2"
+                  placeholder="Custom category"
+                />
+              </div>
             </div>
 
-            <div>
-              <label className="block mb-1 font-medium text-[#001f3f]">Base Price</label>
-              <input type="text" className="w-full text-[#001f3f] border rounded-lg px-4 py-2" placeholder="$0.00" />
-            </div>
+            {/* Expiration Date & Quantity */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block mb-1 font-medium text-[#001f3f]">Expiration Date</label>
+                <input type="date" className="w-full border text-[#001f3f] rounded-lg px-4 py-2" />
+              </div>
 
-            <div>
-              <label className="block mb-1 font-medium text-[#001f3f]">Price & Discount</label>
-              <div className="flex flex-wrap gap-4 mt-2">
-                <label className="flex text-[#001f3f] items-center gap-2">
-                  <input type="radio" name="discount" defaultChecked className="form-radio text-[#001f3f]" />
-                  No Discount
-                </label>
-                <label className="flex text-[#001f3f] items-center gap-2">
-                  <input type="radio" name="discount" className="form-radio text-[#001f3f]" />
-                  Percentage %
-                </label>
-                <label className="flex text-[#001f3f] items-center gap-2">
-                  <input type="radio" name="discount" className="form-radio text-[#001f3f]" />
-                  Bundling
-                </label>
+              <div>
+                <label className="block mb-1 font-medium text-[#001f3f]">Quantity</label>
+                <div className="flex items-center border rounded-lg overflow-hidden">
+                  <button
+                    type="button"
+                    onClick={handleDecrease}
+                    className="px-3 py-2 bg-[#001f3f] text-[#d4ff00] text-xl"
+                  >
+                    −
+                  </button>
+                  <input
+                    type="number"
+                    value={quantity}
+                    onChange={(e) => setQuantity(Math.max(0, parseInt(e.target.value) || 0))}
+                    className="w-full text-center px-2 py-2 text-[#001f3f] outline-none"
+                    min={0}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleIncrease}
+                    className="px-3 py-2 bg-[#001f3f] text-[#d4ff00] text-xl"
+                  >
+                    +
+                  </button>
+                </div>
               </div>
             </div>
 
             <div>
-              <label className="block mb-1 font-medium text-[#001f3f]">Status</label>
-              <select className="w-full border text-[#001f3f] rounded-lg px-4 py-2">
-                <option>Published</option>
-                <option>Draft</option>
-              </select>
+              <label className="block mb-1 font-medium text-[#001f3f]">Price</label>
+              <input type="text" className="w-full text-[#001f3f] border rounded-lg px-4 py-2" placeholder="$0.00" />
             </div>
-            <button className="btn btn-soft btn-success text-[#d4ff00] bg-[#001f3f]"   type="submit">Add Product</button>
+
+            <button className="btn btn-soft btn-success text-[#d4ff00] bg-[#001f3f]" type="submit">
+              Add Product
+            </button>
           </form>
         </div>
       </div>
