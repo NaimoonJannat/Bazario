@@ -1,188 +1,221 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
+import axios from 'axios';
+
+const CLOUD_NAME = 'auraloom';
+const BAZARIO_PRESET = 'bazario_preset';
+const FOLDER = 'bazario';
 
 const AddProduct = () => {
   const [quantity, setQuantity] = useState(0);
-  const [selectedImages, setSelectedImages] = useState([]);
+  const [images, setImages] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const handleDecrease = () => {
-    setQuantity(prev => (prev > 0 ? prev - 1 : 0));
-  };
-
-  const handleIncrease = () => {
-    setQuantity(prev => prev + 1);
-  };
+  const handleDecrease = () => setQuantity(prev => (prev > 0 ? prev - 1 : 0));
+  const handleIncrease = () => setQuantity(prev => prev + 1);
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    const newImages = files.map(file => URL.createObjectURL(file));
-    setSelectedImages(prev => [...prev, ...newImages]);
+    setImages(prev => [...prev, ...files]);
+    const previews = files.map(file => URL.createObjectURL(file));
+    setImagePreviews(prev => [...prev, ...previews]);
   };
 
-  const handleAddButton = event =>{
+  const uploadImages = async () => {
+    const urls = [];
+
+    for (const file of images) {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', BAZARIO_PRESET);
+      formData.append('folder', FOLDER);
+
+      const response = await axios.post(
+        `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+        formData
+      );
+
+      urls.push(response.data.secure_url);
+    }
+
+    return urls;
+  };
+
+  const handleAddButton = async event => {
     event.preventDefault();
-        const form = event.target;
-        const title=form.title.value;
-        const description=form.description.value;
-        const category=form.category.value;
-        const price=form.price.value;
-        const expireDate=form.expireDate.value;
-        const quantity=form.quantity.value;
+    setLoading(true);
 
-        const newProduct = {title, description, category, price, expireDate, quantity}
+    const form = event.target;
 
-        console.log(newProduct);
+    const title = form.title.value;
+    const description = form.description.value;
+    const category = form.category.value;
+    const price = form.price.value;
+    const expireDate = form.expireDate.value;
+    const quantity = form.quantity.value;
+    const createdAt = new Date().toISOString();
 
-        // send data to the server 
-        fetch('http://localhost:5000/products',{
-            method: 'POST',
-            headers: {
-                'content-type' : 'application/json'
-            },
-            body: JSON.stringify(newProduct)
+    try {
+      const imageUrls = await uploadImages();
 
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            Swal.fire({
-                    title: "Success!",
-                    text: "Product Added Successfully",
-                    icon: "success",
-                    confirmButtonText: 'Ok'
-                  });
-                  form.reset();
-            
-        })
-  }
+      const newProduct = {
+        title,
+        description,
+        category,
+        price,
+        expireDate,
+        quantity,
+        createdAt,
+        images: imageUrls
+      };
+
+      const res = await axios.post('http://localhost:5000/products', newProduct);
+
+      if (res.data.insertedId || res.data.acknowledged) {
+        Swal.fire({
+          title: "Success!",
+          text: "Product Added Successfully",
+          icon: "success",
+          confirmButtonText: 'Ok'
+        });
+        form.reset();
+        setImages([]);
+        setImagePreviews([]);
+        setQuantity(0);
+      }
+    } catch (error) {
+      console.error("Error uploading product:", error);
+      Swal.fire("Error", "Failed to add product", "error");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="p-4 md:p-8 max-w-screen-xl mx-auto">
       <h2 className="text-3xl md:text-5xl font-semibold mb-8 text-[#001f3f]">Add Product</h2>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Left: Product Images */}
-        <div className="bg-white p-6 rounded-2xl shadow-md">
-          <h3 className="text-lg font-semibold mb-4 text-[#001f3f]">Product Image</h3>
-          <p className="text-sm text-[#001f3f] mb-4">Set your thumbnail product.</p>
+      <form onSubmit={handleAddButton}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Left: Product Images */}
+          <div className="bg-white p-6 rounded-2xl shadow-md">
+            <h3 className="text-lg font-semibold mb-4 text-[#001f3f]">Product Image</h3>
+            <p className="text-sm text-[#001f3f] mb-4">Set your thumbnail product.</p>
 
-          <div className="mb-4">
-            <img
-              src={selectedImages[0] || 'https://static-01.daraz.com.bd/p/baebfcbe79f2dab34f0d4c68921c01c7.png'}
-              alt="Thumbnail"
-              className="w-full h-auto rounded-xl border"
-            />
-          </div>
-
-          <div className="grid grid-cols-4 gap-4">
-            {(selectedImages.length ? selectedImages : Array.from({ length: 6 })).map((img, i) => (
-              <div key={i} className="aspect-square rounded-xl border overflow-hidden">
+            <div className="mb-4">
+              {imagePreviews[0] ? (
                 <img
-                  src={
-                    typeof img === 'string'
-                      ? img
-                      : 'https://static-01.daraz.com.bd/p/6e19588a7da9821c358c9c65d401942a.png'
-                  }
-                  alt={`Variant ${i}`}
-                  className="object-cover w-full h-full"
+                  src={imagePreviews[0]}
+                  alt="Thumbnail"
+                  className="w-full h-auto rounded-xl border"
                 />
-              </div>
-            ))}
-            <label className="aspect-square border-dashed border-2 border-[#001f3f] flex items-center justify-center rounded-xl cursor-pointer">
-              <span className="text-[#001f3f] text-3xl">+</span>
-              <input
-                type="file"
-                multiple
-                accept="image/*"
-                onChange={handleImageChange}
-                className="hidden"
-              />
-            </label>
-          </div>
-        </div>
-
-        {/* Right: Product Details */}
-        <div className="bg-white p-6 rounded-2xl shadow-md">
-          <h3 className="text-lg font-semibold mb-4 text-[#001f3f]">Product Detail</h3>
-          <p className="text-sm text-[#001f3f] mb-4">Set your product information.</p>
-
-          <form onSubmit={handleAddButton} className="space-y-4">
-            <div>
-              <label className="block mb-1 font-medium text-[#001f3f]">Product Name</label>
-              <input type="text" name="title" className="w-full text-[#001f3f] border rounded-lg px-4 py-2" placeholder="Product name" />
+              ) : (
+                <h2 className='text-[#001f3f]'>Upload Your Product images</h2>
+              )}
             </div>
 
-            <div>
-              <label className="block mb-1 font-medium text-[#001f3f]">Description</label>
-              <textarea name="description" className="w-full border text-[#001f3f] rounded-lg px-4 py-2" rows="5" placeholder="Product description"></textarea>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* <div>
-                <label className="block mb-1 font-medium text-[#001f3f]">Select Category</label>
-                <select className="w-full border text-[#001f3f] rounded-lg px-4 py-2">
-                  <option>Accessories</option>
-                  <option>Electronics</option>
-                  <option>Food</option>
-                </select>
-              </div> */}
-              <div>
-                <label className="block mb-1 font-medium text-[#001f3f]"> Category</label>
-                <input
-                  type="text"
-                  name="category"
-                  className="w-full border text-[#001f3f] rounded-lg px-4 py-2"
-                  placeholder="Category"
-                />
-              </div>
-            </div>
-
-            {/* Expiration Date & Quantity */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block mb-1 font-medium text-[#001f3f]">Expiration Date</label>
-                <input type="date" name="expireDate" className="w-full border text-[#001f3f] rounded-lg px-4 py-2" />
-              </div>
-
-              <div>
-                <label className="block mb-1 font-medium text-[#001f3f]">Quantity</label>
-                <div className="flex items-center border rounded-lg overflow-hidden">
-                  <button
-                    type="button"
-                    onClick={handleDecrease}
-                    className="px-3 py-2 bg-[#001f3f] text-[#d4ff00] text-xl"
-                  >
-                    −
-                  </button>
-                  <input
-                    type="number"
-                    name="quantity"
-                    value={quantity}
-                    onChange={(e) => setQuantity(Math.max(0, parseInt(e.target.value) || 0))}
-                    className="w-full text-center px-2 py-2 text-[#001f3f] outline-none"
-                    min={0}
+            <div className="grid grid-cols-4 gap-4">
+              {imagePreviews.slice(1).map((img, i) => (
+                <div key={i} className="aspect-square rounded-xl border overflow-hidden">
+                  <img
+                    src={img}
+                    alt={`Variant ${i + 1}`}
+                    className="object-cover w-full h-full"
                   />
-                  <button
-                    type="button"
-                    onClick={handleIncrease}
-                    className="px-3 py-2 bg-[#001f3f] text-[#d4ff00] text-xl"
-                  >
-                    +
-                  </button>
+                </div>
+              ))}
+              <label className="aspect-square border-dashed border-2 border-[#001f3f] flex items-center justify-center rounded-xl cursor-pointer">
+                <span className="text-[#001f3f] text-3xl">+</span>
+                <input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="hidden"
+                />
+              </label>
+            </div>
+          </div>
+
+          {/* Right: Product Details */}
+          <div className="bg-white p-6 rounded-2xl shadow-md">
+            <h3 className="text-lg font-semibold mb-4 text-[#001f3f]">Product Detail</h3>
+            <p className="text-sm text-[#001f3f] mb-4">Set your product information.</p>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block mb-1 font-medium text-[#001f3f]">Product Name</label>
+                <input type="text" name="title" className="w-full text-[#001f3f] border rounded-lg px-4 py-2" placeholder="Product name" />
+              </div>
+
+              <div>
+                <label className="block mb-1 font-medium text-[#001f3f]">Description</label>
+                <textarea name="description" className="w-full border text-[#001f3f] rounded-lg px-4 py-2" rows="5" placeholder="Product description"></textarea>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block mb-1 font-medium text-[#001f3f]">Category</label>
+                  <input
+                    type="text"
+                    name="category"
+                    className="w-full border text-[#001f3f] rounded-lg px-4 py-2"
+                    placeholder="Category"
+                  />
                 </div>
               </div>
-            </div>
 
-            <div>
-              <label className="block mb-1 font-medium text-[#001f3f]">Price</label>
-              <input type="text" name="price" className="w-full text-[#001f3f] border rounded-lg px-4 py-2" placeholder="$0.00" />
-            </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block mb-1 font-medium text-[#001f3f]">Expiration Date</label>
+                  <input type="date" name="expireDate" className="w-full border text-[#001f3f] rounded-lg px-4 py-2" />
+                </div>
 
-            <input className="btn btn-soft btn-success text-[#d4ff00] bg-[#001f3f]" value="Add Product" type="submit">
-            </input>
-          </form>
+                <div>
+                  <label className="block mb-1 font-medium text-[#001f3f]">Quantity</label>
+                  <div className="flex items-center border rounded-lg overflow-hidden">
+                    <button
+                      type="button"
+                      onClick={handleDecrease}
+                      className="px-3 py-2 bg-[#001f3f] text-[#d4ff00] text-xl"
+                    >
+                      −
+                    </button>
+                    <input
+                      type="number"
+                      name="quantity"
+                      value={quantity}
+                      onChange={(e) => setQuantity(Math.max(0, parseInt(e.target.value) || 0))}
+                      className="w-full text-center px-2 py-2 text-[#001f3f] outline-none"
+                      min={0}
+                    />
+                    <button
+                      type="button"
+                      onClick={handleIncrease}
+                      className="px-3 py-2 bg-[#001f3f] text-[#d4ff00] text-xl"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label className="block mb-1 font-medium text-[#001f3f]">Price</label>
+                <input type="text" name="price" className="w-full text-[#001f3f] border rounded-lg px-4 py-2" placeholder="$0.00" />
+              </div>
+
+              <input
+                className="btn btn-soft btn-success text-[#d4ff00] bg-[#001f3f]"
+                value={loading ? "Uploading..." : "Add Product"}
+                type="submit"
+                disabled={loading}
+              />
+            </div>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
