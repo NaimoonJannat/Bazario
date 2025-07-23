@@ -1,6 +1,6 @@
 import { Outlet } from "react-router";
 import DashboardSidebar from "../DashboardComponent/DashboardSidebar";
-import Loader from "../../../../Components/Loader";
+
 
 
 
