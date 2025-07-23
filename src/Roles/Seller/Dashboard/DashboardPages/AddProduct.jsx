@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 
 const AddProduct = () => {
-  const [quantity, setQuantity] = useState(1);
-  const [manualCategory, setManualCategory] = useState('');
+  const [quantity, setQuantity] = useState(0);
   const [selectedImages, setSelectedImages] = useState([]);
 
   const handleDecrease = () => {
@@ -18,6 +18,43 @@ const AddProduct = () => {
     const newImages = files.map(file => URL.createObjectURL(file));
     setSelectedImages(prev => [...prev, ...newImages]);
   };
+
+  const handleAddButton = event =>{
+    event.preventDefault();
+        const form = event.target;
+        const title=form.title.value;
+        const description=form.description.value;
+        const category=form.category.value;
+        const price=form.price.value;
+        const expireDate=form.expireDate.value;
+        const quantity=form.quantity.value;
+
+        const newProduct = {title, description, category, price, expireDate, quantity}
+
+        console.log(newProduct);
+
+        // send data to the server 
+        fetch('http://localhost:5000/products',{
+            method: 'POST',
+            headers: {
+                'content-type' : 'application/json'
+            },
+            body: JSON.stringify(newProduct)
+
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            Swal.fire({
+                    title: "Success!",
+                    text: "Product Added Successfully",
+                    icon: "success",
+                    confirmButtonText: 'Ok'
+                  });
+                  form.reset();
+            
+        })
+  }
 
   return (
     <div className="p-4 md:p-8 max-w-screen-xl mx-auto">
@@ -69,34 +106,33 @@ const AddProduct = () => {
           <h3 className="text-lg font-semibold mb-4 text-[#001f3f]">Product Detail</h3>
           <p className="text-sm text-[#001f3f] mb-4">Set your product information.</p>
 
-          <form className="space-y-4">
+          <form onSubmit={handleAddButton} className="space-y-4">
             <div>
               <label className="block mb-1 font-medium text-[#001f3f]">Product Name</label>
-              <input type="text" className="w-full text-[#001f3f] border rounded-lg px-4 py-2" placeholder="Product name" />
+              <input type="text" name="title" className="w-full text-[#001f3f] border rounded-lg px-4 py-2" placeholder="Product name" />
             </div>
 
             <div>
               <label className="block mb-1 font-medium text-[#001f3f]">Description</label>
-              <textarea className="w-full border text-[#001f3f] rounded-lg px-4 py-2" rows="5" placeholder="Product description"></textarea>
+              <textarea name="description" className="w-full border text-[#001f3f] rounded-lg px-4 py-2" rows="5" placeholder="Product description"></textarea>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
+              {/* <div>
                 <label className="block mb-1 font-medium text-[#001f3f]">Select Category</label>
                 <select className="w-full border text-[#001f3f] rounded-lg px-4 py-2">
                   <option>Accessories</option>
                   <option>Electronics</option>
                   <option>Food</option>
                 </select>
-              </div>
+              </div> */}
               <div>
-                <label className="block mb-1 font-medium text-[#001f3f]">Or Enter New Category</label>
+                <label className="block mb-1 font-medium text-[#001f3f]"> Category</label>
                 <input
                   type="text"
-                  value={manualCategory}
-                  onChange={(e) => setManualCategory(e.target.value)}
+                  name="category"
                   className="w-full border text-[#001f3f] rounded-lg px-4 py-2"
-                  placeholder="Custom category"
+                  placeholder="Category"
                 />
               </div>
             </div>
@@ -105,7 +141,7 @@ const AddProduct = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block mb-1 font-medium text-[#001f3f]">Expiration Date</label>
-                <input type="date" className="w-full border text-[#001f3f] rounded-lg px-4 py-2" />
+                <input type="date" name="expireDate" className="w-full border text-[#001f3f] rounded-lg px-4 py-2" />
               </div>
 
               <div>
@@ -120,6 +156,7 @@ const AddProduct = () => {
                   </button>
                   <input
                     type="number"
+                    name="quantity"
                     value={quantity}
                     onChange={(e) => setQuantity(Math.max(0, parseInt(e.target.value) || 0))}
                     className="w-full text-center px-2 py-2 text-[#001f3f] outline-none"
@@ -138,12 +175,11 @@ const AddProduct = () => {
 
             <div>
               <label className="block mb-1 font-medium text-[#001f3f]">Price</label>
-              <input type="text" className="w-full text-[#001f3f] border rounded-lg px-4 py-2" placeholder="$0.00" />
+              <input type="text" name="price" className="w-full text-[#001f3f] border rounded-lg px-4 py-2" placeholder="$0.00" />
             </div>
 
-            <button className="btn btn-soft btn-success text-[#d4ff00] bg-[#001f3f]" type="submit">
-              Add Product
-            </button>
+            <input className="btn btn-soft btn-success text-[#d4ff00] bg-[#001f3f]" value="Add Product" type="submit">
+            </input>
           </form>
         </div>
       </div>
