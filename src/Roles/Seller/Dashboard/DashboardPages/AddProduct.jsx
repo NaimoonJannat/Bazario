@@ -53,7 +53,7 @@ const AddProduct = () => {
 
             <div>
               <label className="block mb-1 font-medium text-[#001f3f]">Categories</label>
-              <select className="w-full border rounded-lg px-4 py-2">
+              <select className="w-full border text-[#001f3f] rounded-lg px-4 py-2">
                 <option>Accessories</option>
                 <option>Electronics</option>
                 <option>Home</option>
@@ -90,6 +90,7 @@ const AddProduct = () => {
                 <option>Draft</option>
               </select>
             </div>
+            <button className="btn btn-soft btn-success text-[#d4ff00] bg-[#001f3f]"   type="submit">Add Product</button>
           </form>
         </div>
       </div>
