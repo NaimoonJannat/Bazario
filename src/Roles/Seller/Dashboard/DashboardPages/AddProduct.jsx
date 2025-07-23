@@ -7,13 +7,14 @@ const BAZARIO_PRESET = 'bazario_preset';
 const FOLDER = 'bazario';
 
 const AddProduct = () => {
-  const [quantity, setQuantity] = useState(0);
+  const [stateQuantity, setStateQuantity] = useState(0);
   const [images, setImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const handleDecrease = () => setQuantity(prev => (prev > 0 ? prev - 1 : 0));
-  const handleIncrease = () => setQuantity(prev => prev + 1);
+  const handleDecrease = () =>
+  setStateQuantity((prev) => (prev > 0 ? prev - 1 : 0));
+const handleIncrease = () => setStateQuantity((prev) => prev + 1);
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
@@ -53,7 +54,7 @@ const AddProduct = () => {
     const category = form.category.value;
     const price = form.price.value;
     const expireDate = form.expireDate.value;
-    const quantity = form.quantity.value;
+    const quantity = Number(stateQuantity);
     const createdAt = new Date().toISOString();
 
     try {
@@ -82,7 +83,7 @@ const AddProduct = () => {
         form.reset();
         setImages([]);
         setImagePreviews([]);
-        setQuantity(0);
+        setStateQuantity(0);
       }
     } catch (error) {
       console.error("Error uploading product:", error);
@@ -182,14 +183,14 @@ const AddProduct = () => {
                     >
                       −
                     </button>
-                    <input
-                      type="number"
-                      name="quantity"
-                      value={quantity}
-                      onChange={(e) => setQuantity(Math.max(0, parseInt(e.target.value) || 0))}
-                      className="w-full text-center px-2 py-2 text-[#001f3f] outline-none"
-                      min={0}
-                    />
+                  <input
+  type="number"
+  name="quantity"
+  value={stateQuantity}
+  onChange={(e) => setStateQuantity(Math.max(0, Number(e.target.value) || 0))}
+  className="w-full text-center px-2 py-2 text-[#001f3f] outline-none"
+  min={0}
+/>
                     <button
                       type="button"
                       onClick={handleIncrease}
