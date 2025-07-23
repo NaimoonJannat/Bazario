@@ -7,7 +7,7 @@ const DashboardLayout = () => {
     <div className="relative">
       {/* <Header /> */}
       <DashboardSidebar></DashboardSidebar>
-      <main className="ml-[60px] pt-20 px-6 min-h-screen">
+      <main className="ml-[60px] pt-20 px-6 min-h-screen bg-gray-300">
       <Outlet />
         {/* <Footer /> */}
       </main>
