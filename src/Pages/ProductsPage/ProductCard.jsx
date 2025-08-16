@@ -10,7 +10,7 @@ const ProductCard = () => {
     >
       {/* Product Image */}
       <img
-        src="https://via.placeholder.com/300x350"
+        src="https://res.cloudinary.com/auraloom/image/upload/v1753455945/bazario/dfmz7nmykbgd2ljbgg8n.jpg"
         alt="Product"
         className="w-full h-72 object-cover"
       />
@@ -18,9 +18,9 @@ const ProductCard = () => {
       {/* Product Info */}
       <div className="p-4">
         <h3 className="text-lg font-semibold text-gray-800">
-          Long Sleeve Striped Cotton Shirt
+          Daawat Basmati Rice 5kg
         </h3>
-        <p className="text-gray-600">$122.00</p>
+        <p className="text-gray-600">750</p>
       </div>
 
       {/* Hover Add to Cart */}
