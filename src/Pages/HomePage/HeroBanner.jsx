@@ -3,7 +3,7 @@ import { ArrowRight } from 'lucide-react';
 
 const HeroBanner = () => {
   return (
-    <div className="relative w-full h-screen bg-[#001f3f] flex flex-col md:flex-row items-center justify-between overflow-hidden px-6 md:px-16 py-12">
+    <div className="relative w-full h-screen bg-[#001f3f] flex flex-col md:flex-row items-center justify-between overflow-hidden px-6 md:px-16 py-32 md:py-12">
       {/* Background Image with blur and darkness */}
       <motion.img
         src="https://i.pinimg.com/736x/c5/9c/ce/c59cce10929410537aa224149cf5aed0.jpg"
