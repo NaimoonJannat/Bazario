@@ -59,7 +59,7 @@ const Products = () => {
 
     // createdAt like "2025-08-16T..." → "2025-08"
     const productMonth = String(product.createdAt || "").slice(0, 7);
-    const matchesDateAdded = dateAddedMonth ? productMonth >= dateAddedMonth : true;
+    const matchesDateAdded = dateAddedMonth ? productMonth == dateAddedMonth : true;
 
     // expireDate like "2028-12-20" → year "2028"
     const productExpireYear = String(product.expireDate || "").slice(0, 4);
@@ -106,7 +106,7 @@ const Products = () => {
               onClick={resetFilters}
               title="Reset filters"
               aria-label="Reset filters"
-              className="w-9 h-9 rounded-full border border-gray-600 flex items-center justify-center hover:bg-gray-800 transition"
+              className="w-9 h-9 rounded-full border border-[#d4ff00] flex items-center justify-center hover:bg-gray-800 transition"
             >
               {/* inline reset icon (circular arrow) */}
               <svg
@@ -185,7 +185,7 @@ const Products = () => {
                 className="w-full px-3 py-2 rounded-lg bg-gray-900 text-white border border-gray-600 focus:outline-none focus:border-[#d4ff00]"
               />
               <p className="text-xs text-gray-400 mt-1">
-                Shows products added on/after this month.
+                Shows products added on this month. Set both year and month too see the result
               </p>
             </div>
 
