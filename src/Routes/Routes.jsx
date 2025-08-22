@@ -21,6 +21,7 @@ import Feedbacks from "../Roles/Seller/Dashboard/DashboardPages/Feedbacks";
 import PreOrder from "../Roles/Seller/Dashboard/DashboardPages/PreOrder";
 import OnSHopSale from "../Roles/Seller/Dashboard/DashboardPages/OnSHopSale";
 import ProductDetails from "../Pages/ProductsPage/ProductDetails";
+import Favorite from "../Pages/FavoritePage/Favorite";
 
 const Routes = createBrowserRouter([
   {
@@ -49,6 +50,11 @@ const Routes = createBrowserRouter([
         path: "/products/product/:id",
         element: <ProductDetails />,
          loader: () => fetch("http://localhost:5000/products")
+      },
+      {
+        path: "/favorite",
+        element: <Favorite /> ,
+         loader: () => fetch("http://localhost:5000/favorite")
       },
     ],
   },
