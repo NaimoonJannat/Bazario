@@ -1,5 +1,7 @@
 import { useLoaderData, useParams } from "react-router";
 import { useState } from "react";
+import { FiHeart } from "react-icons/fi";
+import { IoHeartSharp } from "react-icons/io5";
 
 const ProductDetails = () => {
   const products = useLoaderData();
@@ -12,6 +14,9 @@ const ProductDetails = () => {
   // Quantity state
   const [quantity, setQuantity] = useState(1);
 
+  // Favorite state
+  const [isFavorite, setIsFavorite] = useState(false);
+
   const increaseQty = () => {
     if (quantity < product.quantity) {
       setQuantity(quantity + 1);
@@ -22,6 +27,11 @@ const ProductDetails = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
     }
+  };
+
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+   
   };
 
   return (
@@ -54,15 +64,21 @@ const ProductDetails = () => {
       </div>
 
       {/* Right: Product Info */}
-      <div className="card-body lg:w-1/2 text-white">
+      <div className="card-body lg:w-1/2 text-white relative">
+        {/* Favorite Button */}
+        <button
+          onClick={toggleFavorite}
+          className="absolute top-4 right-4 text-2xl text-[#d4ff00] hover:scale-110 transition"
+        >
+          {isFavorite ? <IoHeartSharp /> : <FiHeart />}
+        </button>
+
         <h2 className="text-4xl font-bold">{product.title}</h2>
         <div className="divider"></div>
         <div className="text-[#d4ff00] font-bold">{product.category}</div>
         <div className="divider"></div>
         <div>
-          <p className="text-base">
-            <span className="font-semibold"></span> {product.description}
-          </p>
+          <p className="text-base">{product.description}</p>
         </div>
         <div className="divider"></div>
 
