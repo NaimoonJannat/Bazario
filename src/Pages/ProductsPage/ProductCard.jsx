@@ -22,15 +22,17 @@ const ProductCard = ({product}) => {
         <h3 className="text-lg font-semibold text-gray-800">
           {title}
         </h3>
-        <p className="text-gray-600">{price} ৳ </p>
+        <div className='flex flex-row text-[#001f3f] justify-center items-center gap-8'>
+          <p className="font-bold">{price} ৳ </p>
         <p className="">{quantity} Items left</p>
+        </div>
 
       </div>
 
       {/* Hover Add to Cart */}
       {hovered && (
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-[85%]">
-          <button className="w-full bg-green-600 text-white py-2 rounded-xl font-medium hover:bg-green-700 transition">
+          <button className="w-full bg-[#d4ff00] text-[#001f3f] py-2 rounded-xl font-medium hover:bg-[#829c01] transition">
             Add to Cart
           </button>
         </div>
