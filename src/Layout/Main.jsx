@@ -16,7 +16,7 @@ const Main = () => {
       {!isNoLayoutRoute && <Sidebar />}
 
       {/* Main content */}
-      <div className="min-h-[calc(100vh-306px)] bg-[#001f3f]">
+      <div className="min-h-[calc(100vh-306px)] bg-[#001f3f] p-4 md:pt-24">
         <Outlet />
       </div>
 

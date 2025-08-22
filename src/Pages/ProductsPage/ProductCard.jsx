@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-const ProductCard = () => {
+const ProductCard = ({product}) => {
+    // const {title, _id, description, category, price, expireDate, quantity, createdAt, images} = product;
+    const {title, _id, price, quantity, images} = product;
     const [hovered, setHovered] = useState(false);
     return (
          <div
-      className="w-64 bg-white rounded-2xl shadow-md overflow-hidden border hover:shadow-lg transition relative"
+      className="w-full bg-white rounded-2xl shadow-md overflow-hidden border hover:shadow-lg transition relative"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       {/* Product Image */}
       <img
-        src="https://res.cloudinary.com/auraloom/image/upload/v1753455945/bazario/dfmz7nmykbgd2ljbgg8n.jpg"
+        src={images[0]}
         alt="Product"
         className="w-full h-72 object-cover"
       />
@@ -18,9 +20,11 @@ const ProductCard = () => {
       {/* Product Info */}
       <div className="p-4">
         <h3 className="text-lg font-semibold text-gray-800">
-          Daawat Basmati Rice 5kg
+          {title}
         </h3>
-        <p className="text-gray-600">750</p>
+        <p className="text-gray-600">{price} ৳ </p>
+        <p className="">{quantity} Items left</p>
+
       </div>
 
       {/* Hover Add to Cart */}
