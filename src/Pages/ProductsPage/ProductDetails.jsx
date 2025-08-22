@@ -61,7 +61,7 @@ const ProductDetails = () => {
         <div className="divider"></div>
         <div>
           <p className="text-base">
-            <span className="font-semibold">Details:</span> {product.description}
+            <span className="font-semibold"></span> {product.description}
           </p>
         </div>
         <div className="divider"></div>
@@ -82,14 +82,14 @@ const ProductDetails = () => {
         <div className="flex items-center gap-4 mt-6">
           <button
             onClick={decreaseQty}
-            className="w-10 h-10 flex justify-center items-center text-xl font-bold border rounded-lg bg-gray-800 hover:bg-gray-700 transition"
+            className="w-10 h-10 flex justify-center items-center text-xl font-bold border rounded-lg bg-gray-800 hover:bg-[#d4ff00] hover:text-[#001f3f] transition"
           >
             -
           </button>
           <span className="text-lg font-bold">{quantity}</span>
           <button
             onClick={increaseQty}
-            className="w-10 h-10 flex justify-center items-center text-xl font-bold border rounded-lg bg-gray-800 hover:bg-gray-700 transition"
+            className="w-10 h-10 flex justify-center items-center text-xl font-bold border rounded-lg bg-gray-800 hover:bg-[#d4ff00] hover:text-[#001f3f] transition"
           >
             +
           </button>
