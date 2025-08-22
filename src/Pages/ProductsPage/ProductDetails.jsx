@@ -1,10 +1,12 @@
 import { useLoaderData, useParams } from "react-router";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../Provider/AuthProvider";
 import { FiHeart } from "react-icons/fi";
 import { IoHeartSharp } from "react-icons/io5";
 
 const ProductDetails = () => {
   const products = useLoaderData();
+  const { user } = useContext(AuthContext);
   const { id } = useParams();
   const product = products.find((task) => task._id === id);
 
@@ -29,9 +31,50 @@ const ProductDetails = () => {
     }
   };
 
-  const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-   
+  const toggleFavorite = async () => {
+    if (!user) {
+      alert("Please login to add favorites!");
+      return;
+    }
+
+    setIsFavorite(!isFavorite); // toggle UI instantly
+
+    try {
+      // Step 1: Check if user already exists in favorites collection
+      const res = await fetch(`http://localhost:5000/favorite/${user.email}`);
+      const existingUser = await res.json();
+
+      if (existingUser && existingUser.email) {
+        // Step 2a: User exists → push productId
+        const updateRes = await fetch(`http://localhost:5000/favorite/${user.email}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ productId: product._id }),
+        });
+
+        const data = await updateRes.json();
+        console.log("Updated favorites:", data);
+      } else {
+        // Step 2b: User does not exist → create new
+        const createRes = await fetch("http://localhost:5000/favorite", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: user.email,
+            favProducts: [product._id],
+          }),
+        });
+
+        const data = await createRes.json();
+        console.log("Created new favorite record:", data);
+      }
+    } catch (error) {
+      console.error("Error updating favorites:", error);
+    }
   };
 
   return (
