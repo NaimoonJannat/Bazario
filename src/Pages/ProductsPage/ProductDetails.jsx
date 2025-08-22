@@ -100,6 +100,9 @@ const ProductDetails = () => {
           <button className="btn bg-[#d4ff00] text-[#001f3f]">
             Add {quantity} to Cart
           </button>
+          <button className="btn bg-[#001f3f] border-[#d4ff00] text-[#d4ff00]">
+            Buy Now
+          </button>
         </div>
       </div>
     </div>
