@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { Link } from 'react-router';
 
 const ProductCard = ({product}) => {
     // const {title, _id, description, category, price, expireDate, quantity, createdAt, images} = product;
     const {title, _id, price, quantity, images} = product;
     const [hovered, setHovered] = useState(false);
     return (
+     <Link to={`product/${_id}`}>
          <div
       className="w-full bg-white rounded-2xl shadow-md overflow-hidden border hover:shadow-lg transition relative"
       onMouseEnter={() => setHovered(true)}
@@ -13,7 +15,7 @@ const ProductCard = ({product}) => {
       {/* Product Image */}
       <img
         src={images[0]}
-        alt="Product"
+        alt={title}
         className="w-full h-72 object-cover"
       />
 
@@ -38,6 +40,7 @@ const ProductCard = ({product}) => {
         </div>
       )}
     </div>
+     </Link>
     );
 };
 
