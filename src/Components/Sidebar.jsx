@@ -15,7 +15,7 @@ const Sidebar = () => {
   useEffect(() => {
     if (user?.email) {
       axios
-        .get(`http://localhost:5000/users/${user.email}`)
+        .get(`http://localhost:5000/users/${user?.email}`)
         .then((res) => setUserRole(res.data.role))
         .catch((err) => console.error(err));
     }

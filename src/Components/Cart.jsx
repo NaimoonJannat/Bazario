@@ -29,7 +29,7 @@ const Cart = ({ isOpen, onClose }) => {
 
   const removeFromCart = async (productId) => {
     try {
-      const res = await fetch(`http://localhost:5000/users/${user.email}`, {
+      const res = await fetch(`http://localhost:5000/users/${user?.email}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ productId, quantity: 0 }) // quantity 0 to remove
