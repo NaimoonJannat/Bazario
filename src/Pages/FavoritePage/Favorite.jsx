@@ -5,6 +5,7 @@ const Favorite = () => {
   const { user } = useContext(AuthContext);
   const [favoriteProducts, setFavoriteProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedProducts, setSelectedProducts] = useState([]);
   const productsPerPage = 4;
 
   useEffect(() => {
@@ -36,6 +37,53 @@ const Favorite = () => {
     );
   };
 
+  const toggleSelect = (id) => {
+    setSelectedProducts(prev =>
+      prev.includes(id) ? prev.filter(pid => pid !== id) : [...prev, id]
+    );
+  };
+
+  const addSelectedToCart = async () => {
+    if (!user?.email || selectedProducts.length === 0) return;
+
+    try {
+      const payload = selectedProducts.map(pid => {
+        const product = favoriteProducts.find(p => p._id === pid);
+        return { productId: pid, quantity: product?.qty || 1 };
+      });
+
+      for (const item of payload) {
+        await fetch(`http://localhost:5000/users/${user.email}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(item),
+        });
+      }
+
+      alert("Selected items added to cart!");
+      setSelectedProducts([]);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
+  };
+
+  const removeFromFavorites = async (productId) => {
+    try {
+      const res = await fetch(`http://localhost:5000/favorite/${user.email}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setFavoriteProducts(prev => prev.filter(p => p._id !== productId));
+        setSelectedProducts(prev => prev.filter(id => id !== productId));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   // Pagination logic
   const totalPages = Math.ceil(favoriteProducts.length / productsPerPage);
   const startIdx = (currentPage - 1) * productsPerPage;
@@ -45,25 +93,6 @@ const Favorite = () => {
     if (page < 1 || page > totalPages) return;
     setCurrentPage(page);
   };
-
-  // Inside your Favorite component
-const removeFromFavorites = async (productId) => {
-  try {
-    const res = await fetch(`http://localhost:5000/favorite/${user.email}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ productId })
-    });
-    const data = await res.json();
-    if (data.success) {
-      // Remove from local state
-      setFavoriteProducts(prev => prev.filter(p => p._id !== productId));
-    }
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 
   return (
     <section className="container px-4 mx-auto">
@@ -98,7 +127,12 @@ const removeFromFavorites = async (productId) => {
                     <tr key={product._id}>
                       <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                         <div className="inline-flex items-center gap-x-3">
-                          <input type="checkbox" className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700" />
+                          <input
+                            type="checkbox"
+                            checked={selectedProducts.includes(product._id)}
+                            onChange={() => toggleSelect(product._id)}
+                            className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
+                          />
                           <div className="flex items-center gap-x-2">
                             <img className="object-cover w-16 h-16 rounded-full" src={product?.images?.[0]} alt={product?.title} />
                             <div>
@@ -136,28 +170,26 @@ const removeFromFavorites = async (productId) => {
 
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
                         <div className="flex items-center gap-x-6">
-                        <button
-  onClick={() => removeFromFavorites(product._id)}
-  className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
->
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-  </svg>
-</button>
-
+                          <button
+                            onClick={() => removeFromFavorites(product._id)}
+                            className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                            </svg>
+                          </button>
                         </div>
                       </td>
                     </tr>
                   ))}
                 </tbody>
-
               </table>
             </div>
           </div>
         </div>
       </div>
 
-      {/* pagination (working now) */}
+      {/* Pagination (exactly like before) */}
       <div className="flex items-center justify-between mt-6">
         <button
           onClick={() => goToPage(currentPage - 1)}
@@ -197,8 +229,13 @@ const removeFromFavorites = async (productId) => {
           </svg>
         </button>
       </div>
-       <div className="flex justify-center space-x-4 mt-6">
-        <button className="px-6 py-3 border-2 border-[#d4ff00] text-sm font-semibold rounded-lg bg-[#001f3f] text-[#d4ff00] hover:bg-[#d4ff00] hover:text-[#001f3f]">
+
+      {/* Add to Cart / Buy Now buttons */}
+      <div className="flex justify-center space-x-4 mt-6">
+        <button
+          onClick={addSelectedToCart}
+          className="px-6 py-3 border-2 border-[#d4ff00] text-sm font-semibold rounded-lg bg-[#001f3f] text-[#d4ff00] hover:bg-[#d4ff00] hover:text-[#001f3f]"
+        >
           Add to Cart
         </button>
         <button className="px-6 py-3 text-sm font-semibold rounded-lg bg-[#d4ff00] text-[#001f3f] hover:bg-[#001f3f] hover:text-[#d4ff00]">
