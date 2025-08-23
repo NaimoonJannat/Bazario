@@ -15,6 +15,7 @@ const saveUserToDB = async (name, email, photoURL) => {
         email,
         photoURL,
         role: 'user',
+        cart: [],
       };
 
       const response = await fetch('http://localhost:5000/users', {
