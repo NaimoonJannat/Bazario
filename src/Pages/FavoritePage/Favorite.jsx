@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from './../../Provider/AuthProvider';
+import Swal from 'sweetalert2';
+
 
 const Favorite = () => {
   const { user } = useContext(AuthContext);
@@ -43,29 +45,43 @@ const Favorite = () => {
     );
   };
 
-  const addSelectedToCart = async () => {
-    if (!user?.email || selectedProducts.length === 0) return;
+ const addSelectedToCart = async () => {
+  if (!user?.email || selectedProducts.length === 0) return;
 
-    try {
-      const payload = selectedProducts.map(pid => {
-        const product = favoriteProducts.find(p => p._id === pid);
-        return { productId: pid, quantity: product?.qty || 1 };
+  try {
+    const payload = selectedProducts.map(pid => {
+      const product = favoriteProducts.find(p => p._id === pid);
+      return { productId: pid, quantity: product?.qty || 1 };
+    });
+
+    for (const item of payload) {
+      await fetch(`http://localhost:5000/users/${user.email}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(item),
       });
-
-      for (const item of payload) {
-        await fetch(`http://localhost:5000/users/${user.email}`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(item),
-        });
-      }
-
-      alert("Selected items added to cart!");
-      setSelectedProducts([]);
-    } catch (error) {
-      console.error("Error adding to cart:", error);
     }
-  };
+
+    // SweetAlert instead of alert
+    Swal.fire({
+      icon: 'success',
+      title: 'Success!',
+      text: 'Selected items added to cart',
+      timer: 2000,
+      showConfirmButton: false,
+    });
+
+    setSelectedProducts([]);
+  } catch (error) {
+    console.error("Error adding to cart:", error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Something went wrong while adding to cart!',
+    });
+  }
+};
+
 
   const removeFromFavorites = async (productId) => {
     try {
