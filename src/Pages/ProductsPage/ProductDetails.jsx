@@ -3,6 +3,7 @@ import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { FiHeart } from "react-icons/fi";
 import { IoHeartSharp } from "react-icons/io5";
+import Swal from "sweetalert2";
 
 const ProductDetails = () => {
   const products = useLoaderData();
@@ -56,51 +57,32 @@ const ProductDetails = () => {
   };
 
   const toggleFavorite = async () => {
-    if (!user) {
-      alert("Please login to add favorites!");
+    if (!user?.email) {
+      Swal.fire("Oops!", "Please login to add favorites!", "warning");
       return;
     }
 
     try {
-      // Step 1: Check if user already exists in favorites collection
-      const res = await fetch(`http://localhost:5000/favorite/${user.email}`);
-      const existingUser = await res.json();
+      const res = await fetch(`http://localhost:5000/favorite/${user.email}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId: product._id }),
+      });
 
-      if (existingUser && existingUser.email) {
-        // Step 2a: User exists → push productId
-        const updateRes = await fetch(
-          `http://localhost:5000/favorite/${user.email}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ productId: product._id }),
-          }
+      const data = await res.json();
+      if (data.success) {
+        setIsFavorite(data.action === "added");
+        Swal.fire(
+          data.action === "added" ? "Added!" : "Removed!",
+          data.action === "added"
+            ? "Product added to favorites."
+            : "Product removed from favorites.",
+          "success"
         );
-
-        const data = await updateRes.json();
-        console.log("Updated favorites:", data);
-        setIsFavorite(true);
-      } else {
-        // Step 2b: User does not exist → create new
-        const createRes = await fetch("http://localhost:5000/favorite", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: user.email,
-            favProducts: [product._id],
-          }),
-        });
-
-        const data = await createRes.json();
-        console.log("Created new favorite record:", data);
-        setIsFavorite(true);
       }
     } catch (error) {
-      console.error("Error updating favorites:", error);
+      console.error("Error updating favorite:", error);
+      Swal.fire("Error!", "Something went wrong.", "error");
     }
   };
 
