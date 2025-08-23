@@ -7,16 +7,18 @@ import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../Provider/AuthProvider';
 import toast from 'react-hot-toast';
+import Cart from './Cart';
 
 const Navbar2 = () => {
   const { user, logOut } = useContext(AuthContext);
   const navigate = useNavigate();
   const [userRole, setUserRole] = useState(null); // 'user' | 'admin' | null
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
     if (user?.email) {
       axios
-        .get(`http://localhost:5000/users/${user.email}`)
+        .get(`http://localhost:5000/users/${user?.email}`)
         .then((res) => setUserRole(res.data.role))
         .catch((err) => console.error(err));
     }
@@ -74,11 +76,11 @@ const Navbar2 = () => {
                   <FaHeart />
                 </div>
               </Link>
-              <Link to='/cart'>
-                <div className='text-base'>
-                  <FaCartShopping />
-                </div>
-              </Link>
+              <button onClick={() => setIsCartOpen(true)}>
+              <div className='text-base'>
+                <FaCartShopping />
+              </div>
+            </button>
             </>
           )}
 
@@ -101,6 +103,11 @@ const Navbar2 = () => {
             </>
           )}
         </ul>
+        
+
+         {/* Render Cart Modal */}
+      {user && <Cart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />}
+
 
         {/* Authenticated User - Dropdown */}
         {user && (

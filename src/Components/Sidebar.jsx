@@ -6,15 +6,16 @@ import { RxBackpack } from 'react-icons/rx';
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../Provider/AuthProvider';
+import Cart from './Cart';
 
 const Sidebar = () => {
   const { user } = useContext(AuthContext);
   const [userRole, setUserRole] = useState(null); // 'user' | 'admin' | null
-
+  const [isCartOpen, setIsCartOpen] = useState(false);
   useEffect(() => {
     if (user?.email) {
       axios
-        .get(`http://localhost:5000/users/${user.email}`)
+        .get(`http://localhost:5000/users/${user?.email}`)
         .then((res) => setUserRole(res.data.role))
         .catch((err) => console.error(err));
     }
@@ -30,12 +31,17 @@ const Sidebar = () => {
       {/* USER Mode */}
       {user && userRole === 'user' && (
         <>
-          <Link to='/favourite' className='tooltip tooltip-left' data-tip='Favourites'>
+          <Link to='/favorite' className='tooltip tooltip-left' data-tip='Favorites'>
             <FaHeart className='text-black text-xl hover:scale-110 transition-transform' />
           </Link>
-          <Link to='/cart' className='tooltip tooltip-left' data-tip='Cart'>
+          <button onClick={() => setIsCartOpen(true)}>
+              <div className='tooltip tooltip-left' data-tip='Cart'>
+                <FaCartShopping className='text-black text-xl hover:scale-110 transition-transform' />
+              </div>
+            </button>
+          {/* <Link to='/cart' className='tooltip tooltip-left' data-tip='Cart'>
             <FaCartShopping className='text-black text-xl hover:scale-110 transition-transform' />
-          </Link>
+          </Link> */}
         </>
       )}
 
@@ -45,6 +51,8 @@ const Sidebar = () => {
           <RxBackpack className='text-black text-xl hover:scale-110 transition-transform' />
         </Link>
       )}
+       {/* Render Cart Modal */}
+      {user && <Cart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />}
     </div>
   );
 };
