@@ -22,27 +22,27 @@ const ProductDetails = () => {
 
   // Load if current product is already favorited by user
   useEffect(() => {
-    const fetchFavoriteStatus = async () => {
-      if (!user?.email) return;
+  const fetchFavoriteStatus = async () => {
+    if (!user?.email) return;
 
-      try {
-        const res = await fetch(`http://localhost:5000/favorite/${user.email}`);
-        const existingUser = await res.json();
+    try {
+      const res = await fetch(`http://localhost:5000/favorite/${user.email}`);
+      const favoriteProducts = await res.json(); // now an array of products
 
-        if (
-          existingUser &&
-          existingUser.favProducts &&
-          existingUser.favProducts.includes(product._id)
-        ) {
-          setIsFavorite(true);
-        }
-      } catch (error) {
-        console.error("Error checking favorite status:", error);
+      if (
+        Array.isArray(favoriteProducts) &&
+        favoriteProducts.some(p => p._id === product._id)
+      ) {
+        setIsFavorite(true);
       }
-    };
+    } catch (error) {
+      console.error("Error checking favorite status:", error);
+    }
+  };
 
-    fetchFavoriteStatus();
-  }, [user?.email, product._id]);
+  fetchFavoriteStatus();
+}, [user?.email, product._id]);
+
 
   const increaseQty = () => {
     if (quantity < product.quantity) {
