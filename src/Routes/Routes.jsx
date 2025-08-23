@@ -54,7 +54,6 @@ const Routes = createBrowserRouter([
       {
         path: "/favorite",
         element: <Favorite /> ,
-         loader: () => fetch("http://localhost:5000/favorite")
       },
     ],
   },
