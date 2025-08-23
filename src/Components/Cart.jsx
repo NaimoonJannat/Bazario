@@ -37,32 +37,50 @@ const Cart = ({ isOpen, onClose }) => {
 
   // Remove item from cart
   const removeFromCart = async (productId) => {
-    try {
-      const res = await fetch(`http://localhost:5000/users/${user?.email}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productId, quantity: 0 })
-      });
-      const data = await res.json();
-      if (data.success) {
-        setCartItems(prev => prev.filter(item => item.productId !== productId));
-        Swal.fire({
-          icon: 'success',
-          title: 'Removed!',
-          text: 'Item removed from cart',
-          timer: 1500,
-          showConfirmButton: false
-        });
-      }
-    } catch (err) {
-      console.error(err);
+  const confirm = await Swal.fire({
+    title: "Are you sure?",
+    text: "This item will be removed from your cart.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Yes, remove it!"
+  });
+
+  if (!confirm.isConfirmed) return;
+
+  try {
+    const res = await fetch(`http://localhost:5000/users/${user?.email}/cart/${productId}`, {
+      method: 'DELETE',
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      setCartItems(prev => prev.filter(item => item.productId !== productId));
       Swal.fire({
-        icon: 'error',
-        title: 'Oops!',
-        text: 'Could not remove item from cart',
+        icon: "success",
+        title: "Removed!",
+        text: "Item removed from cart",
+        timer: 1500,
+        showConfirmButton: false
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops!",
+        text: data.message || "Could not remove item",
       });
     }
-  };
+  } catch (err) {
+    console.error(err);
+    Swal.fire({
+      icon: "error",
+      title: "Oops!",
+      text: "Could not remove item from cart",
+    });
+  }
+};
+
 
   // Update quantity directly from cart
   const updateQuantity = async (productId, newQty) => {
