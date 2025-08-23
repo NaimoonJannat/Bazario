@@ -174,6 +174,14 @@ const Favorite = () => {
           </svg>
         </button>
       </div>
+       <div className="flex justify-center space-x-4 mt-6">
+        <button className="px-6 py-3 border-2 border-[#d4ff00] text-sm font-semibold rounded-lg bg-[#001f3f] text-[#d4ff00] hover:bg-[#d4ff00] hover:text-[#001f3f]">
+          Add to Cart
+        </button>
+        <button className="px-6 py-3 text-sm font-semibold rounded-lg bg-[#d4ff00] text-[#001f3f] hover:bg-[#001f3f] hover:text-[#d4ff00]">
+          Buy Now
+        </button>
+      </div>
     </section>
   );
 };
