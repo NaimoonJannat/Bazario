@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../Provider/AuthProvider';
 import { AiOutlineClose } from 'react-icons/ai';
+import { FaTrash } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 
 const Cart = ({ isOpen, onClose }) => {
@@ -27,12 +28,13 @@ const Cart = ({ isOpen, onClose }) => {
     if (isOpen) fetchCart();
   }, [isOpen, user?.email]);
 
+  // Remove item from cart
   const removeFromCart = async (productId) => {
     try {
       const res = await fetch(`http://localhost:5000/users/${user?.email}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productId, quantity: 0 }) // quantity 0 to remove
+        body: JSON.stringify({ productId, quantity: 0 })
       });
       const data = await res.json();
       if (data.success) {
@@ -52,6 +54,28 @@ const Cart = ({ isOpen, onClose }) => {
         title: 'Oops!',
         text: 'Could not remove item from cart',
       });
+    }
+  };
+
+  // Update quantity directly from cart
+  const updateQuantity = async (productId, newQty) => {
+    if (newQty < 1) return;
+    try {
+      const res = await fetch(`http://localhost:5000/users/${user?.email}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId, quantity: newQty })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setCartItems(prev =>
+          prev.map(item =>
+            item.productId === productId ? { ...item, quantity: newQty } : item
+          )
+        );
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -90,21 +114,33 @@ const Cart = ({ isOpen, onClose }) => {
                       className="w-16 h-16 object-cover rounded"
                     />
                     <div>
-                      <h3 className="font-medium text-[#001f3f] dark:text-white">{item.product.title}</h3>
+                      <h3 className="font-medium text-[#001f3f] dark:text-white">{item.product.title} x{item.quantity}</h3>
                       <p className="text-sm text-gray-500 dark:text-gray-300">
-                        Price: {item.product.price} | Qty: {item.quantity}
+                        Price: ৳ {item.product.price}
                       </p>
+                      {/* Quantity bar */}
+                      <div className="flex items-center gap-2 mt-2">
+                        <button
+                          onClick={() => updateQuantity(item.productId, item.quantity - 1)}
+                          className="w-8 h-8 flex justify-center items-center text-xl font-bold border rounded-lg bg-gray-800 hover:bg-[#d4ff00] hover:text-[#001f3f] transition"
+                        >-</button>
+                        <span className="w-8 text-[#001f3f] text-center">{item.quantity}</span>
+                        <button
+                          onClick={() => updateQuantity(item.productId, item.quantity + 1)}
+                          className="w-8 h-8 flex justify-center items-center text-xl font-bold border rounded-lg bg-gray-800 hover:bg-[#d4ff00] hover:text-[#001f3f] transition"
+                        >+</button>
+                      </div>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
                     <p className="font-semibold text-[#001f3f] dark:text-white">
-                      ₹ {item.quantity * parseFloat(item.product.price)}
+                      ৳ {item.quantity * parseFloat(item.product.price)}
                     </p>
                     <button
                       onClick={() => removeFromCart(item.productId)}
                       className="text-red-500 hover:text-red-700"
                     >
-                      Remove
+                      <FaTrash />
                     </button>
                   </div>
                 </div>
@@ -113,7 +149,7 @@ const Cart = ({ isOpen, onClose }) => {
 
             <div className="mt-4 flex justify-between items-center">
               <h3 className="text-lg font-semibold text-[#001f3f] dark:text-white">
-                Subtotal: ₹ {subtotal.toFixed(2)}
+                Subtotal: ৳ {subtotal.toFixed(2)}
               </h3>
               <button className="px-4 py-2 bg-[#d4ff00] text-[#001f3f] font-semibold rounded hover:bg-[#c0e600]">
                 Checkout
