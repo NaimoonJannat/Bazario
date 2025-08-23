@@ -3,6 +3,7 @@ import { AuthContext } from '../Provider/AuthProvider';
 import { AiOutlineClose } from 'react-icons/ai';
 import { FaTrash } from 'react-icons/fa';
 import Swal from 'sweetalert2';
+import Loader from './Loader'
 
 const Cart = ({ isOpen, onClose }) => {
   const { user } = useContext(AuthContext);
@@ -10,23 +11,29 @@ const Cart = ({ isOpen, onClose }) => {
   const [loading, setLoading] = useState(false);
 
   // Fetch cart items from backend
-  const fetchCart = async () => {
-    if (!user?.email) return;
-    setLoading(true);
-    try {
+//   const fetchCart = async () => {
+//     if (!user?.email) return;
+//     setLoading(true);
+//     try {
+//       const res = await fetch(`http://localhost:5000/users/${user?.email}/cart`);
+//       const data = await res.json();
+//       setCartItems(data);
+//     } catch (err) {
+//       console.error(err);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+  useEffect(() => {
+  if (isOpen && user?.email) {
+    (async () => {
       const res = await fetch(`http://localhost:5000/users/${user?.email}/cart`);
       const data = await res.json();
       setCartItems(data);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (isOpen) fetchCart();
-  }, [isOpen, user?.email]);
+    })();
+  }
+}, [isOpen, user?.email]);
 
   // Remove item from cart
   const removeFromCart = async (productId) => {
@@ -99,7 +106,7 @@ const Cart = ({ isOpen, onClose }) => {
         <h2 className="text-xl font-semibold text-[#001f3f] dark:text-white mb-4">My Cart</h2>
 
         {loading ? (
-          <p className="text-gray-700 dark:text-gray-300">Loading...</p>
+          <p className="text-gray-700 dark:text-gray-300"><Loader /></p>
         ) : cartItems.length === 0 ? (
           <p className="text-gray-700 dark:text-gray-300">Your cart is empty.</p>
         ) : (
@@ -122,12 +129,12 @@ const Cart = ({ isOpen, onClose }) => {
                       <div className="flex items-center gap-2 mt-2">
                         <button
                           onClick={() => updateQuantity(item.productId, item.quantity - 1)}
-                          className="w-8 h-8 flex justify-center items-center text-xl font-bold border rounded-lg bg-gray-800 hover:bg-[#d4ff00] hover:text-[#001f3f] transition"
+                          className="w-8 h-8 flex justify-center items-center text-xl font-bold border text-[#d4ff00] rounded-lg bg-gray-800 hover:bg-[#d4ff00] hover:text-[#001f3f] transition"
                         >-</button>
                         <span className="w-8 text-[#001f3f] text-center">{item.quantity}</span>
                         <button
                           onClick={() => updateQuantity(item.productId, item.quantity + 1)}
-                          className="w-8 h-8 flex justify-center items-center text-xl font-bold border rounded-lg bg-gray-800 hover:bg-[#d4ff00] hover:text-[#001f3f] transition"
+                          className="w-8 h-8 text-[#d4ff00] flex justify-center items-center text-xl font-bold border rounded-lg bg-gray-800 hover:bg-[#d4ff00] hover:text-[#001f3f] transition"
                         >+</button>
                       </div>
                     </div>
