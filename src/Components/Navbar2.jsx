@@ -69,7 +69,7 @@ const Navbar2 = () => {
           {/* User */}
           {user && userRole === 'user' && (
             <>
-              <Link to='/favourite'>
+              <Link to='/favorite'>
                 <div className='text-base'>
                   <FaHeart />
                 </div>
