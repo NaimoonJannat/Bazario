@@ -55,54 +55,62 @@ const Checkout = () => {
   const total = subtotal + deliveryCharge;
 
   // ------------------ Confirm Order -------------------
-  const handleConfirmOrder = async () => {
-    if (!profile.address || !profile.phone) {
-      Swal.fire({
-        icon: "warning",
-        title: "Incomplete Profile",
-        text: "Please update your address and phone in your profile to place the order.",
-      });
-      return;
-    }
+ const handleConfirmOrder = async () => {
+  if (!profile.address || !profile.phone) {
+    Swal.fire({
+      icon: "warning",
+      title: "Incomplete Profile",
+      text: "Please update your address and phone in your profile to place the order.",
+    });
+    return;
+  }
 
-    const orderData = {
-      email: user?.email,
-      name: profile.name,
-      phone: profile.phone,
-      address: profile.address,
-      note,
-      subtotal,
-      delivery: deliveryCharge,
-      orderedAt: new Date(),
-      status: "pending",
-      orders: cart.map((item) => ({
-        productId: item.product._id,
-        quantity: item.quantity,
-      })),
-    };
-
-    try {
-      await axios.post(`http://localhost:5000/orders/${user.email}`, orderData);
-
-      Swal.fire({
-        icon: "success",
-        title: "Order Placed",
-        text: "Soon will be delivered to your doorstep. Thanks for shopping in Bazario!",
-        showCancelButton: true,
-        confirmButtonText: "Home",
-        cancelButtonText: "Surf Products",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate("/"); // go to home
-        } else {
-          navigate("/products"); // go to products page
-        }
-      });
-    } catch (err) {
-      console.log(err);
-      Swal.fire("Error", "Something went wrong while placing your order.", "error");
-    }
+  const orderData = {
+    email: user?.email,
+    name: profile.name,
+    phone: profile.phone,
+    address: profile.address,
+    note,
+    subtotal,
+    delivery: deliveryCharge,
+    orderedAt: new Date(),
+    status: "pending",
+    orders: cart.map((item) => ({
+      productId: item.product._id,
+      quantity: item.quantity,
+    })),
   };
+
+  try {
+    // Place order
+    await axios.post(`http://localhost:5000/orders/${user.email}`, orderData);
+
+    // 🟢 Clear cart from backend
+    await axios.delete(`http://localhost:5000/users/${user.email}/cart`);
+
+    // 🟢 Also clear cart from local state so UI updates instantly
+    setCart([]);
+
+    Swal.fire({
+      icon: "success",
+      title: "Order Placed",
+      text: "Soon will be delivered to your doorstep. Thanks for shopping in Bazario!",
+      showCancelButton: true,
+      confirmButtonText: "Home",
+      cancelButtonText: "Surf Products",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/"); // go to home
+      } else {
+        navigate("/products"); // go to products page
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    Swal.fire("Error", "Something went wrong while placing your order.", "error");
+  }
+};
+
 
   return (
     <div className="flex flex-col lg:flex-row gap-6 p-4 lg:p-10">
