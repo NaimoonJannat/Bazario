@@ -23,28 +23,27 @@ const History = () => {
   }, [user?.email]);
 
   const handlePrint = (orderId) => {
-    // Open the receipt PDF in a new tab
     const receiptUrl = `http://localhost:5000/orders/${orderId}/receipt`;
     window.open(receiptUrl, "_blank");
   };
 
   return (
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg p-4">
-      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <div className="relative overflow-x-auto shadow-xl sm:rounded-xl p-6" style={{ backgroundColor: "#001f3f" }}>
+      <table className="w-full text-sm text-left text-gray-200">
+        <thead className="text-xs uppercase bg-[#d4ff00] text-[#001f3f]">
           <tr>
-            <th className="px-6 py-3">ID No</th>
+            <th className="px-6 py-3 rounded-tl-lg">ID No</th>
             <th className="px-6 py-3">Date Ordered</th>
             <th className="px-6 py-3">Address</th>
             <th className="px-6 py-3">Phone No</th>
             <th className="px-6 py-3">Status</th>
-            <th className="px-6 py-3">Action</th>
+            <th className="px-6 py-3 rounded-tr-lg">Action</th>
           </tr>
         </thead>
         <tbody>
           {orders.length === 0 ? (
             <tr>
-              <td colSpan={6} className="px-6 py-4 text-center">
+              <td colSpan={6} className="px-6 py-4 text-center text-[#d4ff00]">
                 No orders found.
               </td>
             </tr>
@@ -52,33 +51,32 @@ const History = () => {
             orders.map((order, idx) => (
               <tr
                 key={order._id}
-                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                className="hover:bg-[#002b5c] transition-colors duration-200"
               >
-                <td className="px-6 py-4">{idx + 1}</td>
-                <td className="px-6 py-4">
-                  {new Date(order.orderedAt).toLocaleString()}
-                </td>
+                <td className="px-6 py-4 font-semibold">{idx + 1}</td>
+                <td className="px-6 py-4">{new Date(order.orderedAt).toLocaleString()}</td>
                 <td className="px-6 py-4">{order.address}</td>
                 <td className="px-6 py-4">{order.phone}</td>
                 <td className="px-6 py-4">
-                  <span
-                    className={`px-2 py-1 rounded font-semibold ${
-                      order.status === "pending"
-                        ? "bg-yellow-200 text-yellow-800"
-                        : order.status === "delivered"
-                        ? "bg-green-200 text-green-800"
-                        : "bg-gray-200 text-gray-800"
-                    }`}
-                  >
-                    {order.status}
-                  </span>
+                  <div className="flex items-center">
+                    <div
+                      className={`h-3 w-3 rounded-full mr-2 ${
+                        order.status === "pending"
+                          ? "bg-[#d4ff00]"
+                          : order.status === "delivered"
+                          ? "bg-green-400"
+                          : "bg-gray-400"
+                      }`}
+                    ></div>
+                    <span className="font-medium">{order.status}</span>
+                  </div>
                 </td>
                 <td className="px-6 py-4">
                   <button
                     onClick={() => handlePrint(order._id)}
-                    className="text-[#001f3f] text-xl hover:underline"
+                    className="flex items-center text-[#d4ff00] font-semibold hover:underline"
                   >
-                    <IoMdPrint />
+                    <IoMdPrint className="mr-2 text-xl" /> Print
                   </button>
                 </td>
               </tr>
