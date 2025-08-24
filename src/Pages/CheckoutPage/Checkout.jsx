@@ -1,32 +1,57 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./../../Provider/AuthProvider"; 
 import axios from "axios";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
   const { user } = useContext(AuthContext);
   const [profile, setProfile] = useState({});
   const [cart, setCart] = useState([]);
   const [note, setNote] = useState("");
+  const [deliveryCharge, setDeliveryCharge] = useState(70);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!user?.email) return;
+
     // Fetch profile info
     axios
-      .get(`http://localhost:5000/users/${user?.email}`)
-      .then((res) => setProfile(res.data))
+      .get(`http://localhost:5000/users/${user.email}`)
+      .then((res) => {
+        setProfile(res.data);
+
+        // Check if phone or address is missing
+        if (!res.data.address || !res.data.phone) {
+          Swal.fire({
+            icon: "warning",
+            title: "Incomplete Profile",
+            html: `Please go to your profile and update information to confirm your order. Thank You.<br/><br/><button id="goProfile" class="swal2-confirm swal2-styled">Go to Profile</button>`,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            didOpen: () => {
+              const btn = document.getElementById("goProfile");
+              btn.addEventListener("click", () => {
+                navigate("/profile");
+              });
+            },
+          });
+        }
+      })
       .catch((err) => console.log(err));
 
     // Fetch cart info
     axios
-      .get(`http://localhost:5000/users/${user?.email}/cart`)
+      .get(`http://localhost:5000/users/${user.email}/cart`)
       .then((res) => setCart(res.data))
       .catch((err) => console.log(err));
-  }, [user?.email]);
+  }, [user?.email, navigate]);
 
   const subtotal = cart.reduce(
     (sum, item) => sum + item.product.price * item.quantity,
     0
   );
-  const deliveryCharge = 70; // fixed delivery charge
   const total = subtotal + deliveryCharge;
 
   return (
@@ -69,12 +94,16 @@ const Checkout = () => {
 
         <div className="mb-4">
           <label className="block mb-1">Delivery Area</label>
-          <input
-            type="text"
-            value={`Dhaka City (Delivery Charge: ${deliveryCharge})`}
-            disabled
-            className="w-full border rounded px-3 py-2 bg-gray-100"
-          />
+          <select
+            value={deliveryCharge === 70 ? "inside" : "outside"}
+            onChange={(e) =>
+              setDeliveryCharge(e.target.value === "inside" ? 70 : 130)
+            }
+            className="w-full border rounded px-3 py-2"
+          >
+            <option value="inside">Inside Dhaka 70 taka Delivery charge</option>
+            <option value="outside">Outside Dhaka 130 taka Delivery charge</option>
+          </select>
         </div>
 
         <div className="mb-4">
@@ -87,7 +116,20 @@ const Checkout = () => {
           />
         </div>
 
-        <button className="w-full bg-[#d4ff00] text-[#001f3f] hover:text-[#d4ff00] hover:bg-[#001f3f] transition-0.5 py-3 rounded font-semibold">
+        <button
+          className="w-full bg-[#d4ff00] text-[#001f3f] hover:text-[#d4ff00] hover:bg-[#001f3f] transition-0.5 py-3 rounded font-semibold"
+          onClick={() => {
+            if (!profile.address || !profile.phone) {
+              Swal.fire({
+                icon: "warning",
+                title: "Incomplete Profile",
+                text: "Please update your address and phone in your profile to place the order.",
+              });
+              return;
+            }
+            // Confirm order logic here
+          }}
+        >
           Confirm Order
         </button>
       </div>
@@ -119,9 +161,7 @@ const Checkout = () => {
                   <td className="p-2">{item.product.title}</td>
                   <td className="p-2">৳{item.product.price}</td>
                   <td className="p-2 text-center">{item.quantity}</td>
-                  <td className="p-2">
-                    ৳{item.product.price * item.quantity}
-                  </td>
+                  <td className="p-2">৳{item.product.price * item.quantity}</td>
                 </tr>
               ))}
             </tbody>
@@ -137,9 +177,7 @@ const Checkout = () => {
               </span>{" "}
               {deliveryCharge}
             </div>
-            <div className="font-bold text-lg">
-              Total: ৳{total}
-            </div>
+            <div className="font-bold text-lg">Total: ৳{total}</div>
           </div>
         </div>
       </div>
