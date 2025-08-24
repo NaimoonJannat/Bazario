@@ -14,7 +14,9 @@ const Registration = () => {
     const name = form.name.value
     const photo = form.photo.value
     const pass = form.password.value
-    console.log({ email, pass, name, photo })
+    const address = ''
+    const phone = ''
+    console.log({ email, pass, name, photo, address, phone })
     try {
 
       //User Registration
@@ -23,7 +25,7 @@ const Registration = () => {
       await updateUserProfile(name, photo)
       setUser({ ...user, photoURL: photo, displayName: name })
       // Save to DB only if new
-      await saveUserToDB(name, email, photo);
+      await saveUserToDB(name, email, photo, address, phone);
       navigate('/')
       toast.success('Signup Successful')
     } catch (err) {
@@ -42,7 +44,9 @@ const Registration = () => {
 await saveUserToDB(
   signedInUser.displayName,
   signedInUser.email,
-  signedInUser.photoURL
+  signedInUser.photoURL,
+  '',
+  '',
 );
     toast.success('Signin Successful');
     navigate('/');
@@ -53,8 +57,8 @@ await saveUserToDB(
 };
 
   // Save user to backend 
- const saveUserToDB = async (name, email, photoURL) => {
-  console.log('Attempting to save user to DB:', { name, email, photoURL });
+ const saveUserToDB = async (name, email, photoURL, address = '', phone = '') => {
+  console.log('Attempting to save user to DB:', { name, email, photoURL, address, phone });
 
   try {
     const res = await fetch(`http://localhost:5000/users/${email}`);
@@ -67,6 +71,9 @@ await saveUserToDB(
         photoURL,
         role: 'user',
         cart: [],
+        address,
+        phone,
+
       };
 
       const response = await fetch('http://localhost:5000/users', {
