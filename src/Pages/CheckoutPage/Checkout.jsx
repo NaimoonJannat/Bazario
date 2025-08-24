@@ -33,7 +33,9 @@ const Checkout = () => {
             didOpen: () => {
               const btn = document.getElementById("goProfile");
               btn.addEventListener("click", () => {
+                Swal.close(); 
                 navigate("/profile");
+
               });
             },
           });
