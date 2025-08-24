@@ -4,6 +4,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { FaTrash } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import Loader from './Loader'
+import { Link } from 'react-router';
 
 const Cart = ({ isOpen, onClose }) => {
   const { user } = useContext(AuthContext);
@@ -176,9 +177,11 @@ const Cart = ({ isOpen, onClose }) => {
               <h3 className="text-lg font-semibold text-[#001f3f] dark:text-white">
                 Subtotal: ৳ {subtotal.toFixed(2)}
               </h3>
-              <button className="px-4 py-2 bg-[#d4ff00] text-[#001f3f] font-semibold rounded hover:bg-[#c0e600]">
+              <Link to={"/checkout"}>
+              <div className="px-4 py-2 bg-[#d4ff00] text-[#001f3f] font-semibold rounded hover:bg-[#c0e600]">
                 Checkout
-              </button>
+              </div>
+              </Link>
             </div>
           </>
         )}

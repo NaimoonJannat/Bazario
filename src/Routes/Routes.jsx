@@ -23,7 +23,7 @@ import OnSHopSale from "../Roles/Seller/Dashboard/DashboardPages/OnSHopSale";
 import ProductDetails from "../Pages/ProductsPage/ProductDetails";
 import Favorite from "../Pages/FavoritePage/Favorite";
 import Profile from "../Pages/ProfilePage/Profile";
-import Checkout from "../Pages/CheckoutPage";
+import Checkout from "../Pages/CheckoutPage/Checkout";
 
 const Routes = createBrowserRouter([
   {
