@@ -24,6 +24,7 @@ import ProductDetails from "../Pages/ProductsPage/ProductDetails";
 import Favorite from "../Pages/FavoritePage/Favorite";
 import Profile from "../Pages/ProfilePage/Profile";
 import Checkout from "../Pages/CheckoutPage/Checkout";
+import History from "../Pages/HistoryPage/History";
 
 const Routes = createBrowserRouter([
   {
@@ -65,6 +66,11 @@ const Routes = createBrowserRouter([
       {
         path: "/checkout",
         element: <Checkout />,
+        
+      },
+      {
+        path: "/history",
+        element: <History />,
         
       },
     ],
