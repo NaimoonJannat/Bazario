@@ -177,7 +177,8 @@ const Cart = ({ isOpen, onClose }) => {
               <h3 className="text-lg font-semibold text-[#001f3f] dark:text-white">
                 Subtotal: ৳ {subtotal.toFixed(2)}
               </h3>
-              <Link to={"/checkout"}>
+              <Link to={"/checkout"}
+               onClick={onClose}>
               <div className="px-4 py-2 bg-[#d4ff00] text-[#001f3f] font-semibold rounded hover:bg-[#c0e600]">
                 Checkout
               </div>
