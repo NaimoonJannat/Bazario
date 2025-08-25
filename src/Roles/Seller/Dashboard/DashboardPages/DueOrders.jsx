@@ -54,23 +54,29 @@ const DueOrders = () => {
     setSelectedOrder(null);
   };
 
-  // Update order status in backend
-  const handleStatusChange = async (orderId, newStatus) => {
-    try {
-      await axios.put(`http://localhost:5000/orders/id/${orderId}`, {
-        status: newStatus,
-      });
+// Update order status in backend
+const handleStatusChange = async (orderId, newStatus) => {
+  try {
+    const updateData = { status: newStatus };
 
-      // Update frontend state
-      setOrders((prev) =>
-        prev.map((order) =>
-          order._id === orderId ? { ...order, status: newStatus } : order
-        )
-      );
-    } catch (error) {
-      console.error("Error updating order status:", error);
+    // If status changed to delivered, add deliveredTime
+    if (newStatus === "delivered") {
+      updateData.deliveredTime = new Date().toISOString();
     }
-  };
+
+    await axios.put(`http://localhost:5000/orders/id/${orderId}`, updateData);
+
+    // Update frontend state
+    setOrders((prev) =>
+      prev.map((order) =>
+        order._id === orderId ? { ...order, ...updateData } : order
+      )
+    );
+  } catch (error) {
+    console.error("Error updating order status:", error);
+  }
+};
+
 
   // Pagination logic
   const totalPages = Math.ceil(orders.length / rowsPerPage);
