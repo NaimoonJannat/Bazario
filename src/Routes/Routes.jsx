@@ -23,6 +23,9 @@ import OnSHopSale from "../Roles/Seller/Dashboard/DashboardPages/OnSHopSale";
 import ProductDetails from "../Pages/ProductsPage/ProductDetails";
 import Favorite from "../Pages/FavoritePage/Favorite";
 import Profile from "../Pages/ProfilePage/Profile";
+import Checkout from "../Pages/CheckoutPage/Checkout";
+import History from "../Pages/HistoryPage/History";
+import OrderHistory from "../Roles/Seller/Dashboard/DashboardPages/OrderHistory";
 
 const Routes = createBrowserRouter([
   {
@@ -59,7 +62,17 @@ const Routes = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
-        loader: () => fetch("http://localhost:5000/users")
+        
+      },
+      {
+        path: "/checkout",
+        element: <Checkout />,
+        
+      },
+      {
+        path: "/history",
+        element: <History />,
+        
       },
     ],
   },
@@ -86,6 +99,10 @@ const Routes = createBrowserRouter([
        {
         path: "due-orders", // /dashboard/due-orders
         element: <DueOrders></DueOrders>,
+      },
+       {
+        path: "order-history", // /dashboard/order-history
+        element: <OrderHistory></OrderHistory>,
       },
        {
         path: "out-of-stock", // /dashboard/OutOfStock

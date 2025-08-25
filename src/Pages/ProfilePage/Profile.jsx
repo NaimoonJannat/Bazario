@@ -12,11 +12,11 @@ const Profile = () => {
     phone: "",
   });
 
-  const { user } = useContext(AuthContext); // renamed from me
+  const { user } = useContext(AuthContext); 
 
   // Fetch user data from backend
   useEffect(() => {
-    if (!user?.email) return; // wait until authUser exists
+    if (!user?.email) return; 
 
     const fetchUser = async () => {
       try {
