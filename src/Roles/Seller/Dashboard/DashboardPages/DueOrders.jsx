@@ -215,7 +215,7 @@ const DueOrders = () => {
       {/* Modal */}
       {selectedOrder && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-40">
-          <div className="bg-white w-full max-w-2xl rounded-lg shadow-lg p-6 relative">
+          <div className="bg-white w-full max-w-2xl rounded-lg shadow-lg p-6 relative max-h-[80vh] overflow-y-auto">
             <button
               onClick={closeModal}
               className="absolute top-2 right-2 text-gray-500 hover:text-black"
