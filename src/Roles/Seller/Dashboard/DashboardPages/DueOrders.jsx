@@ -67,7 +67,7 @@ const DueOrders = () => {
       {/* Header section  */}
       <div className="flex flex-row justify-between items-center">
         <h2 className="text-4xl font-bold mb-6">Due Orders</h2>
-        <Link to={"/order-history"}>
+        <Link to={"/dashboard/order-history"}>
           <div className="px-4 py-2 bg-[#001f3f] text-[#d4ff00] font-semibold rounded hover:text-[#001f3f] hover:bg-[#d4ff00]">
             Order History
           </div>
