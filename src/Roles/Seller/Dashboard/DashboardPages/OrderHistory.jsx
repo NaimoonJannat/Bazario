@@ -94,13 +94,38 @@ const OrderHistory = () => {
                   <td className="py-3 px-4">{order.note}</td>
                   <td className="py-3 px-4">৳{order.subtotal + order.delivery}</td>
                   <td className="py-3 px-4">
-                    <button
-                      onClick={() => window.print()} // or customize print logic
-                      className="text-green-600 hover:text-green-800"
-                    >
-                      <FaPrint size={18} />
-                    </button>
-                  </td>
+  <button
+    onClick={async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/orders/${order._id}/receipt`, {
+          method: "GET",
+        });
+
+        if (!response.ok) throw new Error("Failed to fetch PDF");
+
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+
+        // Create a temporary link to trigger download
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `receipt-${order._id}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+
+        // Cleanup
+        link.remove();
+        window.URL.revokeObjectURL(url);
+      } catch (err) {
+        console.error("Error downloading invoice:", err);
+      }
+    }}
+    className="text-green-600 hover:text-green-800"
+  >
+    <FaPrint size={18} />
+  </button>
+</td>
+
                   <td className="py-3 px-4">
                     <button
                       onClick={() => openModal(order)}
