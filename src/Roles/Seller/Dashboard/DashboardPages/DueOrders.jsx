@@ -15,14 +15,19 @@ const DueOrders = () => {
     fetchOrders();
   }, []);
 
-  const fetchOrders = async () => {
-    try {
-      const res = await axios.get("http://localhost:5000/orders");
-      setOrders(res.data);
-    } catch (error) {
-      console.error("Error fetching orders:", error);
-    }
-  };
+ const fetchOrders = async () => {
+  try {
+    const res = await axios.get("http://localhost:5000/orders");
+    // Filter out delivered orders
+    const dueOrders = res.data.filter(
+      (order) => order.status === "pending" || order.status === "approved"
+    );
+    setOrders(dueOrders);
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+  }
+};
+
 
   const fetchProduct = async (productId) => {
     if (productsCache[productId]) {
