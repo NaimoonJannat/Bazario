@@ -49,6 +49,24 @@ const DueOrders = () => {
     setSelectedOrder(null);
   };
 
+  // Update order status in backend
+  const handleStatusChange = async (orderId, newStatus) => {
+    try {
+      await axios.put(`http://localhost:5000/orders/id/${orderId}`, {
+        status: newStatus,
+      });
+
+      // Update frontend state
+      setOrders((prev) =>
+        prev.map((order) =>
+          order._id === orderId ? { ...order, status: newStatus } : order
+        )
+      );
+    } catch (error) {
+      console.error("Error updating order status:", error);
+    }
+  };
+
   // Pagination logic
   const totalPages = Math.ceil(orders.length / rowsPerPage);
   const paginatedOrders = orders.slice(
@@ -104,11 +122,21 @@ const DueOrders = () => {
                   </td>
                   <td className="py-3 px-4">
                     <select
-                      defaultValue={order.status}
+                      value={order.status}
+                      onChange={(e) =>
+                        handleStatusChange(order._id, e.target.value)
+                      }
                       className="border rounded p-1"
                     >
-                      <option value="pending">Pending</option>
-                      <option value="approved">Approved</option>
+                      <option value="pending" disabled={order.status !== "pending"}>
+                        Pending
+                      </option>
+                      <option
+                        value="approved"
+                        disabled={order.status === "delivered"}
+                      >
+                        Approved
+                      </option>
                       <option value="delivered">Delivered</option>
                     </select>
                   </td>
