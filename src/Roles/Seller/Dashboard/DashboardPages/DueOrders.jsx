@@ -58,25 +58,23 @@ const DueOrders = () => {
     setSelectedOrder(null);
   };
 
-  const handleStatusChange = async (orderId, newStatus) => {
-    try {
-      const updateData = { status: newStatus };
+ const handleStatusChange = async (orderId, newStatus) => {
+  try {
+    const updateData = { status: newStatus };
 
-      if (newStatus === "delivered") {
-        updateData.deliveredTime = new Date().toISOString();
-      }
-
-      await axios.put(`http://localhost:5000/orders/id/${orderId}`, updateData);
-
-      setOrders((prev) =>
-        prev.map((order) =>
-          order._id === orderId ? { ...order, ...updateData } : order
-        )
-      );
-    } catch (error) {
-      console.error("Error updating order status:", error);
+    if (newStatus === "delivered") {
+      updateData.deliveredTime = new Date().toISOString();
     }
-  };
+
+    await axios.put(`http://localhost:5000/orders/id/${orderId}`, updateData);
+
+    // Reload the page after status change
+    window.location.reload();
+  } catch (error) {
+    console.error("Error updating order status:", error);
+  }
+};
+
 
   const totalPages = Math.ceil(orders.length / rowsPerPage);
   const paginatedOrders = orders.slice(
@@ -104,9 +102,11 @@ const DueOrders = () => {
 
       {/* Loader */}
       {loading ? (
-        <Loader />
+          <div className="flex justify-center items-center min-h-[300px]">
+    <Loader />
+  </div>
       ) : orders.length === 0 ? (
-        <p className="text-center text-gray-500 text-lg mt-10">
+        <p className="text-center text-gray-500 text-xl mt-10">
           There is no Due Order Right now!
         </p>
       ) : (
