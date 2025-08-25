@@ -7,6 +7,9 @@ const DueOrders = () => {
   const [orders, setOrders] = useState([]);
   const [productsCache, setProductsCache] = useState({});
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const rowsPerPage = 6;
 
   useEffect(() => {
     fetchOrders();
@@ -38,7 +41,6 @@ const DueOrders = () => {
   };
 
   const openModal = async (order) => {
-    // fetch all product details first
     await Promise.all(order.orders.map((item) => fetchProduct(item.productId)));
     setSelectedOrder(order);
   };
@@ -47,17 +49,30 @@ const DueOrders = () => {
     setSelectedOrder(null);
   };
 
+  // Pagination logic
+  const totalPages = Math.ceil(orders.length / rowsPerPage);
+  const paginatedOrders = orders.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
+
+  const goToPage = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
   return (
     <div className="p-4">
-         {/* Header section  */}
-            <div className='flex flex-row justify-between items-center'>
-                 <h2 className="text-4xl font-bold mb-6">Due Orders</h2>
-              <Link to={"/order-history"}>
-              <div className="px-4 py-2 bg-[#001f3f] text-[#d4ff00] font-semibold rounded hover:text-[#001f3f] hover:bg-[#d4ff00]">
-                Order History
-              </div>
-              </Link>
-            </div>
+      {/* Header section  */}
+      <div className="flex flex-row justify-between items-center">
+        <h2 className="text-4xl font-bold mb-6">Due Orders</h2>
+        <Link to={"/order-history"}>
+          <div className="px-4 py-2 bg-[#001f3f] text-[#d4ff00] font-semibold rounded hover:text-[#001f3f] hover:bg-[#d4ff00]">
+            Order History
+          </div>
+        </Link>
+      </div>
 
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
@@ -72,9 +87,9 @@ const DueOrders = () => {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
+            {paginatedOrders.map((order) => (
               <tr key={order._id} className="border-b hover:bg-gray-50">
-                <td className="py-3 px-4">{order._id.slice(-6)}</td>
+                <td className="py-3 px-4">{order._id}</td>
                 <td className="py-3 px-4">
                   <div>
                     <p className="font-semibold">{order.name}</p>
@@ -109,6 +124,70 @@ const DueOrders = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination */}
+<div className="flex items-center justify-between mt-6">
+  <button
+    onClick={() => goToPage(currentPage - 1)}
+    disabled={currentPage === 1}
+    className="flex items-center px-5 py-2 text-sm text-[#d4ff00] capitalize transition-colors duration-200 bg-[#001f3f] border rounded-md gap-x-2 disabled:opacity-50 hover:text-[#001f3f] hover:bg-[#d4ff00]"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      className="w-5 h-5 rtl:-scale-x-100"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
+      />
+    </svg>
+    <span>Previous</span>
+  </button>
+
+  <div className="items-center hidden lg:flex gap-x-3">
+    {Array.from({ length: totalPages }, (_, i) => (
+      <button
+        key={i + 1}
+        onClick={() => goToPage(i + 1)}
+        className={`px-2 py-1 text-sm rounded-md ${
+          currentPage === i + 1
+            ? "text-[#001f3f] bg-[#d4ff00]"
+            : "text-gray-500 hover:bg-gray-100"
+        }`}
+      >
+        {i + 1}
+      </button>
+    ))}
+  </div>
+
+  <button
+    onClick={() => goToPage(currentPage + 1)}
+    disabled={currentPage === totalPages}
+    className="flex items-center px-5 py-2 text-sm text-[#d4ff00] capitalize transition-colors duration-200 bg-[#001f3f] border rounded-md gap-x-2 disabled:opacity-50 hover:text-[#001f3f] hover:bg-[#d4ff00]"
+  >
+    <span>Next</span>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      className="w-5 h-5 rtl:-scale-x-100"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+      />
+    </svg>
+  </button>
+</div>
+
 
       {/* Modal */}
       {selectedOrder && (
