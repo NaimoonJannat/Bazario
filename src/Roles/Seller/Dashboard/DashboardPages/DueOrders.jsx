@@ -5,8 +5,8 @@ import { Link } from "react-router";
 
 const DueOrders = () => {
   const [orders, setOrders] = useState([]);
-  const [expandedRow, setExpandedRow] = useState(null);
   const [productsCache, setProductsCache] = useState({});
+  const [selectedOrder, setSelectedOrder] = useState(null);
 
   useEffect(() => {
     fetchOrders();
@@ -21,7 +21,6 @@ const DueOrders = () => {
     }
   };
 
-  // Fetch product details by id
   const fetchProduct = async (productId) => {
     if (productsCache[productId]) {
       return productsCache[productId];
@@ -38,24 +37,19 @@ const DueOrders = () => {
     }
   };
 
-  // Load products for an order when expanding
-  const toggleExpand = async (order) => {
-    if (expandedRow === order._id) {
-      setExpandedRow(null);
-      return;
-    }
+  const openModal = async (order) => {
+    // fetch all product details first
+    await Promise.all(order.orders.map((item) => fetchProduct(item.productId)));
+    setSelectedOrder(order);
+  };
 
-    // fetch all product details for this order
-    await Promise.all(
-      order.orders.map((item) => fetchProduct(item.productId))
-    );
-
-    setExpandedRow(order._id);
+  const closeModal = () => {
+    setSelectedOrder(null);
   };
 
   return (
     <div className="p-4">
-       {/* Header section  */}
+         {/* Header section  */}
             <div className='flex flex-row justify-between items-center'>
                  <h2 className="text-4xl font-bold mb-6">Due Orders</h2>
               <Link to={"/order-history"}>
@@ -79,82 +73,109 @@ const DueOrders = () => {
           </thead>
           <tbody>
             {orders.map((order) => (
-              <React.Fragment key={order._id}>
-                <tr className="border-b hover:bg-gray-50">
-                  <td className="py-3 px-4">{order._id.slice(-6)}</td>
-                  <td className="py-3 px-4">
-                    <div>
-                      <p className="font-semibold">{order.name}</p>
-                      <p>{order.phone}</p>
-                      <p className="text-sm text-gray-500">{order.address}</p>
-                    </div>
-                  </td>
-                  <td className="py-3 px-4">
-                    {new Date(order.orderedAt).toLocaleString()}
-                  </td>
-                  <td className="py-3 px-4">
-                    <select
-                      defaultValue={order.status}
-                      className="border rounded p-1"
-                    >
-                      <option value="pending">Pending</option>
-                      <option value="approved">Approved</option>
-                      <option value="delivered">Delivered</option>
-                    </select>
-                  </td>
-                  <td className="py-3 px-4">{order.note}</td>
-                  <td className="py-3 px-4">
-                    <button
-                      onClick={() => toggleExpand(order)}
-                      className="text-blue-600 hover:text-blue-800"
-                    >
-                      <FaList size={20} />
-                    </button>
-                  </td>
-                </tr>
-
-                {/* Expanded row for order details */}
-                {expandedRow === order._id && (
-                  <tr>
-                    <td colSpan="6" className="bg-gray-50 p-4">
-                      <h3 className="font-semibold mb-2">Ordered Products:</h3>
-                      <ul className="space-y-2">
-                        {order.orders.map((item, i) => {
-                          const product = productsCache[item.productId];
-                          return (
-                            <li
-                              key={i}
-                              className="flex justify-between border-b pb-2"
-                            >
-                              <span>
-                                {product ? product.title : "Loading..."} x{" "}
-                                {item.quantity}
-                              </span>
-                              <span>
-                                ৳
-                                {product
-                                  ? parseInt(product.price) * item.quantity
-                                  : "..."}
-                              </span>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                      <div className="mt-4 text-right space-y-1">
-                        <p>Subtotal: ৳{order.subtotal}</p>
-                        <p>Delivery: ৳{order.delivery}</p>
-                        <p className="font-bold">
-                          Total: ৳{order.subtotal + order.delivery}
-                        </p>
-                      </div>
-                    </td>
-                  </tr>
-                )}
-              </React.Fragment>
+              <tr key={order._id} className="border-b hover:bg-gray-50">
+                <td className="py-3 px-4">{order._id.slice(-6)}</td>
+                <td className="py-3 px-4">
+                  <div>
+                    <p className="font-semibold">{order.name}</p>
+                    <p>{order.phone}</p>
+                    <p className="text-sm text-gray-500">{order.address}</p>
+                  </div>
+                </td>
+                <td className="py-3 px-4">
+                  {new Date(order.orderedAt).toLocaleString()}
+                </td>
+                <td className="py-3 px-4">
+                  <select
+                    defaultValue={order.status}
+                    className="border rounded p-1"
+                  >
+                    <option value="pending">Pending</option>
+                    <option value="approved">Approved</option>
+                    <option value="delivered">Delivered</option>
+                  </select>
+                </td>
+                <td className="py-3 px-4">{order.note}</td>
+                <td className="py-3 px-4">
+                  <button
+                    onClick={() => openModal(order)}
+                    className="text-blue-600 hover:text-blue-800"
+                  >
+                    <FaList size={20} />
+                  </button>
+                </td>
+              </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+      {/* Modal */}
+      {selectedOrder && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-40">
+          <div className="bg-white w-full max-w-2xl rounded-lg shadow-lg p-6 relative">
+            <button
+              onClick={closeModal}
+              className="absolute top-2 right-2 text-gray-500 hover:text-black"
+            >
+              ✖
+            </button>
+            <h3 className="text-2xl font-bold mb-4">Order Details</h3>
+
+            <div className="mb-4">
+              <p>
+                <span className="font-semibold">Customer:</span>{" "}
+                {selectedOrder.name}
+              </p>
+              <p>
+                <span className="font-semibold">Phone:</span>{" "}
+                {selectedOrder.phone}
+              </p>
+              <p>
+                <span className="font-semibold">Address:</span>{" "}
+                {selectedOrder.address}
+              </p>
+            </div>
+
+            <h4 className="font-semibold mb-2">Products</h4>
+            <ul className="divide-y">
+              {selectedOrder.orders.map((item, i) => {
+                const product = productsCache[item.productId];
+                return (
+                  <li key={i} className="flex justify-between py-2">
+                    <span>
+                      {product ? product.title : "Loading..."} x {item.quantity}
+                    </span>
+                    <span>
+                      ৳
+                      {product
+                        ? parseInt(product.price) * item.quantity
+                        : "..."}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+
+            <div className="mt-4 text-right space-y-1">
+              <p>Subtotal: ৳{selectedOrder.subtotal}</p>
+              <p>Delivery: ৳{selectedOrder.delivery}</p>
+              <p className="font-bold">
+                Total: ৳{selectedOrder.subtotal + selectedOrder.delivery}
+              </p>
+            </div>
+
+            <div className="mt-6 flex justify-end">
+              <button
+                onClick={closeModal}
+                className="bg-[#001f3f] text-white px-4 py-2 rounded-lg hover:bg-[#003366]"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
