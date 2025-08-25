@@ -21,6 +21,7 @@ const DueOrders = () => {
     }
   };
 
+  // Fetch product details by id
   const fetchProduct = async (productId) => {
     if (productsCache[productId]) {
       return productsCache[productId];
@@ -37,15 +38,26 @@ const DueOrders = () => {
     }
   };
 
-  const toggleExpand = async (orderId) => {
-    setExpandedRow(expandedRow === orderId ? null : orderId);
+  // Load products for an order when expanding
+  const toggleExpand = async (order) => {
+    if (expandedRow === order._id) {
+      setExpandedRow(null);
+      return;
+    }
+
+    // fetch all product details for this order
+    await Promise.all(
+      order.orders.map((item) => fetchProduct(item.productId))
+    );
+
+    setExpandedRow(order._id);
   };
 
   return (
     <div className="p-4">
-      {/* Header section  */}
+       {/* Header section  */}
             <div className='flex flex-row justify-between items-center'>
-                 <h2 className="text-5xl">Due Orders</h2>
+                 <h2 className="text-4xl font-bold mb-6">Due Orders</h2>
               <Link to={"/order-history"}>
               <div className="px-4 py-2 bg-[#001f3f] text-[#d4ff00] font-semibold rounded hover:text-[#001f3f] hover:bg-[#d4ff00]">
                 Order History
@@ -93,7 +105,7 @@ const DueOrders = () => {
                   <td className="py-3 px-4">{order.note}</td>
                   <td className="py-3 px-4">
                     <button
-                      onClick={() => toggleExpand(order._id)}
+                      onClick={() => toggleExpand(order)}
                       className="text-blue-600 hover:text-blue-800"
                     >
                       <FaList size={20} />
@@ -107,23 +119,26 @@ const DueOrders = () => {
                     <td colSpan="6" className="bg-gray-50 p-4">
                       <h3 className="font-semibold mb-2">Ordered Products:</h3>
                       <ul className="space-y-2">
-                        {order.orders.map((item, i) => (
-                          <li
-                            key={i}
-                            className="flex justify-between border-b pb-2"
-                          >
-                            <span>
-                              {productsCache[item.productId]?.name ||
-                                "Loading..."}
-                              {"  "}x {item.quantity}
-                            </span>
-                            <span>
-                              ৳
-                              {(productsCache[item.productId]?.price || 0) *
-                                item.quantity}
-                            </span>
-                          </li>
-                        ))}
+                        {order.orders.map((item, i) => {
+                          const product = productsCache[item.productId];
+                          return (
+                            <li
+                              key={i}
+                              className="flex justify-between border-b pb-2"
+                            >
+                              <span>
+                                {product ? product.title : "Loading..."} x{" "}
+                                {item.quantity}
+                              </span>
+                              <span>
+                                ৳
+                                {product
+                                  ? parseInt(product.price) * item.quantity
+                                  : "..."}
+                              </span>
+                            </li>
+                          );
+                        })}
                       </ul>
                       <div className="mt-4 text-right space-y-1">
                         <p>Subtotal: ৳{order.subtotal}</p>
