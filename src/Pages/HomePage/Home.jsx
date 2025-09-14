@@ -4,14 +4,20 @@ import axios from "axios";
 import { FaArrowRight } from "react-icons/fa";
 import ProductCardH from "./ProductCardH";
 
+// Swiper imports
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
 
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get("http://localhost:5000/products").then((res) => {
-      // Pick random 8 products
       const shuffled = res.data.sort(() => 0.5 - Math.random());
       setProducts(shuffled.slice(0, 8));
     });
@@ -23,20 +29,41 @@ const Home = () => {
       <HeroBanner />
 
       {/* You May Like Section */}
-      <section className="py-10 px-6">
-        <h2 className="text-3xl font-bold mb-6 text-[#d4ff00]">
+      <section className="py-12 px-6">
+        <h2 className="text-3xl font-bold mb-8 text-[#d4ff00]">
           You May Like
         </h2>
-        <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
+        <Swiper
+          modules={[Autoplay, Navigation]}
+          spaceBetween={20}
+          slidesPerView={1}
+          navigation
+          autoplay={{ delay: 2500, disableOnInteraction: false }}
+          breakpoints={{
+            640: { slidesPerView: 2 },
+            1024: { slidesPerView: 4 },
+          }}
+        >
           {products.map((product) => (
-            <ProductCardH key={product._id} product={product} />
+            <SwiperSlide key={product._id}>
+              <div
+                onClick={() =>
+                  navigate(`/products/product/${product._id}`)
+                }
+                className="cursor-pointer"
+              >
+                <ProductCardH product={product} />
+              </div>
+            </SwiperSlide>
           ))}
-        </div>
+        </Swiper>
       </section>
 
       {/* Categories Section */}
-      <section className="py-10 px-6">
-        <h2 className="text-3xl font-bold mb-6 text-[#d4ff00]">Shop by Category</h2>
+      <section className="py-12 px-6">
+        <h2 className="text-3xl font-bold mb-6 text-[#d4ff00]">
+          Shop by Category
+        </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {["Electronics", "Grocery", "Fashion", "Books"].map((cat) => (
             <div
@@ -49,36 +76,40 @@ const Home = () => {
         </div>
       </section>
 
-     {/* Best Deals Section */}
-<section className="py-10 px-6 bg-[#d4ff00] text-[#001f3f]">
-  <h2 className="text-3xl font-bold mb-6">Best Deals</h2>
-  <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    {products.slice(0, 4).map((product) => (
-      <div
-        key={product._id}
-        className="bg-white rounded-2xl shadow-md p-4 hover:shadow-lg transition"
-      >
-        <img
-          src={product.images?.[0] || "https://via.placeholder.com/200"}
-          alt={product.title}
-          className="h-40 w-full object-cover rounded-xl mb-3"
-        />
-        <h3 className="text-lg font-semibold">{product.title}</h3>
-        <p className="font-bold">৳ {product.price}</p>
-      </div>
-    ))}
-  </div>
-</section>
-
+      {/* Best Deals Section */}
+      <section className="py-12 px-6 bg-[#d4ff00] text-[#001f3f]">
+        <h2 className="text-3xl font-bold mb-6">Best Deals</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {products.slice(0, 4).map((product) => (
+            <div
+              key={product._id}
+              onClick={() =>
+                navigate(`/products/product/${product._id}`)
+              }
+              className="bg-white rounded-2xl shadow-md p-4 hover:shadow-lg transition cursor-pointer"
+            >
+              <img
+                src={product.images?.[0] || "https://via.placeholder.com/200"}
+                alt={product.title}
+                className="h-40 w-full object-cover rounded-xl mb-3"
+              />
+              <h3 className="text-lg font-semibold">{product.title}</h3>
+              <p className="font-bold">৳ {product.price}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* Customer Reviews */}
-      <section className="py-10 px-6">
-        <h2 className="text-3xl font-bold mb-6 text-[#d4ff00]">What Our Customers Say</h2>
+      <section className="py-12 px-6">
+        <h2 className="text-3xl font-bold mb-6 text-[#d4ff00]">
+          What Our Customers Say
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
             "Great experience, fast delivery!",
             "Products are fresh and good quality.",
-            "Super easy ordering process!"
+            "Super easy ordering process!",
           ].map((review, i) => (
             <div
               key={i}
@@ -92,7 +123,7 @@ const Home = () => {
       </section>
 
       {/* Call to Action */}
-      <section className="py-10 px-6 text-center">
+      <section className="py-12 px-6 text-center">
         <h2 className="text-3xl font-bold text-[#d4ff00] mb-4">
           Ready to Shop?
         </h2>
