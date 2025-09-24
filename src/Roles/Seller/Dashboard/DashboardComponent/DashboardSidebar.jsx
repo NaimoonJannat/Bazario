@@ -8,6 +8,7 @@ import { BiSolidCoupon } from "react-icons/bi";
 import { RiDiscountPercentFill } from "react-icons/ri";
 import { MdOutlineFeedback } from "react-icons/md";
 import { FaClockRotateLeft } from "react-icons/fa6";
+import { AiOutlineProduct } from "react-icons/ai";
 
 const Sidebar = () => {
   const [hovered, setHovered] = useState(false);
@@ -23,6 +24,11 @@ const Sidebar = () => {
     icon: <IoAddCircleOutline />,
     label: 'Add Product',
     path: `${DASHBOARD_BASE}/add-product`,
+  },
+  {
+    icon: <AiOutlineProduct />,
+    label: 'Products',
+    path: `${DASHBOARD_BASE}/products`,
   },
   {
     icon: <BiSolidCoupon />,

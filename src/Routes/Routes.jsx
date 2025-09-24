@@ -26,6 +26,7 @@ import Profile from "../Pages/ProfilePage/Profile";
 import Checkout from "../Pages/CheckoutPage/Checkout";
 import History from "../Pages/HistoryPage/History";
 import OrderHistory from "../Roles/Seller/Dashboard/DashboardPages/OrderHistory";
+import AdminProducts from "../Roles/Seller/Dashboard/DashboardPages/AdminProducts";
 
 const Routes = createBrowserRouter([
   {
@@ -87,6 +88,11 @@ const Routes = createBrowserRouter([
       {
         path: "add-product", // /dashboard/add-product
         element: <AddProduct />,
+      },
+      {
+        path: "products", // /dashboard/products
+        element: <AdminProducts />,
+         loader: () => fetch("http://localhost:5000/products")
       },
        {
         path: "coupons", // /dashboard/coupons
