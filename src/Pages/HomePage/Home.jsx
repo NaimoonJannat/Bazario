@@ -3,6 +3,7 @@ import HeroBanner from "./HeroBanner";
 import axios from "axios";
 import { FaArrowRight } from "react-icons/fa";
 import ProductCardH from "./ProductCardH";
+import FeedbackSection from "./FeedbackSection";
 
 // Swiper imports
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -11,6 +12,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 import { useNavigate } from "react-router-dom";
+
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -144,27 +146,32 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Customer Reviews */}
-      <section className="py-12 px-6">
-        <h2 className="text-3xl font-bold mb-6 text-[#d4ff00]">
-          What Our Customers Say
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            "Great experience, fast delivery!",
-            "Products are fresh and good quality.",
-            "Super easy ordering process!",
-          ].map((review, i) => (
-            <div
-              key={i}
-              className="bg-white text-[#001f3f] p-6 rounded-2xl shadow-md"
-            >
-              <p>"{review}"</p>
-              <p className="mt-3 font-semibold text-right">- Customer {i + 1}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      <FeedbackSection></FeedbackSection>
+
+      {/* Trending products */}
+<section className="py-12 px-6">
+  <h2 className="text-3xl font-bold mb-6 text-[#d4ff00]">
+    Trending Products
+  </h2>
+  <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    {products.slice(0, 6).map((product) => (
+      <div
+        key={product._id}
+        onClick={() => navigate(`/products/product/${product._id}`)}
+        className="bg-white rounded-2xl shadow-md p-4 hover:shadow-lg transition cursor-pointer"
+      >
+        <img
+          src={product.images?.[0] || "https://via.placeholder.com/200"}
+          alt={product.title}
+          className="h-40 w-full object-cover rounded-xl mb-3"
+        />
+        <h3 className="text-lg font-semibold">{product.title}</h3>
+        <p className="font-bold">৳ {product.price}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
 
       {/* Call to Action */}
       <section className="py-12 px-6 text-center">
