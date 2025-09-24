@@ -118,6 +118,13 @@ const ProductDetails = () => {
     }
   };
 
+  useEffect(() => {
+  if (id) {
+    localStorage.setItem("lastViewedProductId", id);
+  }
+}, [id]);
+
+
   return (
     <div className="card lg:card-side lg:p-8">
       {/* Left: Images */}
