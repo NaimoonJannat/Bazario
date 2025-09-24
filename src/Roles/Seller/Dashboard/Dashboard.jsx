@@ -70,7 +70,7 @@ const Dashboard = () => {
     <div className="p-4 sm:p-6 bg-gray-900 text-gray-100 min-h-screen">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold">📊 Dashboard</h1>
+        <h1 className="text-xl sm:text-2xl font-bold"> Dashboard</h1>
         <div className="flex items-center bg-gray-800 px-3 py-2 rounded shadow w-full sm:w-auto">
           <FiSearch className="text-gray-400 mr-2" />
           <input
@@ -94,7 +94,7 @@ const Dashboard = () => {
             whileHover={{ scale: 1.05 }}
             className="bg-gray-800 p-4 sm:p-6 rounded-xl shadow flex flex-col items-center"
           >
-            <FaDollarSign className="text-teal-400 text-xl sm:text-2xl mb-2" />
+            
             <h2 className="text-base sm:text-lg font-semibold">{stat.title}</h2>
             <p className="text-lg sm:text-xl font-bold text-teal-300">{stat.value}</p>
           </motion.div>
