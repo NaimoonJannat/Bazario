@@ -1,18 +1,24 @@
-import { useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { FaTachometerAlt, FaHourglassEnd, FaUserGraduate, FaUsers } from 'react-icons/fa';
 import { IoAddCircleOutline, IoCalculatorOutline } from "react-icons/io5";
+import { IoIosLogOut } from "react-icons/io";
 import { GoListUnordered } from "react-icons/go";
 import { FcExpired } from "react-icons/fc";
 import { BiSolidCoupon } from "react-icons/bi";
 import { RiDiscountPercentFill } from "react-icons/ri";
 import { MdOutlineFeedback } from "react-icons/md";
 import { FaClockRotateLeft } from "react-icons/fa6";
+import { AiOutlineProduct } from "react-icons/ai";
+import { AuthContext } from '../../../../Provider/AuthProvider';
 
 const Sidebar = () => {
   const [hovered, setHovered] = useState(false);
+  const { logOut } = useContext(AuthContext)
   const location = useLocation();
+  const navigate = useNavigate();
   const DASHBOARD_BASE = '/dashboard';
+  
   const menuItems = [
    {
     icon: <FaTachometerAlt />,
@@ -25,10 +31,15 @@ const Sidebar = () => {
     path: `${DASHBOARD_BASE}/add-product`,
   },
   {
-    icon: <BiSolidCoupon />,
-    label: 'Coupons',
-    path: `${DASHBOARD_BASE}/coupons`,
+    icon: <AiOutlineProduct />,
+    label: 'Products',
+    path: `${DASHBOARD_BASE}/products`,
   },
+  // {
+  //   icon: <BiSolidCoupon />,
+  //   label: 'Coupons',
+  //   path: `${DASHBOARD_BASE}/coupons`,
+  // },
   {
     icon: <FaUsers />,
     label: 'User List',
@@ -49,26 +60,27 @@ const Sidebar = () => {
     label: 'Expired Products',
     path: `${DASHBOARD_BASE}/expired-products`,
   },
-  {
-    icon: <RiDiscountPercentFill />,
-    label: 'Discounts',
-    path: `${DASHBOARD_BASE}/discounts`,
-  },
-  {
-    icon: <MdOutlineFeedback />,
-    label: 'Feedbacks',
-    path: `${DASHBOARD_BASE}/feedback`,
-  },
-  {
-    icon: <FaClockRotateLeft />,
-    label: 'Pre-Orders',
-    path: `${DASHBOARD_BASE}/pre-orders`,
-  },
+  // {
+  //   icon: <RiDiscountPercentFill />,
+  //   label: 'Discounts',
+  //   path: `${DASHBOARD_BASE}/discounts`,
+  // },
+  // {
+  //   icon: <MdOutlineFeedback />,
+  //   label: 'Feedbacks',
+  //   path: `${DASHBOARD_BASE}/feedback`,
+  // },
+  // {
+  //   icon: <FaClockRotateLeft />,
+  //   label: 'Pre-Orders',
+  //   path: `${DASHBOARD_BASE}/pre-orders`,
+  // },
   {
     icon: <IoCalculatorOutline />,
     label: 'On Shop Sale',
     path: `${DASHBOARD_BASE}/on-shop-sale`,
   },
+  
   
     // {
     //   icon: <FaUserGraduate />,
@@ -85,6 +97,10 @@ const Sidebar = () => {
   // Helper to check active path 
   const isActive = (path) => location.pathname === path;
   
+  const handleLogout = () => {
+    logOut();
+    navigate('/'); // redirect to homepage
+  };
 
   return (
     <div
@@ -136,6 +152,20 @@ const Sidebar = () => {
             )} */}
           </li>
         ))}
+        {/* Logout button at the bottom */}
+   <li className="absolute bottom-4 w-full">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 px-4 py-3 text-white w-full transition-all duration-200 hover:bg-[#234465]"
+          >
+            <span className="text-xl"><IoIosLogOut /></span>
+            <span className={`text-sm font-semibold whitespace-nowrap overflow-hidden transition-all duration-300 ${
+              hovered ? 'opacity-100 w-auto' : 'opacity-0 w-0'
+            }`}>
+              Logout
+            </span>
+          </button>
+        </li>
       </ul>
     </div>
   );
