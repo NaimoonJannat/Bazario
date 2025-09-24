@@ -47,26 +47,27 @@ const ExpiredProducts = () => {
           {expiredProducts.map((product) => (
             <div
               key={product._id}
-              className="bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-lg transition"
+              className="bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-lg transition flex flex-col"
             >
               <img
                 src={product.images?.[0]}
                 alt={product.title}
                 className="h-48 w-full object-cover"
               />
-              <div className="p-4 flex flex-col justify-between h-full">
+              <div className="p-4 flex flex-col gap-2">
                 <h3 className="text-lg font-semibold text-gray-800">
                   {product.title}
                 </h3>
-                <p className="text-sm text-gray-500 mb-2">
-                  {product.category}
-                </p>
-                <p className="text-gray-700 font-bold mb-2">
+                <p className="text-sm text-gray-500">{product.category}</p>
+                <p className="text-gray-700 font-bold">
                   Price: {product.price}৳
                 </p>
                 <p className="text-red-600 text-sm font-medium">
                   Expired on:{" "}
                   {new Date(product.expireDate).toLocaleDateString()}
+                </p>
+                <p className="text-gray-600 text-sm">
+                  {product.description?.slice(0, 60)}...
                 </p>
               </div>
             </div>
