@@ -30,11 +30,11 @@ const Sidebar = () => {
     label: 'Products',
     path: `${DASHBOARD_BASE}/products`,
   },
-  {
-    icon: <BiSolidCoupon />,
-    label: 'Coupons',
-    path: `${DASHBOARD_BASE}/coupons`,
-  },
+  // {
+  //   icon: <BiSolidCoupon />,
+  //   label: 'Coupons',
+  //   path: `${DASHBOARD_BASE}/coupons`,
+  // },
   {
     icon: <FaUsers />,
     label: 'User List',
@@ -55,21 +55,21 @@ const Sidebar = () => {
     label: 'Expired Products',
     path: `${DASHBOARD_BASE}/expired-products`,
   },
-  {
-    icon: <RiDiscountPercentFill />,
-    label: 'Discounts',
-    path: `${DASHBOARD_BASE}/discounts`,
-  },
-  {
-    icon: <MdOutlineFeedback />,
-    label: 'Feedbacks',
-    path: `${DASHBOARD_BASE}/feedback`,
-  },
-  {
-    icon: <FaClockRotateLeft />,
-    label: 'Pre-Orders',
-    path: `${DASHBOARD_BASE}/pre-orders`,
-  },
+  // {
+  //   icon: <RiDiscountPercentFill />,
+  //   label: 'Discounts',
+  //   path: `${DASHBOARD_BASE}/discounts`,
+  // },
+  // {
+  //   icon: <MdOutlineFeedback />,
+  //   label: 'Feedbacks',
+  //   path: `${DASHBOARD_BASE}/feedback`,
+  // },
+  // {
+  //   icon: <FaClockRotateLeft />,
+  //   label: 'Pre-Orders',
+  //   path: `${DASHBOARD_BASE}/pre-orders`,
+  // },
   {
     icon: <IoCalculatorOutline />,
     label: 'On Shop Sale',
