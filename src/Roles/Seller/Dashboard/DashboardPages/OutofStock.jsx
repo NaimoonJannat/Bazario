@@ -8,7 +8,7 @@ const OutofStock = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/products");
+        const res = await axios.get("https://bazario-server-pearl.vercel.app/products");
         const filtered = res.data.filter(
           (product) => Number(product.quantity) === 0
         );
@@ -26,7 +26,7 @@ const OutofStock = () => {
   const handleRestock = (productId) => {
     console.log("Restock requested for:", productId);
     // Later you can call your backend API here:
-    // axios.patch(`http://localhost:5000/products/${productId}`, { quantity: newQuantity });
+    // axios.patch(`https://bazario-server-pearl.vercel.app/products/${productId}`, { quantity: newQuantity });
   };
 
   if (loading) {

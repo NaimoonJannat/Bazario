@@ -12,7 +12,7 @@ const Favorite = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:5000/favorite/${user?.email}`)
+      fetch(`https://bazario-server-pearl.vercel.app/favorite/${user?.email}`)
         .then(res => res.json())
         .then(data => {
           const arr = Array.isArray(data) ? data : [];
@@ -55,7 +55,7 @@ const Favorite = () => {
     });
 
     for (const item of payload) {
-      await fetch(`http://localhost:5000/users/${user.email}`, {
+      await fetch(`https://bazario-server-pearl.vercel.app/users/${user.email}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(item),
@@ -85,7 +85,7 @@ const Favorite = () => {
 
   const removeFromFavorites = async (productId) => {
     try {
-      const res = await fetch(`http://localhost:5000/favorite/${user.email}`, {
+      const res = await fetch(`https://bazario-server-pearl.vercel.app/favorite/${user.email}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ productId })

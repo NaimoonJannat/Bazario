@@ -26,7 +26,7 @@ const ProductDetails = () => {
       if (!user?.email) return;
 
       try {
-        const res = await fetch(`http://localhost:5000/favorite/${user.email}`);
+        const res = await fetch(`https://bazario-server-pearl.vercel.app/favorite/${user.email}`);
         const favoriteProducts = await res.json();
 
         if (
@@ -62,7 +62,7 @@ const ProductDetails = () => {
     }
 
     try {
-      const res = await fetch(`http://localhost:5000/favorite/${user.email}`, {
+      const res = await fetch(`https://bazario-server-pearl.vercel.app/favorite/${user.email}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productId: product._id }),
@@ -93,7 +93,7 @@ const ProductDetails = () => {
     }
 
     try {
-      const res = await fetch(`http://localhost:5000/users/${user.email}`, {
+      const res = await fetch(`https://bazario-server-pearl.vercel.app/users/${user.email}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

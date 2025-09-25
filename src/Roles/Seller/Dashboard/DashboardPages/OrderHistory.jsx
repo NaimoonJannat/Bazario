@@ -16,7 +16,7 @@ const OrderHistory = () => {
 
   const fetchOrders = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/orders");
+      const res = await axios.get("https://bazario-server-pearl.vercel.app/orders");
       // filter only delivered orders
       const deliveredOrders = res.data.filter((order) => order.status === "delivered");
       setOrders(deliveredOrders);
@@ -28,7 +28,7 @@ const OrderHistory = () => {
   const fetchProduct = async (productId) => {
     if (productsCache[productId]) return productsCache[productId];
     try {
-      const res = await axios.get(`http://localhost:5000/products/${productId}`);
+      const res = await axios.get(`https://bazario-server-pearl.vercel.app/products/${productId}`);
       setProductsCache((prev) => ({ ...prev, [productId]: res.data }));
       return res.data;
     } catch (error) {
@@ -97,7 +97,7 @@ const OrderHistory = () => {
   <button
     onClick={async () => {
       try {
-        const response = await fetch(`http://localhost:5000/orders/${order._id}/receipt`, {
+        const response = await fetch(`https://bazario-server-pearl.vercel.app/orders/${order._id}/receipt`, {
           method: "GET",
         });
 

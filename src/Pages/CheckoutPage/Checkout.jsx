@@ -18,7 +18,7 @@ const Checkout = () => {
 
     // Fetch profile info
     axios
-      .get(`http://localhost:5000/users/${user.email}`)
+      .get(`https://bazario-server-pearl.vercel.app/users/${user.email}`)
       .then((res) => {
         setProfile(res.data);
 
@@ -45,7 +45,7 @@ const Checkout = () => {
 
     // Fetch cart info
     axios
-      .get(`http://localhost:5000/users/${user.email}/cart`)
+      .get(`https://bazario-server-pearl.vercel.app/users/${user.email}/cart`)
       .then((res) => setCart(res.data))
       .catch((err) => console.log(err));
   }, [user?.email, navigate]);
@@ -85,10 +85,10 @@ const Checkout = () => {
 
   try {
     // Place order
-    await axios.post(`http://localhost:5000/orders/${user.email}`, orderData);
+    await axios.post(`https://bazario-server-pearl.vercel.app/orders/${user.email}`, orderData);
 
     // 🟢 Clear cart from backend
-    await axios.delete(`http://localhost:5000/users/${user.email}/cart`);
+    await axios.delete(`https://bazario-server-pearl.vercel.app/users/${user.email}/cart`);
 
     // 🟢 Also clear cart from local state so UI updates instantly
     setCart([]);

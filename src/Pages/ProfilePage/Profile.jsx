@@ -20,7 +20,7 @@ const Profile = () => {
 
     const fetchUser = async () => {
       try {
-        const API_URL = `http://localhost:5000/users/${user.email}`;
+        const API_URL = `https://bazario-server-pearl.vercel.app/users/${user.email}`;
         const res = await fetch(API_URL);
         const data = await res.json();
         setProfileUser(data);
@@ -61,7 +61,7 @@ const Profile = () => {
   const handleUpdate = async (e) => {
   e.preventDefault();
   try {
-    const API_URL = `http://localhost:5000/users/${user.email}/profile`; // add /profile
+    const API_URL = `https://bazario-server-pearl.vercel.app/users/${user.email}/profile`; // add /profile
     const res = await fetch(API_URL, {
       method: "PATCH", // change from PUT to PATCH
       headers: {

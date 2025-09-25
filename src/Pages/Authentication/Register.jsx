@@ -61,7 +61,7 @@ await saveUserToDB(
   console.log('Attempting to save user to DB:', { name, email, photoURL, address, phone });
 
   try {
-    const res = await fetch(`http://localhost:5000/users/${email}`);
+    const res = await fetch(`https://bazario-server-pearl.vercel.app/users/${email}`);
     const data = await res.json();
 
     if (!data?.email) {
@@ -76,7 +76,7 @@ await saveUserToDB(
 
       };
 
-      const response = await fetch('http://localhost:5000/users', {
+      const response = await fetch('https://bazario-server-pearl.vercel.app/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

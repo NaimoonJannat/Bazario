@@ -71,7 +71,7 @@ const handleIncrease = () => setStateQuantity((prev) => prev + 1);
         images: imageUrls
       };
 
-      const res = await axios.post('http://localhost:5000/products', newProduct);
+      const res = await axios.post('https://bazario-server-pearl.vercel.app/products', newProduct);
 
       if (res.data.insertedId || res.data.acknowledged) {
         Swal.fire({

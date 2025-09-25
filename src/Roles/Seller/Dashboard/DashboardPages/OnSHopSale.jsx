@@ -10,7 +10,7 @@ const OnShopSale = () => {
   // Fetch products from backend
   useEffect(() => {
     axios
-      .get("http://localhost:5000/products")
+      .get("https://bazario-server-pearl.vercel.app/products")
       .then((res) => setProducts(res.data))
       .catch((err) => console.error("Error fetching products:", err));
   }, []);
@@ -69,7 +69,7 @@ const OnShopSale = () => {
   return (
     <div className="p-10">
       <h2 className="text-3xl md:text-5xl font-semibold mb-8 text-[#001f3f]">
-        On-Shop Sell
+        On-Shop Sale
       </h2>
       <div className="p-4 md:flex gap-4">
         {/* Left: Cart */}

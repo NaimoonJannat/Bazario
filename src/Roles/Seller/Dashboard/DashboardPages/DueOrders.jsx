@@ -20,7 +20,7 @@ const DueOrders = () => {
   const fetchOrders = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("http://localhost:5000/orders");
+      const res = await axios.get("https://bazario-server-pearl.vercel.app/orders");
       // Filter out delivered orders
       const dueOrders = res.data.filter(
         (order) => order.status === "pending" || order.status === "approved"
@@ -39,7 +39,7 @@ const DueOrders = () => {
     }
     try {
       const res = await axios.get(
-        `http://localhost:5000/products/${productId}`
+        `https://bazario-server-pearl.vercel.app/products/${productId}`
       );
       setProductsCache((prev) => ({ ...prev, [productId]: res.data }));
       return res.data;
@@ -66,7 +66,7 @@ const DueOrders = () => {
       updateData.deliveredTime = new Date().toISOString();
     }
 
-    await axios.put(`http://localhost:5000/orders/id/${orderId}`, updateData);
+    await axios.put(`https://bazario-server-pearl.vercel.app/orders/id/${orderId}`, updateData);
 
     // Reload the page after status change
     window.location.reload();

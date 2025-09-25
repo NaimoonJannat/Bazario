@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router";
 // Save new user to backend if not already exists
 const saveUserToDB = async (name, email, photoURL) => {
   try {
-    const res = await fetch(`http://localhost:5000/users/${email}`);
+    const res = await fetch(`https://bazario-server-pearl.vercel.app/users/${email}`);
     const existingUser = await res.json();
 
     if (!existingUser?.email) {
@@ -18,7 +18,7 @@ const saveUserToDB = async (name, email, photoURL) => {
         cart: [],
       };
 
-      const response = await fetch('http://localhost:5000/users', {
+      const response = await fetch('https://bazario-server-pearl.vercel.app/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

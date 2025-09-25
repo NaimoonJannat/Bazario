@@ -75,7 +75,7 @@ const generateDescription = async () => {
 Title: ${formData.title}, Category: ${formData.category}, Price: ${formData.price}.
 Keep it short and engaging.`;
 
-    const res = await axios.post("http://localhost:5000/ai/generate", { prompt });
+    const res = await axios.post("https://bazario-server-pearl.vercel.app/ai/generate", { prompt });
     setFormData(prev => ({ ...prev, description: res.data.text }));
   } catch (err) {
     console.error(err);
@@ -116,7 +116,7 @@ Keep it short and engaging.`;
         images: imageUrls
       };
 
-      const res = await axios.post('http://localhost:5000/products', newProduct);
+      const res = await axios.post('https://bazario-server-pearl.vercel.app/products', newProduct);
 
       if (res.data.insertedId || res.data.acknowledged) {
         Swal.fire({

@@ -25,7 +25,7 @@ const AdminProductCard = ({ product, onDelete }) => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const res = await fetch(`http://localhost:5000/products/${_id}`, {
+          const res = await fetch(`https://bazario-server-pearl.vercel.app/products/${_id}`, {
             method: "DELETE",
           });
           const data = await res.json();
