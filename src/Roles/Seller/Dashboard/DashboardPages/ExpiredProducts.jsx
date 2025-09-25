@@ -8,7 +8,7 @@ const ExpiredProducts = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/products");
+        const res = await axios.get("https://bazario-server-pearl.vercel.app/products");
         const today = new Date();
         const filtered = res.data.filter(
           (product) => new Date(product.expireDate) < today

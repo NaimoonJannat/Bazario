@@ -28,7 +28,7 @@ const FeedbackSection = () => {
 
     setLoading(true);
     try {
-      await axios.post("http://localhost:5000/feedback", {
+      await axios.post("https://bazario-server-pearl.vercel.app/feedback", {
         email,
         message,
       });

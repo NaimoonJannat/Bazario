@@ -4,7 +4,7 @@ import Loader from '../../../../Components/Loader';
 
 
 const UserList = () => {
-  const { data: users, loading, error } = useFetch('http://localhost:5000/users');
+  const { data: users, loading, error } = useFetch('https://bazario-server-pearl.vercel.app/users');
 
   if (loading) return <p className="text-center mt-10 text-xl"><Loader></Loader></p>;
   if (error) return <p className="text-center mt-10 text-red-500">Failed to load users.</p>;

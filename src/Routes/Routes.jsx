@@ -49,12 +49,12 @@ const Routes = createBrowserRouter([
       {
         path: "/products",
         element: <Products />,
-         loader: () => fetch("http://localhost:5000/products")
+         loader: () => fetch("https://bazario-server-pearl.vercel.app/products")
       },
       {
         path: "/products/product/:id",
         element: <ProductDetails />,
-        loader: () => fetch("http://localhost:5000/products")
+        loader: () => fetch("https://bazario-server-pearl.vercel.app/products")
       },
       {
         path: "/favorite",
@@ -92,7 +92,7 @@ const Routes = createBrowserRouter([
       {
         path: "products", // /dashboard/products
         element: <AdminProducts />,
-         loader: () => fetch("http://localhost:5000/products")
+         loader: () => fetch("https://bazario-server-pearl.vercel.app/products")
       },
        {
         path: "coupons", // /dashboard/coupons

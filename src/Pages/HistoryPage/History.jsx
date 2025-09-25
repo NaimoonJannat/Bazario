@@ -12,7 +12,7 @@ const History = () => {
 
     const fetchOrders = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/orders/${user.email}`);
+        const res = await axios.get(`https://bazario-server-pearl.vercel.app/orders/${user.email}`);
         setOrders(res.data); 
       } catch (err) {
         console.error(err);
@@ -23,7 +23,7 @@ const History = () => {
   }, [user?.email]);
 
   const handlePrint = (orderId) => {
-    const receiptUrl = `http://localhost:5000/orders/${orderId}/receipt`;
+    const receiptUrl = `https://bazario-server-pearl.vercel.app/orders/${orderId}/receipt`;
     window.open(receiptUrl, "_blank");
   };
 

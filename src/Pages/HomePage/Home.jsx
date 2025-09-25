@@ -21,7 +21,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:5000/products").then((res) => {
+    axios.get("https://bazario-server-pearl.vercel.app/products").then((res) => {
       const shuffled = res.data.sort(() => 0.5 - Math.random());
       setProducts(shuffled.slice(0, 8));
     });
@@ -31,7 +31,7 @@ const Home = () => {
   const lastViewed = localStorage.getItem("lastViewedProductId");
   if (lastViewed) {
     axios
-      .get(`http://localhost:5000/products/${lastViewed}/recommendations`)
+      .get(`https://bazario-server-pearl.vercel.app/products/${lastViewed}/recommendations`)
       .then((res) => setRecommended(res.data));
   }
 }, []);

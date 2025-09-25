@@ -10,7 +10,7 @@ const OnShopSale = () => {
   // Fetch products from backend
   useEffect(() => {
     axios
-      .get("http://localhost:5000/products")
+      .get("https://bazario-server-pearl.vercel.app/products")
       .then((res) => setProducts(res.data))
       .catch((err) => console.error("Error fetching products:", err));
   }, []);

@@ -17,7 +17,7 @@ const ProductCard = ({ product }) => {
     }
 
     try {
-      const res = await fetch(`http://localhost:5000/users/${user?.email}`, {
+      const res = await fetch(`https://bazario-server-pearl.vercel.app/users/${user?.email}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productId: _id, quantity: 1 }), // default 1 when adding from card

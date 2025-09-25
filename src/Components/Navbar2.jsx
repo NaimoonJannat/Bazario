@@ -18,7 +18,7 @@ const Navbar2 = () => {
   useEffect(() => {
     if (user?.email) {
       axios
-        .get(`http://localhost:5000/users/${user?.email}`)
+        .get(`https://bazario-server-pearl.vercel.app/users/${user?.email}`)
         .then((res) => setUserRole(res.data.role))
         .catch((err) => console.error(err));
     }

@@ -16,7 +16,7 @@ const Cart = ({ isOpen, onClose }) => {
 //     if (!user?.email) return;
 //     setLoading(true);
 //     try {
-//       const res = await fetch(`http://localhost:5000/users/${user?.email}/cart`);
+//       const res = await fetch(`https://bazario-server-pearl.vercel.app/users/${user?.email}/cart`);
 //       const data = await res.json();
 //       setCartItems(data);
 //     } catch (err) {
@@ -29,7 +29,7 @@ const Cart = ({ isOpen, onClose }) => {
   useEffect(() => {
   if (isOpen && user?.email) {
     (async () => {
-      const res = await fetch(`http://localhost:5000/users/${user?.email}/cart`);
+      const res = await fetch(`https://bazario-server-pearl.vercel.app/users/${user?.email}/cart`);
       const data = await res.json();
       setCartItems(data);
     })();
@@ -51,7 +51,7 @@ const Cart = ({ isOpen, onClose }) => {
   if (!confirm.isConfirmed) return;
 
   try {
-    const res = await fetch(`http://localhost:5000/users/${user?.email}/cart/${productId}`, {
+    const res = await fetch(`https://bazario-server-pearl.vercel.app/users/${user?.email}/cart/${productId}`, {
       method: 'DELETE',
     });
     const data = await res.json();
@@ -87,7 +87,7 @@ const Cart = ({ isOpen, onClose }) => {
   const updateQuantity = async (productId, newQty) => {
     if (newQty < 1) return;
     try {
-      const res = await fetch(`http://localhost:5000/users/${user?.email}`, {
+      const res = await fetch(`https://bazario-server-pearl.vercel.app/users/${user?.email}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ productId, quantity: newQty })

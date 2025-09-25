@@ -20,10 +20,10 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const [usersRes, productsRes, ordersRes, favRes] = await Promise.all([
-          axios.get("http://localhost:5000/users"),
-          axios.get("http://localhost:5000/products"),
-          axios.get("http://localhost:5000/orders"),
-          axios.get("http://localhost:5000/favorite"),
+          axios.get("https://bazario-server-pearl.vercel.app/users"),
+          axios.get("https://bazario-server-pearl.vercel.app/products"),
+          axios.get("https://bazario-server-pearl.vercel.app/orders"),
+          axios.get("https://bazario-server-pearl.vercel.app/favorite"),
         ]);
         setUsers(usersRes.data);
         setProducts(productsRes.data);
