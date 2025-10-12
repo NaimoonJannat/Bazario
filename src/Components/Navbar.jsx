@@ -9,7 +9,7 @@ import { AuthContext } from '../Provider/AuthProvider';
 import toast from 'react-hot-toast';
 import Cart from './Cart';
 
-const Navbar2 = () => {
+const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const navigate = useNavigate();
   const [userRole, setUserRole] = useState(null); // 'user' | 'admin' | null
@@ -166,4 +166,4 @@ const Navbar2 = () => {
   );
 };
 
-export default Navbar2;
+export default Navbar;

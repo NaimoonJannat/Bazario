@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
 import Footer from "../Components/Footer";
-import Navbar2 from "../Components/Navbar2";
+import Navbar from "../Components/Navbar";
 import Sidebar from "../Components/Sidebar";
 
 const Main = () => {
@@ -12,7 +12,7 @@ const Main = () => {
   return (
     <div>
       {/* Show navbar and sidebar only if not login/register route */}
-      {!isNoLayoutRoute && <Navbar2 />}
+      {!isNoLayoutRoute && <Navbar />}
       {!isNoLayoutRoute && <Sidebar />}
 
       {/* Main content */}
