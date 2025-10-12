@@ -111,7 +111,7 @@ const Navbar2 = () => {
 
         {/* Authenticated User - Dropdown */}
         {user && (
-          <div className='dropdown dropdown-end'>
+          <div className='dropdown dropdown-end ml-2.5'>
             <label
               tabIndex={0}
               className='btn btn-ghost btn-circle avatar'
