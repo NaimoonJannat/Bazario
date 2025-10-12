@@ -96,9 +96,12 @@ const Products = () => {
   return (
     <div className="">
       {/* The container */}
-      <div className="flex flex-col md:flex-row">
+      <div className="flex flex-col md:flex-row min-h-screen md:h-screen md:overflow-hidden">
+
+
         {/* ================= LEFT: FILTERS ================= */}
-        <div className="w-full md:w-1/3 border-r-2 border-[#d4ff00] max-h-screen p-4 bg-[#001f3f] text-white">
+        <div className="w-full md:w-1/3 border-r-2 border-[#d4ff00] md:h-screen p-4 bg-[#001f3f] text-white md:overflow-y-auto md:sticky md:top-0">
+
           {/* Header + Reset */}
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-semibold">Filters</h3>
@@ -240,7 +243,9 @@ const Products = () => {
         </div>
 
         {/* ================= RIGHT: PRODUCTS (unchanged layout) ================= */}
-        <div className="text-center space-y-4 w-full md:w-2/3">
+        <div className="text-center space-y-4 w-full md:w-2/3 md:overflow-y-auto md:h-screen p-6">
+
+
           <h2 className="text-3xl text-white font-bold">
             Total <span className="text-[#d4ff00]">{filteredProducts.length}</span> Products
           </h2>
