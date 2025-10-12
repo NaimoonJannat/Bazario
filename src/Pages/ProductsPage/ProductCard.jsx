@@ -38,21 +38,23 @@ const ProductCard = ({ product }) => {
   return (
     <Link to={`product/${_id}`}>
       <div
-        className="w-full bg-white rounded-2xl shadow-md overflow-hidden border hover:shadow-lg transition relative"
+        className="w-11/12 bg-white rounded-2xl shadow-md overflow-hidden border hover:shadow-lg transition relative"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
         {/* Product Image */}
-        <img src={images[0]} alt={title} className="w-full h-72 object-cover" />
+        <img src={images[0]} alt={title} className="w-full h-70 object-cover" />
 
         {/* Product Info */}
-        <div className="p-4">
-          <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
-          <div className="flex flex-row text-[#001f3f] justify-center items-center gap-8">
-            <p className="font-bold">{price} ৳ </p>
-            <p>{quantity} Items left</p>
-          </div>
-        </div>
+       <div className="p-4 flex flex-col justify-between h-[140px]">
+  <h3 className="text-lg font-semibold text-gray-800 line-clamp-2 min-h-[3rem]">
+    {title}
+  </h3>
+  <div className="flex flex-row text-[#001f3f] justify-center items-center gap-8 mt-3">
+    <p className="font-bold">{price} ৳</p>
+    <p>{quantity} Items left</p>
+  </div>
+</div>
 
         {/* Hover Add to Cart */}
         {hovered && (

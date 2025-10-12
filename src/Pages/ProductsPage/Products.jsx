@@ -246,7 +246,7 @@ const Products = () => {
           </h2>
 
           {/* Product Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {currentProducts.map((product) => (
               <ProductCard key={product._id} product={product} />
             ))}
