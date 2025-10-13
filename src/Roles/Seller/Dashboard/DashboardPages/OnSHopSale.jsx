@@ -67,7 +67,7 @@ const OnShopSale = () => {
   };
 
   return (
-    <div className="p-10">
+    <div className="p-10 text-black">
       <h2 className="text-3xl md:text-5xl font-semibold mb-8 text-[#001f3f]">
         On-Shop Sale
       </h2>
