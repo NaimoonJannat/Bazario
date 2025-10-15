@@ -75,7 +75,7 @@ const AdminProductCard = ({ product, onDelete }) => {
             <FaEye />
           </Link>
           <Link
-            to={`/admin/update-product/${_id}`}
+            to={`/dashboard/update-product/${_id}`}
             className="flex-1 bg-green-600 text-white py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-green-700 transition"
           >
             <FaEdit />
