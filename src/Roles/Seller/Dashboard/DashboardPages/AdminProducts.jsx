@@ -32,10 +32,20 @@ const AdminProducts = () => {
     currentPage * productsPerPage
   );
 
-  // Remove deleted product from UI
-  const handleDeleteUI = (id) => {
-    setAllProducts((prev) => prev.filter((p) => p._id !== id));
-  };
+  
+// Remove deleted product from UI
+const handleDeleteUI = (id) => {
+  // Remove product from UI
+  setAllProducts((prev) => prev.filter((p) => p._id !== id));
+
+  // Reset pagination to page 1
+  setCurrentPage(1);
+
+  // Scroll to top of page
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+
 
   return (
     <div className="p-4 md:p-6">

@@ -1,18 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
-import {
-  FaEdit,
-  FaTrash,
-  FaEye,
-} from "react-icons/fa";
+import { FaEdit, FaTrash, FaEye } from "react-icons/fa";
 
 const AdminProductCard = ({ product, onDelete }) => {
-  const { _id, title, price, quantity, category, expireDate, createdAt, images } =
-    product;
+  const { _id, title, price, quantity, category, expireDate, createdAt, images } = product;
   const [hovered, setHovered] = useState(false);
 
-  // Delete handler
+  // Delete handler with SweetAlert only
   const handleDelete = async () => {
     Swal.fire({
       title: "Are you sure?",
@@ -27,11 +22,15 @@ const AdminProductCard = ({ product, onDelete }) => {
         try {
           const res = await fetch(`https://bazario-server-pearl.vercel.app/products/${_id}`, {
             method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
           });
           const data = await res.json();
+
           if (data.success) {
-            Swal.fire("Deleted!", "Product has been removed.", "success");
             onDelete(_id); // update UI
+            Swal.fire("Deleted!", "Product has been removed.", "success");
           } else {
             Swal.fire("Error!", data.message || "Failed to delete product.", "error");
           }
@@ -69,23 +68,18 @@ const AdminProductCard = ({ product, onDelete }) => {
       {/* Action Buttons */}
       {hovered && (
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-[90%] flex justify-between gap-2">
-          {/* View */}
           <Link
             to={`/products/product/${_id}`}
             className="flex-1 bg-blue-600 text-white py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-blue-700 transition"
           >
             <FaEye />
           </Link>
-
-          {/* Update */}
           <Link
             to={`/admin/update-product/${_id}`}
             className="flex-1 bg-green-600 text-white py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-green-700 transition"
           >
             <FaEdit />
           </Link>
-
-          {/* Delete */}
           <button
             onClick={handleDelete}
             className="flex-1 bg-red-600 text-white py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-red-700 transition"
