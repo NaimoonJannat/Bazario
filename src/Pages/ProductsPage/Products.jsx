@@ -1,9 +1,11 @@
 import { useLoaderData } from "react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import ProductCard from "./ProductCard";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const Products = () => {
   const products = useLoaderData();
+  const { user } = useContext(AuthContext);
 
   // --- Filters ---
   const [search, setSearch] = useState("");
@@ -11,6 +13,29 @@ const Products = () => {
   const [dateAddedMonth, setDateAddedMonth] = useState(""); // "YYYY-MM"
   const [expireYear, setExpireYear] = useState(""); // "YYYY"
   const [priceRange, setPriceRange] = useState([0, 0]);
+
+
+  useEffect(() => {
+  if (user?.email && search.trim() !== "") {
+    fetch(`https://bazario-server-pearl.vercel.app/users/${user.email}/search`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ keyword: search }),
+    }).catch((err) => console.error("Failed to save search:", err));
+  }
+}, [search]);
+
+const handleView = (product) => {
+  if (user?.email) {
+    fetch(`https://bazario-server-pearl.vercel.app/users/${user.email}/viewed`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ productId: product._id }),
+    }).catch((err) => console.error("Failed to save viewed product:", err));
+  }
+};
+
+
 
   // --- Pagination ---
   const [currentPage, setCurrentPage] = useState(1);
@@ -252,9 +277,11 @@ const Products = () => {
 
           {/* Product Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {currentProducts.map((product) => (
-              <ProductCard key={product._id} product={product} />
-            ))}
+             {currentProducts.map((product) => (
+    <div key={product._id} onClick={() => handleView(product)} className="cursor-pointer">
+      <ProductCard product={product} />
+    </div>
+  ))}
           </div>
 
           {/* Pagination */}

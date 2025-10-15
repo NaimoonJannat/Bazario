@@ -11,10 +11,63 @@ const AddProduct = () => {
   const [images, setImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [aiGenerating, setAiGenerating] = useState(false);
 
   const handleDecrease = () =>
-  setStateQuantity((prev) => (prev > 0 ? prev - 1 : 0));
-const handleIncrease = () => setStateQuantity((prev) => prev + 1);
+    setStateQuantity((prev) => (prev > 0 ? prev - 1 : 0));
+  const handleIncrease = () => setStateQuantity((prev) => prev + 1);
+
+  // AI Generate Description function
+  const handleAiGenerate = async (form) => {
+    const title = form.title.value;
+    const description = form.description.value;
+    const price = form.price.value;
+
+    if (!title.trim()) {
+      Swal.fire({
+        title: "Error!",
+        text: "Please enter a product title first",
+        icon: "error",
+        confirmButtonText: 'Ok'
+      });
+      return;
+    }
+
+    setAiGenerating(true);
+    try {
+      // Use environment-based API URL
+      const API_BASE_URL = import.meta.env.DEV
+        ? 'http://localhost:5000'
+        : 'https://bazario-server-pearl.vercel.app';
+
+      const response = await axios.post(`${API_BASE_URL}/api/ai-generate-description`, {
+        title,
+        description: description || '',
+        price
+      });
+
+      if (response.data && response.data.generatedDescription) {
+        // Clear existing content and update the description textarea
+        form.description.value = response.data.generatedDescription;
+        Swal.fire({
+          title: "Success!",
+          text: "AI description generated successfully",
+          icon: "success",
+          confirmButtonText: 'Ok'
+        });
+      }
+    } catch (error) {
+      console.error("Error generating AI description:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to generate AI description. Please try again.",
+        icon: "error",
+        confirmButtonText: 'Ok'
+      });
+    } finally {
+      setAiGenerating(false);
+    }
+  };
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
@@ -152,7 +205,29 @@ const handleIncrease = () => setStateQuantity((prev) => prev + 1);
               </div>
 
               <div>
-                <label className="block mb-1 font-medium text-[#001f3f]">Description</label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="font-medium text-[#001f3f]">Description</label>
+                  <button
+                    type="button"
+                    onClick={() => handleAiGenerate(event.target.closest('form'))}
+                    disabled={aiGenerating}
+                    className="px-3 py-1 bg-gradient-to-r from-purple-500 to-blue-500 text-white text-sm rounded-lg hover:from-purple-600 hover:to-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center gap-1"
+                  >
+                    {aiGenerating ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        Generating...
+                      </>
+                    ) : (
+                      <>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                        AI Generate
+                      </>
+                    )}
+                  </button>
+                </div>
                 <textarea required name="description" className="w-full border text-[#001f3f] rounded-lg px-4 py-2" rows="5" placeholder="Product description"></textarea>
               </div>
 
@@ -184,15 +259,15 @@ const handleIncrease = () => setStateQuantity((prev) => prev + 1);
                     >
                       −
                     </button>
-                  <input
-                  required
-  type="number"
-  name="quantity"
-  value={stateQuantity}
-  onChange={(e) => setStateQuantity(Math.max(0, Number(e.target.value) || 0))}
-  className="w-full text-center px-2 py-2 text-[#001f3f] outline-none"
-  min={0}
-/>
+                    <input
+                      required
+                      type="number"
+                      name="quantity"
+                      value={stateQuantity}
+                      onChange={(e) => setStateQuantity(Math.max(0, Number(e.target.value) || 0))}
+                      className="w-full text-center px-2 py-2 text-[#001f3f] outline-none"
+                      min={0}
+                    />
                     <button
                       type="button"
                       onClick={handleIncrease}

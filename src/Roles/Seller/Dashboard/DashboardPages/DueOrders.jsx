@@ -89,8 +89,8 @@ const DueOrders = () => {
   };
 
   return (
-    <div className="p-4">
-      {/* Header */}
+    <div className="p-4 text-black">
+      {/* Header */} 
       <div className="flex flex-row justify-between items-center">
         <h2 className="text-4xl font-bold mb-6">Due Orders</h2>
         <Link to={"/dashboard/order-history"}>
