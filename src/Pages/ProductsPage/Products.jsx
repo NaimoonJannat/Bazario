@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router";
+import { useLoaderData, useSearchParams } from "react-router";
 import { useContext, useEffect, useMemo, useState } from "react";
 import ProductCard from "./ProductCard";
 import { AuthContext } from "../../Provider/AuthProvider";
@@ -6,10 +6,11 @@ import { AuthContext } from "../../Provider/AuthProvider";
 const Products = () => {
   const products = useLoaderData();
   const { user } = useContext(AuthContext);
+  const [searchParams] = useSearchParams();
 
   // --- Filters ---
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(searchParams.get("category") || "");
   const [dateAddedMonth, setDateAddedMonth] = useState(""); // "YYYY-MM"
   const [expireYear, setExpireYear] = useState(""); // "YYYY"
   const [priceRange, setPriceRange] = useState([0, 0]);
