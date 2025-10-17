@@ -35,11 +35,11 @@ const Sidebar = () => {
     label: 'Products',
     path: `${DASHBOARD_BASE}/products`,
   },
-  {
-    icon: <BiSolidCoupon />,
-    label: 'Coupons',
-    path: `${DASHBOARD_BASE}/coupons`,
-  },
+  // {
+  //   icon: <BiSolidCoupon />,
+  //   label: 'Coupons',
+  //   path: `${DASHBOARD_BASE}/coupons`,
+  // },
   {
     icon: <FaUsers />,
     label: 'User List',
