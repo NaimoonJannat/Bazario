@@ -1,182 +1,99 @@
 [
   {
-    "title": "Premium Basmati Rice 5kg",
-    "description": "Long-grain aromatic basmati rice, perfect for biryani or everyday meals. Naturally aged for extra flavor.",
-    "category": "Groceries",
-    "price": 890,
-    "expireDate": "2026-04-10",
-    "quantity": 35,
-    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760541040/P5TiqXwXAMIrPgLqsTWNXGpi5RUhdooqw5x0PEAG_cmwyoz.jpg"],
-    "recommended": ["1", "5", "12"]
-  },
-  {
-    "title": "Organic Brown Sugar 1kg",
-    "description": "Unrefined brown sugar rich in natural minerals and with a mild caramel flavor. Great for desserts and tea.",
-    "category": "Groceries",
-    "price": 180,
-    "expireDate": "2026-02-20",
-    "quantity": 50,
-    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760541037/brown-sugar-1kg-581822_l_zrrudq.jpg"],
-    "recommended": ["7", "15", "2"]
-  },
-  {
-    "title": "Whole Wheat Flour 2kg",
-    "description": "100% stone-ground whole wheat atta that makes soft and nutritious chapatis and breads.",
-    "category": "Groceries",
-    "price": 240,
-    "expireDate": "2026-06-12",
-    "quantity": 45,
-    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760541047/61NmRybSu8L._UF1000_1000_QL80__cddrdn.jpg"],
-    "recommended": ["3", "8", "11"]
-  },
-  {
-    "title": "Olive Oil Extra Virgin 1L",
-    "description": "Cold-pressed extra virgin olive oil imported from Spain. Ideal for salad dressings and healthy cooking.",
-    "category": "Cooking Essentials",
-    "price": 1250,
-    "expireDate": "2026-12-01",
-    "quantity": 25,
-    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760541038/Olitalia_Extra_Virgin_Olive_Oil_1_Ltr-OLITALIA-cf34b-319492_fccjzf.jpg"],
-    "recommended": ["4", "10", "14"]
-  },
-  {
-    "title": "Instant Noodles Chicken Flavor (Pack of 5)",
-    "description": "Quick and tasty instant noodles with rich chicken flavor. Perfect for busy days and quick snacks.",
-    "category": "Snacks",
-    "price": 120,
-    "expireDate": "2025-08-14",
+    "title": "Cadbury Dairy Milk Silk",
+    "description": "A smooth and creamy milk chocolate bar made from the finest cocoa and milk for a rich, indulgent taste experience.",
+    "category": "Chocolate",
+    "price": 250,
+    "expireDate": "2026-03-15",
     "quantity": 80,
-    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760541030/81aDMlADnbL._UF1000_1000_QL80__xk6deb.jpg"],
-    "recommended": ["6", "13", "19"]
+    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760585535/71w7ppkACUL._SL1500__i9jty0.jpg"]
+    
   },
   {
-    "title": "Natural Honey 500g",
-    "description": "Pure and raw honey collected from natural hives. No preservatives or added sugar.",
-    "category": "Groceries",
+    "title": "Ferrero Rocher Hazelnut Chocolate",
+    "description": "Crispy wafer shells filled with creamy hazelnut spread, wrapped in rich milk chocolate and golden foil for a premium treat.",
+    "category": "Chocolate",
     "price": 480,
-    "expireDate": "2027-01-01",
-    "quantity": 40,
-    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760541036/Alshifa-Natural-Honey-500g1_xso2rj.png"],
-    "recommended": ["1", "4", "9"]
-  },
-  {
-    "title": "Green Tea Bags (25 pcs)",
-    "description": "Refreshing green tea rich in antioxidants. Helps boost metabolism and relax the mind.",
-    "category": "Beverages",
-    "price": 270,
-    "expireDate": "2026-07-15",
-    "quantity": 60,
-    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760541031/858bc480e69140e09313d2b6bcbe9b3b.png_720x720q80_aotrcb.png"],
-    "recommended": ["2", "8", "16"]
-  },
-  {
-    "title": "Chocolate Chip Cookies 400g",
-    "description": "Crunchy cookies filled with rich chocolate chips. A perfect treat for all ages.",
-    "category": "Snacks",
-    "price": 350,
-    "expireDate": "2025-12-05",
-    "quantity": 75,
-    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760541030/81NhfG4ER6S._UF1000_1000_QL80__ste5hi.jpg"],
-    "recommended": ["5", "10", "17"]
-  },
-  {
-    "title": "Coconut Hair Oil 200ml",
-    "description": "Pure coconut oil for nourishing and strengthening hair. Suitable for all hair types.",
-    "category": "Personal Care",
-    "price": 180,
-    "expireDate": "2027-03-10",
-    "quantity": 55,
-    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760541044/vnNfHtJSjenwbMfItEvODRlKV2OvInO9WtL33pbf_zqczkq.png"],
-    "recommended": ["11", "14", "19"]
-  },
-  {
-    "title": "Shampoo Anti-Dandruff 400ml",
-    "description": "Clinically proven anti-dandruff shampoo that keeps your scalp clean and hair soft.",
-    "category": "Personal Care",
-    "price": 450,
-    "expireDate": "2026-05-30",
-    "quantity": 38,
-    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760541042/shampoo_birjqm.jpg"],
-    "recommended": ["9", "18", "15"]
-  },
-  {
-    "title": "Liquid Handwash 250ml",
-    "description": "Gentle and fragrant handwash with moisturizing ingredients to keep your hands clean and soft.",
-    "category": "Household",
-    "price": 150,
-    "expireDate": "2026-08-25",
-    "quantity": 60,
-    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760541032/a5333dad66606d9cc904a14c2ac286e0_m0kabc.jpg"],
-    "recommended": ["12", "16", "17"]
-  },
-  {
-    "title": "Laundry Detergent 1kg",
-    "description": "Powerful detergent for bright, clean clothes. Suitable for both hand wash and machine wash.",
-    "category": "Household",
-    "price": 360,
-    "expireDate": "2027-02-12",
-    "quantity": 40,
-    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760541037/fast-wash-detergent-powder-free-tibet-soap-125-gm-1-kg_wk5eov.jpg"],
-    "recommended": ["11", "13", "20"]
-  },
-  {
-    "title": "Toothpaste Herbal 150g",
-    "description": "Herbal toothpaste with neem and clove for strong gums and fresh breath.",
-    "category": "Personal Care",
-    "price": 220,
-    "expireDate": "2026-03-01",
-    "quantity": 48,
-    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760541031/6001067021452_ov9fk7.jpg"],
-    "recommended": ["14", "18", "6"]
-  },
-  {
-    "title": "Dishwashing Liquid 500ml",
-    "description": "Tough on grease, gentle on hands. Lemon-fresh dishwashing liquid for sparkling clean dishes.",
-    "category": "Household",
-    "price": 200,
-    "expireDate": "2027-01-05",
-    "quantity": 55,
-    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760541043/vdwl500hh.jpg_v2cvtp.png"],
-    "recommended": ["11", "12", "17"]
-  },
-  {
-    "title": "Black Pepper Powder 100g",
-    "description": "Finely ground black pepper made from premium handpicked peppercorns. Adds bold flavor to dishes.",
-    "category": "Spices",
-    "price": 260,
-    "expireDate": "2027-06-15",
+    "expireDate": "2026-05-10",
     "quantity": 45,
-    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760541045/40cfe3f7d749cd8a2d5ee6ce27eca9c1_qpcart.jpg"],
-    "recommended": ["1", "3", "4"]
+    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760585534/813xf-cAykL._SL1500__gdrr6u.jpg"]
+    
   },
   {
-    "title": "Tomato Ketchup 500g",
-    "description": "Thick and tangy tomato ketchup made from ripe tomatoes. Great with snacks and meals.",
-    "category": "Condiments",
-    "price": 220,
-    "expireDate": "2026-09-05",
-    "quantity": 65,
-    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760541048/51DIEhnhyEL_h6zn15.jpg"],
-    "recommended": ["5", "8", "13"]
-  },
-  {
-    "title": "Salted Butter 200g",
-    "description": "Creamy salted butter made from pure cow’s milk. Perfect for baking and breakfast spreads.",
-    "category": "Dairy",
-    "price": 350,
-    "expireDate": "2025-12-10",
-    "quantity": 28,
-    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760541031/aarong-dairy-butter-200-gm_stfpll.jpg"],
-    "recommended": ["17", "18", "19"]
-  },
-  {
-    "title": "Fresh Milk 1L",
-    "description": "Pasteurized and homogenized fresh milk rich in calcium and protein. Sourced from local dairy farms.",
-    "category": "Dairy",
+    "title": "KitKat 4-Finger Bar",
+    "description": "Crunchy wafer fingers covered with smooth milk chocolate — the perfect balance of crisp and creamy for a quick break.",
+    "category": "Chocolate",
     "price": 120,
-    "expireDate": "2025-10-20",
+    "expireDate": "2026-01-20",
+    "quantity": 150,
+    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760585534/nestle-kitkat-4-finger-chocolate-wafer-india-365-gm_vyr2kx.jpg"]
+    
+  },
+  {
+    "title": "Toblerone Swiss Milk Chocolate",
+    "description": "Classic triangular chocolate bar made with Swiss milk chocolate, honey, and almond nougat for a distinctive flavor.",
+    "category": "Chocolate",
+    "price": 350,
+    "expireDate": "2026-04-05",
+    "quantity": 60,
+    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760585535/Toblerone_3362_toskju.jpg"]
+    
+  },
+  {
+    "title": "Lindt Excellence 70% Dark Chocolate",
+    "description": "Premium dark chocolate with a rich aroma and smooth texture, crafted from high-quality cocoa beans for true chocolate lovers.",
+    "category": "Chocolate",
+    "price": 420,
+    "expireDate": "2026-02-28",
+    "quantity": 50,
+    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760585534/ee35a9600f81991acb6734730bd74e82_ogzqyq.jpg"]
+    
+  },
+  {
+    "title": "Snickers Chocolate Bar",
+    "description": "A chewy bar packed with peanuts, caramel, and nougat covered in creamy milk chocolate — satisfying hunger anytime.",
+    "category": "Chocolate",
+    "price": 100,
+    "expireDate": "2025-12-15",
+    "quantity": 200,
+    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760585535/dryeqrv2efldaaoyceat_lgmxqz.png"]
+    
+  },
+  {
+    "title": "Galaxy Smooth Milk Chocolate",
+    "description": "Luxuriously smooth and silky milk chocolate that melts effortlessly in your mouth for a velvety experience.",
+    "category": "Chocolate",
+    "price": 270,
+    "expireDate": "2026-06-12",
     "quantity": 90,
-    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760541030/514nZ5eC6gL._UF894_1000_QL80__ubufwe.jpg"],
-    "recommended": ["19", "20", "1"]
+    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760585534/Galaxy-Smooth-Milk-min_ashzg3.png"]
+  },
+  {
+    "title": "Bounty Coconut Chocolate Bar",
+    "description": "Moist, tender coconut filling wrapped in a thick layer of smooth milk chocolate — a tropical delight in every bite.",
+    "category": "Chocolate",
+    "price": 150,
+    "expireDate": "2026-03-01",
+    "quantity": 110,
+    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760585535/06b99f6e3ff4f63e0448bdc5f72071ce.jpg_720x720q80_de4adv.jpg"]
+    
+  },
+  {
+    "title": "Hershey’s Cookies ‘n’ Creme Bar",
+    "description": "Delicious combination of smooth white chocolate and crunchy chocolate cookie bits, creating a creamy, crunchy texture.",
+    "category": "Chocolate",
+    "price": 220,
+    "expireDate": "2026-05-18",
+    "quantity": 100,
+    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760585534/2639170798_a721fw.jpg"]
+  },
+  {
+    "title": "Nestlé Aero Chocolate Bar",
+    "description": "Light and bubbly milk chocolate that melts in your mouth with a unique airy texture for a smooth chocolate experience.",
+    "category": "Chocolate",
+    "price": 180,
+    "expireDate": "2026-04-25",
+    "quantity": 130,
+    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760585535/71LRuqG6WXL._SL1500__lcu5bh.jpg"]
   }
 ]
