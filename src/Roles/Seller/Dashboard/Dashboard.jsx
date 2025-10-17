@@ -87,7 +87,7 @@ const Dashboard = () => {
           { title: "Users", value: totalUsers },
           { title: "Products", value: totalProducts },
           { title: "Orders", value: totalOrders },
-          { title: "Revenue", value: `$${totalRevenue}` },
+          { title: "Revenue", value: `৳${totalRevenue}` },
         ].map((stat, i) => (
           <motion.div
             key={i}
