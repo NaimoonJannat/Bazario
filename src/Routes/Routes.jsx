@@ -27,6 +27,7 @@ import Checkout from "../Pages/CheckoutPage/Checkout";
 import History from "../Pages/HistoryPage/History";
 import OrderHistory from "../Roles/Seller/Dashboard/DashboardPages/OrderHistory";
 import AdminProducts from "../Roles/Seller/Dashboard/DashboardPages/AdminProducts";
+import UpdateProduct from "../Roles/Seller/Dashboard/DashboardPages/UpdateProduct";
 
 const Routes = createBrowserRouter([
   {
@@ -88,6 +89,10 @@ const Routes = createBrowserRouter([
       {
         path: "add-product", // /dashboard/add-product
         element: <AddProduct />,
+      },
+      {
+         path: "update-product/:id", // /dashboard/update-product
+        element: <UpdateProduct />,
       },
       {
         path: "products", // /dashboard/products

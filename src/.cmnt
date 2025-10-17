@@ -1,25 +1,99 @@
-{/* <div>
-              <label className="block mb-1 font-medium text-[#001f3f]">Price & Discount</label>
-              <div className="flex flex-wrap gap-4 mt-2">
-                <label className="flex text-[#001f3f] items-center gap-2">
-                  <input type="radio" name="discount" defaultChecked className="form-radio text-[#001f3f]" />
-                  No Discount
-                </label>
-                <label className="flex text-[#001f3f] items-center gap-2">
-                  <input type="radio" name="discount" className="form-radio text-[#001f3f]" />
-                  Percentage %
-                </label>
-                <label className="flex text-[#001f3f] items-center gap-2">
-                  <input type="radio" name="discount" className="form-radio text-[#001f3f]" />
-                  Bundling
-                </label>
-              </div>
-            </div> */}
-
-            {/* <div>
-              <label className="block mb-1 font-medium text-[#001f3f]">Status</label>
-              <select className="w-full border text-[#001f3f] rounded-lg px-4 py-2">
-                <option>Published</option>
-                <option>Draft</option>
-              </select>
-            </div> */}
+[
+  {
+    "title": "Cadbury Dairy Milk Silk",
+    "description": "A smooth and creamy milk chocolate bar made from the finest cocoa and milk for a rich, indulgent taste experience.",
+    "category": "Chocolate",
+    "price": 250,
+    "expireDate": "2026-03-15",
+    "quantity": 80,
+    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760585535/71w7ppkACUL._SL1500__i9jty0.jpg"]
+    
+  },
+  {
+    "title": "Ferrero Rocher Hazelnut Chocolate",
+    "description": "Crispy wafer shells filled with creamy hazelnut spread, wrapped in rich milk chocolate and golden foil for a premium treat.",
+    "category": "Chocolate",
+    "price": 480,
+    "expireDate": "2026-05-10",
+    "quantity": 45,
+    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760585534/813xf-cAykL._SL1500__gdrr6u.jpg"]
+    
+  },
+  {
+    "title": "KitKat 4-Finger Bar",
+    "description": "Crunchy wafer fingers covered with smooth milk chocolate — the perfect balance of crisp and creamy for a quick break.",
+    "category": "Chocolate",
+    "price": 120,
+    "expireDate": "2026-01-20",
+    "quantity": 150,
+    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760585534/nestle-kitkat-4-finger-chocolate-wafer-india-365-gm_vyr2kx.jpg"]
+    
+  },
+  {
+    "title": "Toblerone Swiss Milk Chocolate",
+    "description": "Classic triangular chocolate bar made with Swiss milk chocolate, honey, and almond nougat for a distinctive flavor.",
+    "category": "Chocolate",
+    "price": 350,
+    "expireDate": "2026-04-05",
+    "quantity": 60,
+    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760585535/Toblerone_3362_toskju.jpg"]
+    
+  },
+  {
+    "title": "Lindt Excellence 70% Dark Chocolate",
+    "description": "Premium dark chocolate with a rich aroma and smooth texture, crafted from high-quality cocoa beans for true chocolate lovers.",
+    "category": "Chocolate",
+    "price": 420,
+    "expireDate": "2026-02-28",
+    "quantity": 50,
+    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760585534/ee35a9600f81991acb6734730bd74e82_ogzqyq.jpg"]
+    
+  },
+  {
+    "title": "Snickers Chocolate Bar",
+    "description": "A chewy bar packed with peanuts, caramel, and nougat covered in creamy milk chocolate — satisfying hunger anytime.",
+    "category": "Chocolate",
+    "price": 100,
+    "expireDate": "2025-12-15",
+    "quantity": 200,
+    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760585535/dryeqrv2efldaaoyceat_lgmxqz.png"]
+    
+  },
+  {
+    "title": "Galaxy Smooth Milk Chocolate",
+    "description": "Luxuriously smooth and silky milk chocolate that melts effortlessly in your mouth for a velvety experience.",
+    "category": "Chocolate",
+    "price": 270,
+    "expireDate": "2026-06-12",
+    "quantity": 90,
+    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760585534/Galaxy-Smooth-Milk-min_ashzg3.png"]
+  },
+  {
+    "title": "Bounty Coconut Chocolate Bar",
+    "description": "Moist, tender coconut filling wrapped in a thick layer of smooth milk chocolate — a tropical delight in every bite.",
+    "category": "Chocolate",
+    "price": 150,
+    "expireDate": "2026-03-01",
+    "quantity": 110,
+    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760585535/06b99f6e3ff4f63e0448bdc5f72071ce.jpg_720x720q80_de4adv.jpg"]
+    
+  },
+  {
+    "title": "Hershey’s Cookies ‘n’ Creme Bar",
+    "description": "Delicious combination of smooth white chocolate and crunchy chocolate cookie bits, creating a creamy, crunchy texture.",
+    "category": "Chocolate",
+    "price": 220,
+    "expireDate": "2026-05-18",
+    "quantity": 100,
+    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760585534/2639170798_a721fw.jpg"]
+  },
+  {
+    "title": "Nestlé Aero Chocolate Bar",
+    "description": "Light and bubbly milk chocolate that melts in your mouth with a unique airy texture for a smooth chocolate experience.",
+    "category": "Chocolate",
+    "price": 180,
+    "expireDate": "2026-04-25",
+    "quantity": 130,
+    "images": ["https://res.cloudinary.com/auraloom/image/upload/v1760585535/71LRuqG6WXL._SL1500__lcu5bh.jpg"]
+  }
+]
