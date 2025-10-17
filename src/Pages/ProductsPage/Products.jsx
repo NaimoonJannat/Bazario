@@ -15,28 +15,25 @@ const Products = () => {
   const [expireYear, setExpireYear] = useState(""); // "YYYY"
   const [priceRange, setPriceRange] = useState([0, 0]);
 
-
   useEffect(() => {
-  if (user?.email && search.trim() !== "") {
-    fetch(`https://bazario-server-pearl.vercel.app/users/${user.email}/search`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ keyword: search }),
-    }).catch((err) => console.error("Failed to save search:", err));
-  }
-}, [search]);
+    if (user?.email && search.trim() !== "") {
+      fetch(`https://bazario-server-pearl.vercel.app/users/${user.email}/search`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ keyword: search }),
+      }).catch((err) => console.error("Failed to save search:", err));
+    }
+  }, [search]);
 
-const handleView = (product) => {
-  if (user?.email) {
-    fetch(`https://bazario-server-pearl.vercel.app/users/${user.email}/viewed`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ productId: product._id }),
-    }).catch((err) => console.error("Failed to save viewed product:", err));
-  }
-};
-
-
+  const handleView = (product) => {
+    if (user?.email) {
+      fetch(`https://bazario-server-pearl.vercel.app/users/${user.email}/viewed`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId: product._id }),
+      }).catch((err) => console.error("Failed to save viewed product:", err));
+    }
+  };
 
   // --- Pagination ---
   const [currentPage, setCurrentPage] = useState(1);
@@ -94,12 +91,18 @@ const handleView = (product) => {
     const price = Number(product.price);
     const matchesPrice = price >= priceRange[0] && price <= priceRange[1];
 
+    // --- New logic: quantity > 0 and not expired ---
+    const now = new Date();
+    const expireDate = product.expireDate ? new Date(product.expireDate) : null;
+    const isAvailable = product.quantity > 0 && (!expireDate || expireDate >= now);
+
     return (
       matchesSearch &&
       matchesCategory &&
       matchesDateAdded &&
       matchesExpireYear &&
-      matchesPrice
+      matchesPrice &&
+      isAvailable
     );
   });
 
@@ -123,7 +126,6 @@ const handleView = (product) => {
     <div className="">
       {/* The container */}
       <div className="flex flex-col md:flex-row min-h-screen md:h-screen md:overflow-hidden">
-
 
         {/* ================= LEFT: FILTERS ================= */}
         <div className="w-full md:w-1/3 border-r-2 border-[#d4ff00] md:h-screen p-4 bg-[#001f3f] text-white md:overflow-y-auto md:sticky md:top-0">
@@ -271,18 +273,17 @@ const handleView = (product) => {
         {/* ================= RIGHT: PRODUCTS (unchanged layout) ================= */}
         <div className="text-center space-y-4 w-full md:w-2/3 md:overflow-y-auto md:h-screen p-6">
 
-
           <h2 className="text-3xl text-white font-bold">
             Total <span className="text-[#d4ff00]">{filteredProducts.length}</span> Products
           </h2>
 
           {/* Product Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-             {currentProducts.map((product) => (
-    <div key={product._id} onClick={() => handleView(product)} className="cursor-pointer">
-      <ProductCard product={product} />
-    </div>
-  ))}
+            {currentProducts.map((product) => (
+              <div key={product._id} onClick={() => handleView(product)} className="cursor-pointer">
+                <ProductCard product={product} />
+              </div>
+            ))}
           </div>
 
           {/* Pagination */}
